@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.F_boardDAO">
+	<resultMap type="com.naver.kokfitness.entities.F_board" id="f_boardMap">
+		<id property="f_seq" column="f_seq" />
+		<id property="f_name" column="f_name" />
+		<id property="f_title" column="f_title" />
+		<id property="f_content" column="f_content" />
+		<id property="f_hit" column="f_hit" />
+		<id property="f_date" column="f_date" />
+		<id property="f_attach" column="f_attach" />
+		<id property="f_ip" column="f_ip" />
+	</resultMap>
+	<insert id="f_insert" parameterType="hashMap">
+		insert into	f_board(
+		f_seq,f_name,f_title,f_content,f_hit,f_date,f_attach,f_ip
+		)values(
+		((select ifnull(MAX(f_seq)+1,1) from f_board alias_seq))
+		,#{f_name,jdbcType=VARCHAR}
+		,#{f_title,jdbcType=VARCHAR}
+		,#{f_content,jdbcType=VARCHAR}
+		,#{f_hit,jdbcType=INTEGER}
+		,#{f_date,jdbcType=VARCHAR}
+		,#{f_attach,jdbcType=VARCHAR}
+		,#{f_ip,jdbcType=VARCHAR})
+	</insert>
+	
+<!-- 	<select id="f_boardselectListAll" resultMap="f_boardMap"> -->
+<!-- 		select * from f_board -->
+<!-- 	</select> -->
+	
+<!-- 	<update id="updateHit" parameterType="Integer"> -->
+<!-- 		update f_board set f_hit=f_hit + 1 where f_seq=#{b_seq} -->
+<!-- 	</update> -->
+	
+</mapper>
+	

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.MemberDAO">
+	<resultMap type="com.naver.kokfitness.entities.Member" id="memberMap">
+		<id property="email" column="email"/>
+		<id property="id" column="id"/>
+		<id property="password" column="password"/>
+		<id property="name" column="name"/>
+		<id property="zipcode" column="zipcode"/>
+		<id property="newaddr" column="newaddr"/>
+		<id property="detailaddr" column="detailaddr"/>
+		<id property="phone1" column="phone1"/>
+		<id property="phone2" column="phone2"/>
+		<id property="phone3" column="phone3"/>
+		<id property="memlevel" column="memlevel"/>
+		<id property="mileage" column="mileage"/>
+		<id property="program_code" column="program_code"/>
+		<id property="staff_code" column="staff_code"/>
+	</resultMap>
+
+	<select id="emailConfirm" parameterType="String" resultType="int">
+		select count(*) 
+		from member 
+		where email=#{email}
+	</select>
+		<select id="idConfirm" parameterType="String" resultType="int">
+		select count(*) 
+		from member 
+		where id=#{id}
+	</select>
+	<insert id="memberInsert" parameterType="hashMap">
+		insert into member(
+		email,id,password,name,zipcode,newaddr,detailaddr,phone1,phone2,phone3
+		)values(
+		#{email,jdbcType=VARCHAR},#{id,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},
+		#{zipcode,jdbcType=VARCHAR},#{newaddr,jdbcType=VARCHAR},#{detailaddr,jdbcType=VARCHAR},
+		#{phone1,jdbcType=VARCHAR},#{phone2,jdbcType=VARCHAR},#{phone3,jdbcType=VARCHAR}
+		)
+	</insert>
+</mapper>

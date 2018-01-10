@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.CF_commentDAO">
+	<resultMap type="com.naver.kokfitness.entities.CF_comment" id="cf_commentMap">
+		<id property="cf_seq" column="cf_seq" />
+		<id property="cf_name" column="cf_name" />
+		<id property="cf_content" column="cf_content" />
+		<id property="cf_date" column="cf_date" />
+		<id property="cf_parseq" column="cf_parseq" />
+	</resultMap>
+	
+	<insert id="cf_insert" parameterType="hashMap">
+		insert into	cf_comment(
+		cf_seq,cf_name,cf_content,cf_date,cf_parseq
+		)values(
+		((select ifnull(MAX(cf_seq)+1,1) from cf_comment alias_seq))
+		,#{cf_name,jdbcType=VARCHAR}
+		,#{cf_content,jdbcType=VARCHAR}
+		,#{cf_date,jdbcType=VARCHAR}
+		,#{cf_parseq,jdbcType=INTEGER})
+	</insert>
+	
+	
+	<select id="cf_selectListAll" resultMap="cf_commentMap">
+		select * from cf_comment
+	</select>
+	
+	</mapper>
