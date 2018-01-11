@@ -16,7 +16,34 @@ $(document).ready(function(){
 	$('#loginModal').on('hidden.bs.modal', function () {
 		$('#login_form').show();
 		$('#lost_form').hide();
-	})
+	});
+	$('#findbtn').on("click",function(){
+		var email=$('#findemail').val();
+		var name=$('#findname').val();
+		alert(email+name);
+		$.ajax({
+				type:'POST',
+				data:"email="+email+"&name="+name,
+				datatype:'json',
+				url : 'passwordFind',
+				success : function(data){
+					if(data==0){
+						$('#"failpasswordModalMsg"').text("입력된 정보가 일치하지 않습니다.");
+						$('#failpasswordModal').modal('show');
+					}else{
+						$('#"failpasswordModalMsg"').text("새로운 비밀번호가 E-mail로 전송 되었습니다.");
+						$('#failpasswordModal').modal('show');
+					}
+				},
+				error : function(xhr,status,error){
+					alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+				}
+			});
+		$('#passwordModal').on('hidden.bs.modal',function(e){
+			$('#findemail').val("");
+			$('#findname').val("");
+		});
+	});
 	$('#login').on("click",function(){
 		$('#loginModal').modal('show');
 	});
@@ -174,21 +201,21 @@ $(document).ready(function(){
 				      </div>
 			      </div>
 		      </form>
-		      <form class="lost_form" style="display:none;" id="lost_form" action="passLost" method="post" role="form">
+		      <form class="lost_form" style="display:none;" id="lost_form" method="post" role="form">
 		      	<div class="modal-body">
 			      	  <div class="row">
 			      		<h3 class="col-sm-offset-4" style="text-align:center;">비밀번호 찾기</h3>
 			      	  </div>
 			      	  <div class="col-sm-6">
 					    <label for="email">이메일 주소</label>
-					    <input type="email" class="form-control" id="email" name="email" required="required" placeholder="Email">
+					    <input type="email" class="form-control" id="findemail" name="email" required="required" placeholder="Email">
 					  </div>
 					  <div class="col-sm-6">
 					    <label for="name">이름</label>
-					    <input type="text" class="form-control" id="name" name="name" required="required" placeholder="name">
+					    <input type="text" class="form-control" id="findname" name="name" required="required" placeholder="name">
 					  </div>
 					  <div class="col-sm-12">
-				      	<button type="submit" id="loginbtn" class="btn btn-default" style="width:100%">확인</button>
+				      	<button type="button" id="findbtn" class="btn btn-default" style="width:100%">확인</button>
 				      </div>
 			      </div>
 		      </form>
@@ -197,5 +224,20 @@ $(document).ready(function(){
 		    </div>
 		  </div>
 		</div>
+	<div id="failpasswordModal" class="modal fade" role="dialog" >
+         <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+               <div class="modal-body">
+	               <div id="failpasswordModalMsg" style="color:ff0000">some msg</div>
+               </div>
+               <div class="modal-footer" style="text-align:center">
+                  <button type="button"class="btn btn-success" data-dismiss="modal">확인</button>
+               </div>
+            </div>
+         </div>
+     </div>
 </body>
 </html>

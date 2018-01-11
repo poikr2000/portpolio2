@@ -7,4 +7,6 @@ public interface MemberDAO {
 	int idConfirm(String id);
 	void memberInsert(Member member);
 	Member memberGetOne(String email);
+	Member passwordFind(Member member);
+	int passwordChange(Member member);
 }

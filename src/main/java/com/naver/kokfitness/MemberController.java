@@ -2,7 +2,15 @@ package com.naver.kokfitness;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -124,5 +132,74 @@ public class MemberController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:index";
+	}
+	@RequestMapping(value = "passwordFind", method = RequestMethod.POST)
+	@ResponseBody
+	public int passwordFind(@RequestParam String email,@RequestParam String name) {
+		Member data = null;
+		data.setEmail(email);
+		data.setName(name);
+		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
+		Member member=null;
+		try {
+			member=dao.passwordFind(member);
+		}catch(Exception e) {
+			System.out.println("error : "+e.getMessage());
+		}
+		if(member==null) {
+			return 0;
+		}else {
+			String temppass = randomNum();
+			String encodepassword=passwordEncoder.encode(temppass);
+			sendEmail(email, temppass);
+			data.setPassword(encodepassword);
+			dao.passwordChange(data);
+			return 1;
+		}
+	}
+	String randomNum(){
+		StringBuffer buffer = new StringBuffer();
+		for(int i=0; i<=5;i++){
+			int num = (int) (Math.random()*10);
+			buffer.append(num);
+		}
+		return buffer.toString();
+	}
+	private void sendEmail( String email, String authNum ) {
+		  String host = "smtp.gmail.com";
+		  String subject = "K.O.K FITNESS 인증번호";
+		  String fromName = "K.O.K FITNESS 관리자";
+		  String from = "poikr2017@gmail.com";
+		  String to1 = email;
+		  String content = "임시 비밀번호["+authNum+"]";
+		  try {
+			  Properties props = new Properties();
+			  props.put("mail.smtp.starttls.enable", "true");
+			  props.put("mail.transport.protocol", "smtp");
+			  props.put("mail.smtp.host", host);
+			  props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			  props.put("mail.smtp.port","587"); // or 465
+			  props.put("mail.smtp.user",from);
+			  props.put("mail.smtp.auth","true");
+		   
+			  Session mailSession = Session.getInstance(props,new javax.mail.Authenticator() {
+				  		protected PasswordAuthentication getPasswordAuthentication() {
+				  			
+				  			return new PasswordAuthentication("poikr2017", "njeqqtavfwngbzwc");    // 위 gmail에서 생성된 비밀번호 넣는다
+				  		}
+			  });
+			  Message msg = new MimeMessage( mailSession);
+			  msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName,"UTF-8","B")));
+			  
+			  InternetAddress[] address1 = { new InternetAddress(to1)};
+			  msg.setRecipients(Message.RecipientType.TO, address1);
+			  msg.setSubject(subject);
+			  msg.setSentDate(new java.util.Date());
+			  msg.setContent(content,"text/html;charset=euc-kr");
+			  Transport.send(msg);
+			  System.out.println("----> success:");
+		  }catch (Exception e) {
+		   System.out.println("----> error:"+e.getMessage());
+		  }
 	}
 }

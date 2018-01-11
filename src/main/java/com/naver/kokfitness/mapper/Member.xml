@@ -44,4 +44,14 @@
 		from member 
 		where email=#{email}
 	</select>
+	<select id="passwordFind" parameterType="hashMap" resultMap="memberMap">
+		select * 
+		from member 
+		where email=#{email} and name=#{name}
+	</select>
+		<update id="passwordChange" parameterType="hashMap">
+		update member 
+		set password=#{password} 
+		where email=#{email}
+	</update>
 </mapper>
