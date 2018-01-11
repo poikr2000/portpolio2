@@ -12,6 +12,58 @@ $(document).ready(function(){
 	$('#login').on("click",function(){
 		$('#loginModal').modal('show');
 	});
+	 // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
+    var userInputEmail = getCookie("userInputEmail");
+    $("input[name='email']").val(userInputEmail); 
+     
+    if($("input[name='email']").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+        $("#emailSaveChk").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+    }
+     
+    $("#emailSaveChk").change(function(){ // 체크박스에 변화가 있다면,
+        if($("#emailSaveChk").is(":checked")){ // ID 저장하기 체크했을 때,
+            var userInputEmail = $("input[name='email']").val();
+            setCookie("userInputEmail", userInputEmail, 7); // 7일 동안 쿠키 보관
+        }else{ // ID 저장하기 체크 해제 시,
+            deleteCookie("userInputEmail");
+        }
+    });
+     
+    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+    $("input[name='email']").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+	        if($("#emailSaveChk").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+	            var userInputEmail = $("input[name='email']").val();
+	            setCookie("userInputEmail", userInputEmail, 7); // 7일 동안 쿠키 보관
+	        }
+	 });
+	
+	 
+	function setCookie(cookieName, value, exdays){
+	    var exdate = new Date();
+	    exdate.setDate(exdate.getDate() + exdays);
+	    var cookieValue = escape(value) + ((exdays==null) ? "" : "; expires=" + exdate.toGMTString());
+	    document.cookie = cookieName + "=" + cookieValue;
+	}
+	 
+	function deleteCookie(cookieName){
+	    var expireDate = new Date();
+	    expireDate.setDate(expireDate.getDate() - 1);
+	    document.cookie = cookieName + "= " + "; expires=" + expireDate.toGMTString();
+	}
+	 
+	function getCookie(cookieName) {
+	    cookieName = cookieName + '=';
+	    var cookieData = document.cookie;
+	    var start = cookieData.indexOf(cookieName);
+	    var cookieValue = '';
+	    if(start != -1){
+	        start += cookieName.length;
+	        var end = cookieData.indexOf(';', start);
+	        if(end == -1)end = cookieData.length;
+	        cookieValue = cookieData.substring(start, end);
+	    }
+	    return unescape(cookieValue);
+	}
 });
 </script>
 </content>
@@ -22,7 +74,19 @@ $(document).ready(function(){
 			<div class="container">
 				<div class="header__logo"><a href="index.html"><img src="resources/assets/img/logo.png" alt=""/></a></div>
 				<div class="header__toogleGroup">
-					<div class="btn" ><a id="login">로그인</a>&nbsp|&nbsp<a href="memberTerms">회원가입</a>
+					<div class="btn">
+					<c:choose>
+						<c:when test="${sessionemail==null}">
+							<a id="login">로그인</a>&nbsp|&nbsp<a href="memberTerms">회원가입</a>
+						</c:when>
+						<c:when test="${sessionemail=='admin@admin.com'}">
+							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp|&nbsp<a href="memberTerms">회원가입</a>
+						</c:when>
+						<c:otherwise>
+							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>
+						</c:otherwise>
+					</c:choose>	
+					
 					</div>
 				</div>
 				<!-- consult-nav -->
@@ -67,7 +131,7 @@ $(document).ready(function(){
 			</div>
 		</header><!-- End / header -->
 	</div>
-	<form>
+	<form class="login_form" id="login_form" action="login" method="post" role="form">
 		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
@@ -88,7 +152,7 @@ $(document).ready(function(){
 				</div>
 				<div class="row col-sm-12">
 					<div class="col-sm-offset-10">
-						<input type="checkbox"><span>이메일 저장</span>
+						<input type="checkbox" id="emailSaveChk"><span>이메일 저장</span>
 					</div>
 				</div>
 				<div class="row col-sm-12">
@@ -98,7 +162,7 @@ $(document).ready(function(){
 					</div>
 				</div>
 				<div class="col-sm-12">
-			      	<button type="submit" id="usebtn" class="btn btn-default" style="width:100%">로그인</button>
+			      	<button type="submit" id="loginbtn" class="btn btn-default" style="width:100%">로그인</button>
 			      </div>
 		      </div>
 		      <div class="modal-footer">

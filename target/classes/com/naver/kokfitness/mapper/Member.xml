@@ -39,4 +39,9 @@
 		#{phone1,jdbcType=VARCHAR},#{phone2,jdbcType=VARCHAR},#{phone3,jdbcType=VARCHAR}
 		)
 	</insert>
+	<select id="memberGetOne" parameterType="String" resultMap="memberMap">
+		select *
+		from member 
+		where email=#{email}
+	</select>
 </mapper>

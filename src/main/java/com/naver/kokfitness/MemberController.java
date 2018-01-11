@@ -1,7 +1,14 @@
 package com.naver.kokfitness;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -66,16 +73,56 @@ public class MemberController {
 			String encodepassword=passwordEncoder.encode(member.getPassword());
 			member.setPassword(encodepassword);
 			dao.memberInsert(member);
-			if(passwordEncoder.matches(member.getPassword(),encodepassword)) {
-                System.out.println("같음");
-	        }else {
-	            System.out.println("다름");
-	        }
 		}catch(Exception e){
 			System.out.println("error : "+e.getMessage());
 		}
 		ModelAndView mav = new ModelAndView("result_page");
 		mav.addObject("member",member);
 		return mav;
+	}
+	@RequestMapping(value = "login", method = RequestMethod.POST)
+	public String login(@ModelAttribute("member") Member member,HttpSession session,HttpServletResponse response) throws IOException {
+		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
+		Member data=dao.memberGetOne(member.getEmail());
+		if(data==null) {
+			response.setCharacterEncoding("EUC-KR");
+		    PrintWriter writer = response.getWriter();
+		    writer.println("<script type='text/javascript'>");
+		    writer.println("alert('이메일이 존재하지 않습니다.');");
+		    writer.println("history.back();");
+		    writer.println("</script>");
+		    writer.flush();
+			return "";
+		}else {
+			if(BCrypt.checkpw(member.getPassword(), data.getPassword())) {
+                session.setAttribute("sessionemail", data.getEmail());
+                session.setAttribute("sessionid", data.getId());
+    			session.setAttribute("sessionname", data.getName());
+    			session.setAttribute("sessionpassword", data.getPassword());
+    			session.setAttribute("sessionzipcode", data.getZipcode());
+    			session.setAttribute("sessionnewaddr", data.getNewaddr());
+    			session.setAttribute("sessiondetailaddr", data.getDetailaddr());
+    			session.setAttribute("sessionphone1", data.getPhone1());
+    			session.setAttribute("sessionphone2", data.getPhone2());
+    			session.setAttribute("sessionphone3", data.getPhone3());
+    			session.setAttribute("sessionprogram", data.getProgram_code());
+    			session.setAttribute("sessionlevel", data.getMemlevel());
+    			return "redirect:index";
+	        }else {
+	        	response.setCharacterEncoding("EUC-KR");
+			    PrintWriter writer = response.getWriter();
+			    writer.println("<script type='text/javascript'>");
+			    writer.println("alert('비밀번호가 일치하지 않습니다.');");
+			    writer.println("history.back();");
+			    writer.println("</script>");
+			    writer.flush();
+				return "";
+	        }
+		}
+	}
+	@RequestMapping(value = "logout", method = RequestMethod.GET)
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:index";
 	}
 }
