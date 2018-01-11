@@ -6,14 +6,23 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<content tag="local_script">
+<script>
+$(document).ready(function(){
+	$('#login').on("click",function(){
+		$('#loginModal').modal('show');
+	});
+});
+</script>
+</content>
 </head>
 <body>
 	<div class="page-wrap">
 		<header class="header header__style-02">
 			<div class="container">
-				<div class="header__logo"><a href="index.html"><img src="assets/img/logo.png" alt=""/></a></div>
+				<div class="header__logo"><a href="index.html"><img src="resources/assets/img/logo.png" alt=""/></a></div>
 				<div class="header__toogleGroup">
-					<div class="btn" ><a href="">로그인</a>&nbsp|&nbsp<a href="memberTerms">회원가입</a>
+					<div class="btn" ><a id="login">로그인</a>&nbsp|&nbsp<a href="memberTerms">회원가입</a>
 					</div>
 				</div>
 				<!-- consult-nav -->
@@ -58,5 +67,45 @@
 			</div>
 		</header><!-- End / header -->
 	</div>
+	<form>
+		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		  <div class="modal-dialog">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+		      </div>
+		      <div class="modal-body">
+		      	<div class="row">
+		      		<h3 class="col-sm-offset-5" style="text-align:center;">Log In</h3>
+		      	</div>
+		      	<div class="col-sm-6">
+				  <label for="email">이메일 주소</label>
+				  <input type="email" class="form-control" id="email" name="email" required="required" placeholder="Email">
+				</div>
+				<div class="col-sm-6">
+				  <label for="password">패스워드</label>
+				  <input type="password" class="form-control" id="password" name="password" required="required" placeholder="Password">
+				</div>
+				<div class="row col-sm-12">
+					<div class="col-sm-offset-10">
+						<input type="checkbox"><span>이메일 저장</span>
+					</div>
+				</div>
+				<div class="row col-sm-12">
+					<div class="col-sm-offset-8">&nbsp&nbsp&nbsp
+						<a href="memberTerms">회원가입</a>&nbsp&nbsp|&nbsp&nbsp
+						<a href="">비밀번호 찾기</a>
+					</div>
+				</div>
+				<div class="col-sm-12">
+			      	<button type="submit" id="usebtn" class="btn btn-default" style="width:100%">로그인</button>
+			      </div>
+		      </div>
+		      <div class="modal-footer">
+		      </div>
+		    </div>
+		  </div>
+		</div>
+	</form>
 </body>
 </html>

@@ -139,7 +139,7 @@ $(document).ready(function(){
 	</div>
 	<div class="container col-sm-12" style="text-align:left;margin-top:50px;">
 			<div class="col-sm-offset-3" style="margin-top:50px;">
-				<h6 class="page-title__title">회원 가입</h6>
+				<h3>회원 가입</h3>
 			</div>
 			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:50px;">
 				<label class="col-sm-2">이메일</label>
