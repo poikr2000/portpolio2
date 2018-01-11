@@ -62,25 +62,20 @@ public class MemberController {
 	@RequestMapping(value = "memberInsert", method = RequestMethod.POST)
 	public ModelAndView memberInsert(@ModelAttribute("member") Member member) {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
-		System.out.println("---------"+member.getEmail());
-		System.out.println("---------"+member.getId());
-		System.out.println("---------"+member.getName());
-		System.out.println("---------"+member.getNewaddr());
-		System.out.println("---------"+member.getZipcode());
-		System.out.println("---------"+member.getDetailaddr());
 		try {
 			String encodepassword=passwordEncoder.encode(member.getPassword());
+			member.setPassword(encodepassword);
+			dao.memberInsert(member);
 			if(passwordEncoder.matches(member.getPassword(),encodepassword)) {
                 System.out.println("같음");
 	        }else {
 	            System.out.println("다름");
 	        }
-			member.setPassword(encodepassword);
-			System.out.println("---------"+encodepassword);
 		}catch(Exception e){
 			System.out.println("error : "+e.getMessage());
 		}
 		ModelAndView mav = new ModelAndView("result_page");
+		mav.addObject("member",member);
 		return mav;
 	}
 }

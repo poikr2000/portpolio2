@@ -36,7 +36,7 @@ $(document).ready(function(){
 	<div class="page-title">
 		<div class="container">
 			<div class="col-sm-offset-2" style="text-align:left;">
-				<h3 class="page-title__title">이용약관</h3>
+				<h6 class="page-title__title">이용약관</h6>
 			</div>
 			<div class="col-sm-offset-2" style="overflow:scroll; width:800px; height:300px; padding:10px; text-align:left; border: 1px solid gray;">
 				<div class="acon">
@@ -322,7 +322,7 @@ $(document).ready(function(){
 					<label for="agree_checkbox1">위 이용약관에 동의합니다.</label>
 				</div>
 				<div class="col-sm-offset-2" style="text-align:left;margin-top:15px;">
-					<h3 class="page-title__title" >개인정보 취급방침</h3>
+					<h6 class="page-title__title" >개인정보 취급방침</h6>
 				</div>
 				<div class="col-sm-offset-2" style="overflow:scroll; width:800px; height:300px; padding:10px; text-align:left; border: 1px solid gray;">
 					<h4>개인정보 보호정책</h4>

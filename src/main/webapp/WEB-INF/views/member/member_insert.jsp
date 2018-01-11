@@ -139,7 +139,7 @@ $(document).ready(function(){
 	</div>
 	<div class="container col-sm-12" style="text-align:left;margin-top:50px;">
 			<div class="col-sm-offset-3" style="margin-top:50px;">
-				<h1 class="page-title__title">회원 가입</h1>
+				<h6 class="page-title__title">회원 가입</h6>
 			</div>
 			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:50px;">
 				<label class="col-sm-2">이메일</label>
@@ -151,7 +151,7 @@ $(document).ready(function(){
 				    <input type="hidden" id="emailconfirmchk" name="emailconfirmchk" value="no">
 			    </div>
 		  	</div>
-		  	<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:10px;">
+		  	<div class="form-group col-sm-offset-3 col-sm-8">
 				<label class="col-sm-2">별명</label>
 				<div class="col-sm-4">
 					<input class="form-control input-sm" maxlength="7" id="id" name="id" required="required" type="text" placeholder="7자 이내">
@@ -161,7 +161,7 @@ $(document).ready(function(){
 				    <input type="hidden" id="idconfirmchk" name="idconfirmchk" value="no">
 			    </div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:10px;">
+			<div class="form-group col-sm-offset-3 col-sm-8">
 				<label class="col-sm-2">비밀번호</label>
 				<div class="col-sm-3">
 					<input class="form-control input-sm" maxlength="15"id="password" name="password" required="required" type="password" placeholder="password">
@@ -171,13 +171,13 @@ $(document).ready(function(){
 					<input class="form-control input-sm" maxlength="15"id="passwordchk" name="passwordchk" required="required" type="password" placeholder="password">
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:10px;">
+			<div class="form-group col-sm-offset-3 col-sm-8">
 				<label class="col-sm-2">이름</label>
 				<div class="col-sm-4">
 					<input class="form-control input-sm" maxlength="10"id="name" name="name"required="required" type="text" placeholder="name">
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:10px;">
+			<div class="form-group col-sm-offset-3 col-sm-8">
 				<label class="col-sm-2">주소</label>
 				<div class="col-sm-2">
 					<input class="form-control input-sm" id="zipcode" name="zipcode"required="required" type="text">
@@ -196,7 +196,7 @@ $(document).ready(function(){
 					<input class="form-control input-sm" id="detailaddr" name="detailaddr"required="required" type="text" placeholder="상세 주소를 입력해 주세요.">
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:10px;">
+			<div class="form-group col-sm-offset-3 col-sm-8">
 				<label class="col-sm-2">전화번호</label>
 				<div class="col-sm-2">
 					<select id="phone1" name="phone1" class="form-control"> 
