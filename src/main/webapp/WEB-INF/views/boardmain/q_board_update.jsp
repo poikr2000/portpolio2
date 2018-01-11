@@ -8,8 +8,8 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-
+<div class="col-sm-12" style="background: black;height:90px;">
+   </div>
 	<form id="BoardDelForm" name="" action="/exec/front/Board/del/4"
 		method="post" enctype="multipart/form-data" style="margin-top:60pt">
 		<div class="xans-element- xans-board xans-board-read-4 xans-board-read xans-board-4">

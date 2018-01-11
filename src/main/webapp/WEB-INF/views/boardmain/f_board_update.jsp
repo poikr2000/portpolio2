@@ -7,67 +7,50 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Write something else you want</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
-	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
-	crossorigin="anonymous">
-
-<!-- Optional theme -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
-	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
-	crossorigin="anonymous">
-
-<!-- Latest compiled and minified JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
-	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
-	crossorigin="anonymous"></script>
 </head>
 <body>
-	<form action="f_modify" method="post" encType="multiplart/form-data"
-		style="margin-top: 100pt">
+	<form action="f_board_modify" method="post" encType="multiplart/form-data">
+	<div class="col-sm-12" style="background: black;height:90px;">
+    </div>
 		<div class="container">
 			<table class="table table-bordered">
 				<tbody>
 					<tr>
-						<th>제목:</th>
-						<td><input type="text" placeholder="" name="f_title"
-							class="form-control" /></td>
+						<hi>제목 : ${f_board.f_title }</hi>&nbsp&nbsp&nbsp
+						<hi>작성자 : ${f_board.f_name}</hi>
+						<hi class="pull-right">조회수 : ${f_board.f_hit}</hi>
 					</tr>
-
 					<tr>
-						<th>작성자:</th>
-						<td><input type="text" placeholder="" name="f_name"
-							class="form-control" /></td>
+						<td>내용:</td>
+						<td>${f_board.f_content}</td>
 					</tr>
-
 					<tr>
-						<th>내용:</th>
-						<td><textarea cols="10" placeholder="" id="f_content"
-								name="f_content" class="form-control"></textarea></td>
-					</tr>
-
-					<tr>
-						<td colspan="2"><input type="submit" value="수정"
-							class="pull-right"> <input type="button" value="reset"
-							class="pull-left"> <input type="button"
-							value="글 목록으로... " class="pull-right"
-							onclick="javascript:location.href='f_board'" /></td>
+						<td colspan="2"><input type="submit" value="수정" class="pull-right">
+						<input type="button" value="reset" class="pull-left"></td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
 	</form>
 
-	<form encType="multiplart/form-data">
+	<form>
 		<div class="container">
 			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>작성자</th>
+						<th>내용</th>
+						<th>작성일자</th>
+					</tr>
+				</thead>
 				<tbody>
 					<c:forEach var="cf_comments" items="${cf_comments}">
 						<tr>
-							<td>${cf_comments.cf_content}${cf_comments.name}${cf_comments.date}</td>
+							<td>${cf_comments.cf_seq}</td>
+							<td>${cf_comments.cf_name }</td>
+							<td>${cf_comments.cf_content}</td>
+							<td>${cf_comments.cf_date}</td>
 						</tr>
 					</c:forEach>
 				</tbody>
@@ -96,47 +79,39 @@
 			<div class="container">
 				<h1 align="center" style="margin-top: 50pt">자유 게시판</h1>
 				<table id="example" class="table table-striped table-bordered"
-					cellspacing="0" width="100%" style="margin-top: 100pt">
+					cellspacing="0" width="100%" style="margin-top: 60px">
 					<thead>
 						<tr style="text-algin: center">
-							<td><input type="checkbox" id="allchek"></td>
-							<td>글번호</td>
-							<td>E-mail</td>
+							<td>#</td>
 							<td>작성자</td>
 							<td>제목</td>
-							<td>첨부파일</td>
+							<td>내용</td>
 							<td>작성일</td>
 							<td>조회수</td>
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach var="boards" items="${boards}">
+						<c:forEach var="f_boards" items="${f_boards}">
 							<tr style="text-algin: center; vertical-algin: middle;">
-								<td><input type="checkbox" id="allchek" name="unitchek"
-									value="${boards.b_seq}"></td>
-								<td>${boards.b_step}${boards.b_seq}</td>
-								<td>${boards.b_email}</td>
-								<td>${boards.b_name}</td>
-								<td><a href="f_board_update?f_seq=${boards.f_seq}"> <c:if
-											test="${boards.b_step == 1}">
-											<img src="resources/images/reply1.png" width="15pt">
-										</c:if>${boards.b_title}
-								</a></td>
-								<td><c:if test="${boards.b_attach != null}">
-										<a href="boardDownload?f_attach=${boards.b_attach}"><i
-											id="attach_file" name="attach_file" class="fa fa-file"
-											aria-hidden="true"></i> </a>
-									</c:if></td>
-								<td>${boards.b_date}</td>
-								<td>${boards.b_hit}</td>
+								<td>${f_boards.f_seq}</td>
+								<td>${f_boards.f_name}</td>
+								<td>${f_boards.f_title}</td>
+								<td><a href="f_board_update?f_seq=${f_boards.f_seq}">${f_boards.f_content}</a></td>
+								<td>${f_boards.f_date}</td>
+								<td>${f_boards.f_hit}</td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
-				<button id="write" onclick="location.href='f_board_insert'"
-					type="button" style="margin-left: 94%">글쓰기</button>
-				<button id="write" type="button"
-					onclick="location.href='f_board_update'">삭제</button>
+				<button id="write" onclick="location.href='f_insert_form'"
+					type="button" class="pull-right">글쓰기</button>
+				<button id="write" type="button" class="pull-right"
+					onclick="location.href='cf_selectListAll'">리스트</button>
+			</div>
+		</form>
+		<form action="cf_comment" method="post">
+			<div class="container">
+				<button id="write" type="submit">댓글</button>
 			</div>
 		</form>
 	</div>

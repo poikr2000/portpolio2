@@ -9,6 +9,14 @@
 <content tag="local_script">
 <script>
 $(document).ready(function(){
+	$('#passwordfindbtn').click( function () {
+		$('#login_form').hide();
+		$('#lost_form').show();
+	});
+	$('#loginModal').on('hidden.bs.modal', function () {
+		$('#login_form').show();
+		$('#lost_form').hide();
+	})
 	$('#login').on("click",function(){
 		$('#loginModal').modal('show');
 	});
@@ -131,45 +139,63 @@ $(document).ready(function(){
 			</div>
 		</header><!-- End / header -->
 	</div>
-	<form class="login_form" id="login_form" action="login" method="post" role="form">
 		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 		  <div class="modal-dialog">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 		      </div>
-		      <div class="modal-body">
-		      	<div class="row">
-		      		<h3 class="col-sm-offset-5" style="text-align:center;">Log In</h3>
-		      	</div>
-		      	<div class="col-sm-6">
-				  <label for="email">이메일 주소</label>
-				  <input type="email" class="form-control" id="email" name="email" required="required" placeholder="Email">
-				</div>
-				<div class="col-sm-6">
-				  <label for="password">패스워드</label>
-				  <input type="password" class="form-control" id="password" name="password" required="required" placeholder="Password">
-				</div>
-				<div class="row col-sm-12">
-					<div class="col-sm-offset-10">
-						<input type="checkbox" id="emailSaveChk"><span>이메일 저장</span>
+		      <form class="login_form" id="login_form" action="login" method="post" role="form">
+			      <div class="modal-body">
+			      	<div class="row">
+			      		<h3 class="col-sm-offset-5" style="text-align:center;">Log In</h3>
+			      	</div>
+			      	<div class="col-sm-6">
+					  <label for="email">이메일 주소</label>
+					  <input type="email" class="form-control" id="email" name="email" required="required" placeholder="Email">
 					</div>
-				</div>
-				<div class="row col-sm-12">
-					<div class="col-sm-offset-8">&nbsp&nbsp&nbsp
-						<a href="memberTerms">회원가입</a>&nbsp&nbsp|&nbsp&nbsp
-						<a href="">비밀번호 찾기</a>
+					<div class="col-sm-6">
+					  <label for="password">패스워드</label>
+					  <input type="password" class="form-control" id="password" name="password" required="required" placeholder="Password">
 					</div>
-				</div>
-				<div class="col-sm-12">
-			      	<button type="submit" id="loginbtn" class="btn btn-default" style="width:100%">로그인</button>
+					<div class="row col-sm-12">
+						<div class="col-sm-offset-10">
+							<input type="checkbox" id="emailSaveChk"><span>이메일 저장</span>
+						</div>
+					</div>
+					<div class="row col-sm-12">
+						<div class="col-sm-offset-8">&nbsp&nbsp&nbsp
+							<a href="memberTerms">회원가입</a>&nbsp&nbsp|&nbsp&nbsp
+							<a id="passwordfindbtn">비밀번호 찾기</a>
+						</div>
+					</div>
+					<div class="col-sm-12">
+				      	<button type="submit" id="loginbtn" class="btn btn-default" style="width:100%">로그인</button>
+				      </div>
 			      </div>
-		      </div>
+		      </form>
+		      <form class="lost_form" style="display:none;" id="lost_form" action="passLost" method="post" role="form">
+		      	<div class="modal-body">
+			      	  <div class="row">
+			      		<h3 class="col-sm-offset-4" style="text-align:center;">비밀번호 찾기</h3>
+			      	  </div>
+			      	  <div class="col-sm-6">
+					    <label for="email">이메일 주소</label>
+					    <input type="email" class="form-control" id="email" name="email" required="required" placeholder="Email">
+					  </div>
+					  <div class="col-sm-6">
+					    <label for="name">이름</label>
+					    <input type="text" class="form-control" id="name" name="name" required="required" placeholder="name">
+					  </div>
+					  <div class="col-sm-12">
+				      	<button type="submit" id="loginbtn" class="btn btn-default" style="width:100%">확인</button>
+				      </div>
+			      </div>
+		      </form>
 		      <div class="modal-footer">
 		      </div>
 		    </div>
 		  </div>
 		</div>
-	</form>
 </body>
 </html>

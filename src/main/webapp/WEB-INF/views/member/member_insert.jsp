@@ -28,8 +28,8 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 }
 $(document).ready(function(){
 	$('#emailconfirm').on("click",function(){
-		var email = $('#email').val()
-		if($('#email').val()==""){
+		var email = $('#useremail').val()
+		if($('#useremail').val()==""){
 			$('#signUpModalMsg').text("메일주소를 입력해주세요.");
 			$('#usebtn').text("확인");
 			$('#signUpModal').modal('show');
@@ -109,7 +109,7 @@ $(document).ready(function(){
 			$('#signUpModal').modal('show');
 			return;
 		}
-		if($('#password').val()!=$('#passwordchk').val()){
+		if($('#userpassword').val()!=$('#passwordchk').val()){
 			msg+="- 비밀번호를 다시 확인 해주시기 바랍니다 -";
 			$('#signUpModalMsg').text(msg);
 			$('#usebtn').text("확인");
@@ -144,7 +144,7 @@ $(document).ready(function(){
 			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:50px;">
 				<label class="col-sm-2">이메일</label>
 				<div class="col-sm-4">
-					<input class="form-control input-sm" id="email" name="email" required="required" type="email" placeholder="email">
+					<input class="form-control input-sm" id="useremail" name="email" required="required" type="email" placeholder="email">
 				</div>
 				<div class="input-group-btn">
 				    <button class="btn btn-default" id="emailconfirm" name="emailconfirm" type="button">중복검사</button>
@@ -164,7 +164,7 @@ $(document).ready(function(){
 			<div class="form-group col-sm-offset-3 col-sm-8">
 				<label class="col-sm-2">비밀번호</label>
 				<div class="col-sm-3">
-					<input class="form-control input-sm" maxlength="15"id="password" name="password" required="required" type="password" placeholder="password">
+					<input class="form-control input-sm" maxlength="15"id="userpassword" name="password" required="required" type="password" placeholder="password">
 				</div>
 				<label class="col-sm-2">비밀번호 확인</label>
 				<div class="col-sm-3">

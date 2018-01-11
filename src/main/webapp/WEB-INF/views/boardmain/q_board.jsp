@@ -24,6 +24,8 @@
 <script src="resources/js/ncs3.js"></script>
 </head>
 <body>
+<div class="col-sm-12" style="background: black;height:90px;">
+   </div>
 	<form action="f_board">
 		<div class="container">
 			<h1 align="center" style="margin-top: 50pt">자유 게시판</h1>

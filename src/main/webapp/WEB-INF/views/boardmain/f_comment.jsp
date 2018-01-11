@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=EUC-KR">
@@ -9,6 +9,8 @@
 </head>
 <body>
 	<form action="cf_selectListAll" method="get">
+	   <div class="col-sm-12" style="background: black;height:90px;">
+	   </div>
 		<div class="container">
 			<table class="table table-bordered">
 			<thead>

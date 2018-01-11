@@ -88,7 +88,7 @@ public class MemberController {
 			response.setCharacterEncoding("EUC-KR");
 		    PrintWriter writer = response.getWriter();
 		    writer.println("<script type='text/javascript'>");
-		    writer.println("alert('이메일이 존재하지 않습니다.');");
+		    writer.println("alert('이메일 주소와 일치하는 회원이 없습니다.');");
 		    writer.println("history.back();");
 		    writer.println("</script>");
 		    writer.flush();

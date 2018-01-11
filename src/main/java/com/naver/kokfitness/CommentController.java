@@ -29,11 +29,20 @@ public class CommentController {
 	public ModelAndView cf_insert(@ModelAttribute ("cf_comment") CF_comment cf_comment) {
 		ModelAndView mav = new ModelAndView("boardmain/f_board_update");
 		CF_commentDAO dao = sqlSession.getMapper(CF_commentDAO.class);
-		SimpleDateFormat df = new SimpleDateFormat("yyyy/MM/dd");
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date date=new Date();
 		String today=df.format(date);
 		cf_comment.setCf_date(today);
 		dao.cf_insert(cf_comment);
+		return mav;
+	}
+	
+	@RequestMapping(value = "cf_comment", method = RequestMethod.POST)
+	public ModelAndView cf_comment() {
+		ModelAndView mav = new ModelAndView("boardmain/f_board_update");
+		CF_commentDAO dao = sqlSession.getMapper(CF_commentDAO.class);
+		ArrayList<CF_comment> cf_comments = dao.cf_selectListAll();
+		mav.addObject("cf_comments",cf_comments);
 		return mav;
 	}
 	

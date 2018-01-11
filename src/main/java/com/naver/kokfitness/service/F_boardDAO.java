@@ -11,8 +11,12 @@ public interface F_boardDAO {
 	void updateHit(Object f_seq);
 
 	F_board selectDetail(int f_seq);
+	
+	int f_modify(F_board f_board);
 
 	ArrayList<F_board> f_boardselectListAll();
+
+	F_board selectGetOne(int f_seq);
 
 	
 }
