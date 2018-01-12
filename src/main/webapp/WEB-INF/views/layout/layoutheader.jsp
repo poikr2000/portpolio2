@@ -39,6 +39,7 @@ $(document).ready(function(){
 					}else{
 						$('#failpasswordModalMsg').text("새로운 비밀번호가 E-mail로 전송 되었습니다.");
 						$('#failpasswordModal').modal('show');
+						$('#loginModal').modal('hide');
 					}
 				},
 				error : function(xhr,status,error){
@@ -51,15 +52,15 @@ $(document).ready(function(){
 	});
 	 // 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
     var userInputEmail = getCookie("userInputEmail");
-    $("input[name='email']").val(userInputEmail); 
+    $("input[id='loginemail']").val(userInputEmail); 
      
-    if($("input[name='email']").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+    if($("input[id='loginemail']").val() != ""){ // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
         $("#emailSaveChk").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
     }
      
     $("#emailSaveChk").change(function(){ // 체크박스에 변화가 있다면,
         if($("#emailSaveChk").is(":checked")){ // ID 저장하기 체크했을 때,
-            var userInputEmail = $("input[name='email']").val();
+            var userInputEmail = $("input[id='loginemail']").val();
             setCookie("userInputEmail", userInputEmail, 7); // 7일 동안 쿠키 보관
         }else{ // ID 저장하기 체크 해제 시,
             deleteCookie("userInputEmail");
@@ -67,9 +68,9 @@ $(document).ready(function(){
     });
      
     // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
-    $("input[name='email']").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+    $("input[id='loginemail']").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
 	        if($("#emailSaveChk").is(":checked")){ // ID 저장하기를 체크한 상태라면,
-	            var userInputEmail = $("input[name='email']").val();
+	            var userInputEmail = $("input[id='loginemail']").val();
 	            setCookie("userInputEmail", userInputEmail, 7); // 7일 동안 쿠키 보관
 	        }
 	 });
@@ -121,7 +122,7 @@ $(document).ready(function(){
 						</c:when>
 						<c:otherwise>
 							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp|&nbsp
-							<a href="">내정보</a>
+							<a href="memberUpdateForm?email=${sessionemail}">내정보</a>
 						</c:otherwise>
 					</c:choose>	
 					
@@ -169,65 +170,65 @@ $(document).ready(function(){
 			</div>
 		</header><!-- End / header -->
 	</div>
-		<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-		  <div class="modal-dialog">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		      </div>
-		      <form class="login_form" id="login_form" action="login" method="post" role="form">
-			      <div class="modal-body">
-			      	<div class="row">
-			      		<h3 class="col-sm-offset-5" style="text-align:center;">Log In</h3>
-			      	</div>
-			      	<div class="col-sm-6">
-					  <label for="email">이메일 주소</label>
-					  <input type="email" class="form-control" id="email" name="email" required="required" placeholder="Email">
+	<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	      </div>
+	      <form class="login_form" id="login_form" action="login" method="post" role="form">
+		      <div class="modal-body">
+		      	<div class="row">
+		      		<h3 class="col-sm-offset-5" style="text-align:center;">Log In</h3>
+		      	</div>
+		      	<div class="col-sm-6">
+				  <label for="email">이메일 주소</label>
+				  <input type="email" class="form-control" id="loginemail" name="email" required="required" placeholder="Email">
+				</div>
+				<div class="col-sm-6">
+				  <label for="password">패스워드</label>
+				  <input type="password" class="form-control" id="password" name="password" required="required" placeholder="Password">
+				</div>
+				<div class="row col-sm-12">
+					<div class="col-sm-offset-10">
+						<input type="checkbox" id="emailSaveChk"><span>이메일 저장</span>
 					</div>
-					<div class="col-sm-6">
-					  <label for="password">패스워드</label>
-					  <input type="password" class="form-control" id="password" name="password" required="required" placeholder="Password">
+				</div>
+				<div class="row col-sm-12">
+					<div class="col-sm-offset-8">&nbsp&nbsp&nbsp
+						<a href="memberTerms">회원가입</a>&nbsp&nbsp|&nbsp&nbsp
+						<a id="passwordfindbtn">비밀번호 찾기</a>
 					</div>
-					<div class="row col-sm-12">
-						<div class="col-sm-offset-10">
-							<input type="checkbox" id="emailSaveChk"><span>이메일 저장</span>
-						</div>
-					</div>
-					<div class="row col-sm-12">
-						<div class="col-sm-offset-8">&nbsp&nbsp&nbsp
-							<a href="memberTerms">회원가입</a>&nbsp&nbsp|&nbsp&nbsp
-							<a id="passwordfindbtn">비밀번호 찾기</a>
-						</div>
-					</div>
-					<div class="col-sm-12">
-				      	<button type="submit" id="loginbtn" class="btn btn-default" style="width:100%">로그인</button>
-				      </div>
+				</div>
+				<div class="col-sm-12">
+			      	<button type="submit" id="loginbtn" class="btn btn-default" style="width:100%">로그인</button>
 			      </div>
-		      </form>
-		      <form class="lost_form" style="display:none;" id="lost_form" method="post" role="form">
-		      	<div class="modal-body">
-			      	  <div class="row">
-			      		<h3 class="col-sm-offset-4" style="text-align:center;">비밀번호 찾기</h3>
-			      	  </div>
-			      	  <div class="col-sm-6">
-					    <label for="email">이메일 주소</label>
-					    <input type="email" class="form-control" id="findemail" name="findemail" required="required" placeholder="Email">
-					  </div>
-					  <div class="col-sm-6">
-					    <label for="name">이름</label>
-					    <input type="text" class="form-control" id="findname" name="findname" required="required" placeholder="name">
-					  </div>
-					  <div class="col-sm-12">
-				      	<button type="button" id="findbtn" class="btn btn-default" style="width:100%">확인</button>
-				      	<button type="submit" id="findsubmt" class="btn btn-default" style="display: none"></button>
-				      </div>
-			      </div>
-		      </form>
-		      <div class="modal-footer">
 		      </div>
-		    </div>
-		  </div>
-		</div>
+	      </form>
+	      <form class="lost_form" style="display:none;" id="lost_form" method="post" role="form">
+	      	<div class="modal-body">
+		      	  <div class="row">
+		      		<h3 class="col-sm-offset-4" style="text-align:center;">비밀번호 찾기</h3>
+		      	  </div>
+		      	  <div class="col-sm-6">
+				    <label for="email">이메일 주소</label>
+				    <input type="email" class="form-control" id="findemail" name="findemail" required="required" placeholder="Email">
+				  </div>
+				  <div class="col-sm-6">
+				    <label for="name">이름</label>
+				    <input type="text" class="form-control" id="findname" name="findname" required="required" placeholder="name">
+				  </div>
+				  <div class="col-sm-12">
+			      	<button type="button" id="findbtn" class="btn btn-default" style="width:100%">확인</button>
+			      	<button type="submit" id="findsubmt" class="btn btn-default" style="display: none"></button>
+			      </div>
+		      </div>
+	      </form>
+	      <div class="modal-footer">
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	<div id="failpasswordModal" class="modal fade" role="dialog" >
          <div class="modal-dialog modal-sm" role="document">
             <div class="modal-content">

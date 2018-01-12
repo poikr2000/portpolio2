@@ -63,7 +63,7 @@ $(document).ready(function(){
 	$('#idconfirm').on("click",function(){
 		var id = $('#id').val()
 		if($('#id').val()==""){
-			$('#signUpModalMsg').text("별명을 입력해주세요.");
+			$('#signUpModalMsg').text("닉네임을 입력해주세요.");
 			$('#usebtn').text("확인");
 			$('#signUpModal').modal('show');
 			return;
@@ -75,7 +75,7 @@ $(document).ready(function(){
 				url : 'idConfirm',
 				success : function(data){
 					if(data>0){
-						$('#signUpModalMsg').text("이미 사용중인 별명입니다.");
+						$('#signUpModalMsg').text("이미 사용중인 닉네임입니다.");
 						$('#usebtn').text("확인");
 						$('#signUpModal').modal('show');
 						$('#id').val('');
@@ -103,7 +103,7 @@ $(document).ready(function(){
 			return;
 		}
 		if($('#idconfirmchk').val()=="no"){
-			msg+="- 별명 중복 검사를 해주시기 바랍니다 -";
+			msg+="- 닉네임 중복 검사를 해주시기 바랍니다 -";
 			$('#signUpModalMsg').text(msg);
 			$('#usebtn').text("확인");
 			$('#signUpModal').modal('show');
@@ -137,7 +137,7 @@ $(document).ready(function(){
 <form name="insert_form" id="insert_form" method="post" role="form" data-parsley-validate="true"enctype="multipart/form-data">
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
-	<div class="container col-sm-12" style="text-align:left;margin-top:50px;">
+	<div class="container col-sm-12" style="text-align:left;">
 			<div class="col-sm-offset-3" style="margin-top:50px;">
 				<h3>회원 가입</h3>
 			</div>
@@ -152,9 +152,9 @@ $(document).ready(function(){
 			    </div>
 		  	</div>
 		  	<div class="form-group col-sm-offset-3 col-sm-8">
-				<label class="col-sm-2">별명</label>
+				<label class="col-sm-2">닉네임</label>
 				<div class="col-sm-4">
-					<input class="form-control input-sm" maxlength="7" id="id" name="id" required="required" type="text" placeholder="7자 이내">
+					<input class="form-control input-sm" maxlength="14" id="id" name="id" required="required" type="text" placeholder="7자 이내">
 				</div>
 				<div class="input-group-btn">
 				    <button class="btn btn-default" id="idconfirm" name="idconfirm" type="button">중복검사</button>

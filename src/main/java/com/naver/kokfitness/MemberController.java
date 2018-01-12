@@ -49,11 +49,18 @@ public class MemberController {
 		
 		return "member/member_insert";
 	}
+	@RequestMapping(value = "memberUpdateForm", method = RequestMethod.GET)
+	public ModelAndView memberUpdateForm(@RequestParam String email) {
+		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
+		Member member=dao.memberGetOne(email);
+		ModelAndView mav = new ModelAndView("member/member_update");
+		mav.addObject("member",member);
+		return mav;
+	}
 	@RequestMapping(value = "emailConfirm", method = RequestMethod.POST)
 	@ResponseBody
 	public int emailConfirm(@RequestParam String email) {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
-		System.out.println("---------"+email);
 		int result=0;
 		try {
 			result=dao.emailConfirm(email);
@@ -66,7 +73,6 @@ public class MemberController {
 	@ResponseBody
 	public int idConfirm(@RequestParam String id) {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
-		System.out.println("---------"+id);
 		int result=0;
 		try {
 			result=dao.idConfirm(id);
@@ -89,8 +95,23 @@ public class MemberController {
 		mav.addObject("member",member);
 		return mav;
 	}
+	@RequestMapping(value = "memberUpdate", method = RequestMethod.POST)
+	public ModelAndView memberUpdate(@ModelAttribute("member") Member member,HttpSession session) {
+		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
+		try {
+			String encodepassword=passwordEncoder.encode(member.getPassword());
+			member.setPassword(encodepassword);
+			dao.memberUpdate(member);
+		}catch(Exception e){
+			System.out.println("error : "+e.getMessage());
+		}
+		ModelAndView mav = new ModelAndView("result_page");
+		mav.addObject("member",member);
+		session.invalidate();
+		return mav;
+	}
 	@RequestMapping(value = "login", method = RequestMethod.POST)
-	public String login(@ModelAttribute("member") Member member,HttpSession session,HttpServletResponse response) throws IOException {
+	public void login(@ModelAttribute("member") Member member,HttpSession session,HttpServletResponse response) throws IOException {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
 		Member data=dao.memberGetOne(member.getEmail());
 		if(data==null) {
@@ -101,7 +122,6 @@ public class MemberController {
 		    writer.println("history.back();");
 		    writer.println("</script>");
 		    writer.flush();
-			return "";
 		}else {
 			if(BCrypt.checkpw(member.getPassword(), data.getPassword())) {
                 session.setAttribute("sessionemail", data.getEmail());
@@ -116,7 +136,12 @@ public class MemberController {
     			session.setAttribute("sessionphone3", data.getPhone3());
     			session.setAttribute("sessionprogram", data.getProgram_code());
     			session.setAttribute("sessionlevel", data.getMemlevel());
-    			return "redirect:index";
+    			response.setCharacterEncoding("EUC-KR");
+    		    PrintWriter writer = response.getWriter();
+    		    writer.println("<script type='text/javascript'>");
+    		    writer.println("document.location.href='index';");
+    		    writer.println("</script>");
+    		    writer.flush();
 	        }else {
 	        	response.setCharacterEncoding("EUC-KR");
 			    PrintWriter writer = response.getWriter();
@@ -125,7 +150,6 @@ public class MemberController {
 			    writer.println("history.back();");
 			    writer.println("</script>");
 			    writer.flush();
-				return "";
 	        }
 		}
 	}

@@ -11,4 +11,5 @@ public interface MemberDAO {
 	Member memberGetOne(String email);
 	Member passwordFind(HashMap emailname);
 	int passwordChange(Member member);
+	void memberUpdate(Member member);
 }

@@ -54,4 +54,11 @@
 		set password=#{password} 
 		where email=#{email}
 	</update>
+	<update id="memberUpdate" parameterType="hashMap">
+		update member
+		set password=#{password},name=#{name},
+		zipcode=#{zipcode},newaddr=#{newaddr},detailaddr=#{detailaddr},
+		phone1=#{phone1},phone2=#{phone2},phone3=#{phone3}
+		where email=#{email}
+	</update>
 </mapper>

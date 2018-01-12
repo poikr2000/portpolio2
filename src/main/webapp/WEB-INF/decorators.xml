@@ -20,7 +20,6 @@
 		<!-- <pattern>/memberList</pattern> -->
 		<pattern>/jusoPopup</pattern>
 
-
 		<!-- <pattern>/gallery</pattern> -->
 
 	</excludes>
