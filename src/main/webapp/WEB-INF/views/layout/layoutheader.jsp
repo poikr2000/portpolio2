@@ -16,11 +16,17 @@ $(document).ready(function(){
 	$('#loginModal').on('hidden.bs.modal', function () {
 		$('#login_form').show();
 		$('#lost_form').hide();
+		$('#findemail').val("");
+		$('#findname').val("");
+		return;
 	});
 	$('#findbtn').on("click",function(){
 		var email=$('#findemail').val();
 		var name=$('#findname').val();
-		alert(email+name);
+		if(email==""||name==""){
+			$('#findsubmt').click();
+			return;
+		}
 		$.ajax({
 				type:'POST',
 				data:"email="+email+"&name="+name,
@@ -28,20 +34,16 @@ $(document).ready(function(){
 				url : 'passwordFind',
 				success : function(data){
 					if(data==0){
-						$('#"failpasswordModalMsg"').text("입력된 정보가 일치하지 않습니다.");
+						$('#failpasswordModalMsg').text("입력된 정보가 일치하지 않습니다.");
 						$('#failpasswordModal').modal('show');
 					}else{
-						$('#"failpasswordModalMsg"').text("새로운 비밀번호가 E-mail로 전송 되었습니다.");
+						$('#failpasswordModalMsg').text("새로운 비밀번호가 E-mail로 전송 되었습니다.");
 						$('#failpasswordModal').modal('show');
 					}
 				},
 				error : function(xhr,status,error){
 					alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
 				}
-			});
-		$('#passwordModal').on('hidden.bs.modal',function(e){
-			$('#findemail').val("");
-			$('#findname').val("");
 		});
 	});
 	$('#login').on("click",function(){
@@ -118,7 +120,8 @@ $(document).ready(function(){
 							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp|&nbsp<a href="memberTerms">회원가입</a>
 						</c:when>
 						<c:otherwise>
-							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>
+							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp|&nbsp
+							<a href="">내정보</a>
 						</c:otherwise>
 					</c:choose>	
 					
@@ -208,14 +211,15 @@ $(document).ready(function(){
 			      	  </div>
 			      	  <div class="col-sm-6">
 					    <label for="email">이메일 주소</label>
-					    <input type="email" class="form-control" id="findemail" name="email" required="required" placeholder="Email">
+					    <input type="email" class="form-control" id="findemail" name="findemail" required="required" placeholder="Email">
 					  </div>
 					  <div class="col-sm-6">
 					    <label for="name">이름</label>
-					    <input type="text" class="form-control" id="findname" name="name" required="required" placeholder="name">
+					    <input type="text" class="form-control" id="findname" name="findname" required="required" placeholder="name">
 					  </div>
 					  <div class="col-sm-12">
 				      	<button type="button" id="findbtn" class="btn btn-default" style="width:100%">확인</button>
+				      	<button type="submit" id="findsubmt" class="btn btn-default" style="display: none"></button>
 				      </div>
 			      </div>
 		      </form>

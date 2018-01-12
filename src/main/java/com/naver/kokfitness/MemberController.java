@@ -2,6 +2,7 @@ package com.naver.kokfitness;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.HashMap;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -136,15 +137,14 @@ public class MemberController {
 	@RequestMapping(value = "passwordFind", method = RequestMethod.POST)
 	@ResponseBody
 	public int passwordFind(@RequestParam String email,@RequestParam String name) {
-		Member data = null;
-		data.setEmail(email);
-		data.setName(name);
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
 		Member member=null;
+		HashMap emailname = new HashMap();
+		emailname.put("email", email);
+		emailname.put("name", name);
 		try {
-			member=dao.passwordFind(member);
+			member=dao.passwordFind(emailname);
 		}catch(Exception e) {
-			System.out.println("error : "+e.getMessage());
 		}
 		if(member==null) {
 			return 0;
@@ -152,8 +152,8 @@ public class MemberController {
 			String temppass = randomNum();
 			String encodepassword=passwordEncoder.encode(temppass);
 			sendEmail(email, temppass);
-			data.setPassword(encodepassword);
-			dao.passwordChange(data);
+			member.setPassword(encodepassword);
+			dao.passwordChange(member);
 			return 1;
 		}
 	}
@@ -167,7 +167,7 @@ public class MemberController {
 	}
 	private void sendEmail( String email, String authNum ) {
 		  String host = "smtp.gmail.com";
-		  String subject = "K.O.K FITNESS 인증번호";
+		  String subject = "K.O.K FITNESS 비밀번호 재발급";
 		  String fromName = "K.O.K FITNESS 관리자";
 		  String from = "poikr2017@gmail.com";
 		  String to1 = email;
@@ -197,9 +197,7 @@ public class MemberController {
 			  msg.setSentDate(new java.util.Date());
 			  msg.setContent(content,"text/html;charset=euc-kr");
 			  Transport.send(msg);
-			  System.out.println("----> success:");
 		  }catch (Exception e) {
-		   System.out.println("----> error:"+e.getMessage());
 		  }
 	}
 }
