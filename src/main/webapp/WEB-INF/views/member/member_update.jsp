@@ -27,7 +27,9 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 	document.update_form.zipcode.value = zipNo;
 }
 $(document).ready(function(){
-	
+	$(document).on("keyup","input:text[numberOnly]",function(){
+		$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+	});
 	$('#memberupdatebtn').click(function(){
 		var id=$('#id').val();
 		var name=$('#name').val();
@@ -188,23 +190,23 @@ $(document).ready(function(){
 				    </select>
 				</div>
 				<div class="col-sm-2">
-					<input class="form-control input-sm" value="${member.phone2}" maxlength="4"id="phone2" name="phone2" required="required" type="text" placeholder="phone2">
+					<input class="form-control input-sm" value="${member.phone2}" maxlength="4"id="phone2" name="phone2" numberonly="true" required="required" type="text" placeholder="phone2">
 				</div>
 				<div class="col-sm-2">
-					<input class="form-control input-sm" value="${member.phone3}"maxlength="4"id="phone3" name="phone3" required="required" type="text" placeholder="phone3">
+					<input class="form-control input-sm" value="${member.phone3}"maxlength="4"id="phone3" name="phone3" numberonly="true" required="required" type="text" placeholder="phone3">
 				</div>
 			</div>
 			<c:if test="${sessionemail=='admin@admin.com'}">
 				<div class="form-group col-sm-offset-3 col-sm-8">
 					<label class="col-sm-2">회원레벨</label>
 					<div class="col-sm-4">
-						<input class="form-control input-sm" value="${member.memlevel}"id="memlevel" name="memlevel" maxlength="1"type="text" required="required">
+						<input class="form-control input-sm" value="${member.memlevel}"id="memlevel" name="memlevel" numberonly="true" maxlength="1"type="text" required="required">
 					</div>
 			  	</div>
 			  	<div class="form-group col-sm-offset-3 col-sm-8">
 					<label class="col-sm-2">마일리지</label>
 					<div class="col-sm-4">
-						<input class="form-control input-sm" value="${member.mileage}"id="mileage" name="mileage" maxlength="7"type="text" required="required">
+						<input class="form-control input-sm" value="${member.mileage}"id="mileage" name="mileage" numberonly="true" maxlength="7"type="text" required="required">
 					</div>
 			  	</div>
 			  	<div class="form-group col-sm-offset-3 col-sm-8">

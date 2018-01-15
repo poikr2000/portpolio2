@@ -162,6 +162,7 @@ $(document).ready(function(){
 								<li class="menu-item-has-children"><a href=""><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;option</a>
 									<ul class="sub-menu">
 										<li><a href="memberList">회원 리스트</a></li>
+										<li><a href="partnerInsertForm">거래처 등록</a></li>
 									</ul>
 								</li>
 							</c:when>

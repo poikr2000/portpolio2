@@ -27,6 +27,9 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 	document.insert_form.zipcode.value = zipNo;
 }
 $(document).ready(function(){
+	$(document).on("keyup","input:text[numberOnly]",function(){
+		$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+	});
 	$('#emailconfirm').on("click",function(){
 		var email = $('#useremail').val()
 		if($('#useremail').val()==""){
@@ -210,10 +213,10 @@ $(document).ready(function(){
 				    </select>
 				</div>
 				<div class="col-sm-2">
-					<input class="form-control input-sm" maxlength="4"id="phone2" name="phone2" required="required" type="text" placeholder="phone2">
+					<input class="form-control input-sm" maxlength="4"id="phone2" name="phone2" numberonly="true" required="required" type="text" placeholder="phone2">
 				</div>
 				<div class="col-sm-2">
-					<input class="form-control input-sm" maxlength="4"id="phone3" name="phone3" required="required" type="text" placeholder="phone3">
+					<input class="form-control input-sm" maxlength="4"id="phone3" name="phone3" numberonly="true" required="required" type="text" placeholder="phone3">
 				</div>
 			</div>
 	</div>

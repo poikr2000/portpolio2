@@ -52,7 +52,7 @@ $(document).ready(function(){
 	</div>
 	<div class="container col-sm-12">
 		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;text-align:center;">
-			  <h2>회원리스트</h2>
+			  <h2>회원 리스트</h2>
 		</div>
 		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;margin-bottom: 70px;">
 			<table class="table table-striped table-bordered" id="membertable">

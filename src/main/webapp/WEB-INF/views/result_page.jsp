@@ -17,7 +17,8 @@
 		</div>
 		<div style="text-align:center;margin-top:50px;">
 			<div><h5>${member.name}님의 회원가입을 진심으로 환영합니다.</h5></div>
-			<div><h5>서비스를 이용하려면 우측 상단 로그인을 해 주시기 바랍니다</h5></div>
+			<div><h5>첫 회원가입 기념으로 100마일리지를 드립니다.</h5></div>
+			<div><h5>서비스를 이용하려면 우측 상단 로그인을 해 주시기 바랍니다.</h5></div>
 			<div><h5><a href="index"><홈으로 돌아가기></a></h5></div>
 		</div>
 	</div>

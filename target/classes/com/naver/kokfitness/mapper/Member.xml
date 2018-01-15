@@ -19,7 +19,7 @@
 		<id property="program_code" column="program_code"/>
 		<id property="staff_code" column="staff_code"/>
 	</resultMap>
-		<resultMap type="com.naver.kokfitness.entities.Program" id="programMap">
+	<resultMap type="com.naver.kokfitness.entities.Program" id="programMap">
 		<id property="code" column="code"/>
 		<id property="name" column="name"/>
 	</resultMap>
