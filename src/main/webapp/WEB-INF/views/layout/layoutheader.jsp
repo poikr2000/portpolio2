@@ -115,14 +115,14 @@ $(document).ready(function(){
 					<div class="btn">
 					<c:choose>
 						<c:when test="${sessionemail==null}">
-							<a id="login">로그인</a>&nbsp|&nbsp<a href="memberTerms">회원가입</a>
+							<a id="login">로그인</a>&nbsp;|&nbsp;<a href="memberTerms">회원가입</a>
 						</c:when>
 						<c:when test="${sessionemail=='admin@admin.com'}">
-							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp|&nbsp<a href="memberTerms">회원가입</a>
+							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp;|&nbsp;<a href="memberTerms">회원가입</a>
 						</c:when>
 						<c:otherwise>
-							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp|&nbsp
-							<a href="memberUpdateForm?email=${sessionemail}">내정보</a>
+							<a href="logout"><span>${sessionid}</span>&nbsp;logout</a>&nbsp;|&nbsp;
+							<a href="memberDetail?email=${sessionemail}">내정보</a>
 						</c:otherwise>
 					</c:choose>	
 					
@@ -157,12 +157,17 @@ $(document).ready(function(){
 						</li>
 						<li><a href="contact.html">mileage</a>
 						</li>
-						<li class="menu-item-has-children"><a href="project.html">option</a>
-							<ul class="sub-menu">
-								<li><a href="project-detail.html">Project detail</a>
+						<c:choose>
+							<c:when test="${sessionemail=='admin@admin.com'}">
+								<li class="menu-item-has-children"><a href=""><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;option</a>
+									<ul class="sub-menu">
+										<li><a href="memberList">회원 리스트</a></li>
+									</ul>
 								</li>
-							</ul>
-						</li>
+							</c:when>
+							<c:otherwise>
+							</c:otherwise>
+						</c:choose>	
 					</ul><!-- consult-menu -->
 					
 					<div class="navbar-toggle"><span></span><span></span><span></span></div>

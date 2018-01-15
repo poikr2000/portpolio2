@@ -27,7 +27,25 @@ function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAdd
 	document.update_form.zipcode.value = zipNo;
 }
 $(document).ready(function(){
+	
 	$('#memberupdatebtn').click(function(){
+		var id=$('#id').val();
+		var name=$('#name').val();
+		var password=$('#userpassword').val();
+		var passwordchk=$('#passwordchk').val();
+		var zipcode=$('#zipcode').val();
+		var newaddr=$('#newaddr').val();
+		var detailaddr=$('#detailaddr').val();
+		var phone2=$('#phone2').val();
+		var phone3=$('#phone3').val();
+		if(name==""||id==""||password==""||passwordchk==""||zipcode==""||
+				newaddr==""||detailaddr==""||phone2==""||phone3==""){
+			$('#requirechk').click();
+			return;
+		}
+		$('#udateconfirmbtn').show();
+		$('#admin_updateconfirmbtn').hide();
+		$('#deleteconfirmbtn').hide();
 		var msg=""
 		if($('#userpassword').val()!=$('#passwordchk').val()){
 			msg="- 비밀번호를 다시 확인 해주시기 바랍니다 -";
@@ -41,8 +59,58 @@ $(document).ready(function(){
 		$('#confirmModalMsg').text(msg);
 		$('#confirmModal').modal('show');
 	})
-	$('#confirmbtn').click(function(){
+	$('#udateconfirmbtn').click(function(){
 		$('#update_form').attr('action','memberUpdate');
+		$('#update_form').submit();
+	})
+	$('#admin_memberupdatebtn').click(function(){
+		var id=$('#id').val();
+		var name=$('#name').val();
+		var password=$('#userpassword').val();
+		var passwordchk=$('#passwordchk').val();
+		var zipcode=$('#zipcode').val();
+		var newaddr=$('#newaddr').val();
+		var detailaddr=$('#detailaddr').val();
+		var phone2=$('#phone2').val();
+		var phone3=$('#phone3').val();
+		var memlevel=$('#memlevel').val();
+		var mileage=$('#mileage').val();
+		if(name==""||id==""||password==""||passwordchk==""||zipcode==""||newaddr==""||detailaddr==""||phone2==""||phone3==""||memlevel==""||mileage==""){
+			$('#requirechk').click();
+			return;
+		}else{
+			$('#udateconfirmbtn').hide();
+			$('#admin_updateconfirmbtn').show();
+			$('#deleteconfirmbtn').hide();
+			var msg=""
+			if($('#userpassword').val()!=$('#passwordchk').val()){
+				msg="- 비밀번호를 다시 확인 해주시기 바랍니다 -";
+				$('#updateModalMsg').text(msg);
+				$('#usebtn').text("확인");
+				$('#updateModal').modal('show');
+				$('#passwordchk').val('');
+				return;
+			}
+			msg="- 변경 사항을 저장하시겠습니까? -";
+			$('#confirmModalMsg').text(msg);
+			$('#confirmModal').modal('show');
+		}
+	})
+	$('#admin_updateconfirmbtn').click(function(){
+		$('#update_form').attr('action','adminMemberUpdate');
+		$('#update_form').submit();
+	})
+	$('#memberdeletebtn').click(function(){
+		$('#udateconfirmbtn').hide();
+		$('#admin_updateconfirmbtn').hide();
+		$('#deleteconfirmbtn').show();
+		var msg=""
+		msg="- 회원정보를 삭제하시겠습니까 -";
+		$('#confirmModalMsg').text(msg);
+		$('#confirmModal').modal('show');
+	})
+	$('#deleteconfirmbtn').click(function(){
+		$('#update_form').attr('action','memberDelete');
 		$('#update_form').submit();
 	})
 });
@@ -50,9 +118,10 @@ $(document).ready(function(){
 </content>
 </head>
 <body>
-<form name="update_form" id="update_form" method="post" role="form" data-parsley-validate="true"enctype="multipart/form-data">
+<form name="update_form" id="update_form" method="post" role="form" >
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
+	<input type="submit" style="display: none" id="requirechk" name="requirechk">
 	<div class="container col-sm-12" style="text-align:left;">
 			<div class="col-sm-offset-3" style="margin-top:50px;">
 				<h3>정보 수정</h3>
@@ -60,13 +129,14 @@ $(document).ready(function(){
 			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:50px;">
 				<label class="col-sm-2">이메일</label>
 				<div class="col-sm-4">
-					<input class="form-control input-sm" value="${member.email}"id="email" name="email"readonly="readonly" type="text">
+					<input class="form-control input-sm" value="${member.email}"id="email" name="email" readonly="readonly" type="text">
 				</div>
 		  	</div>
 		  	<div class="form-group col-sm-offset-3 col-sm-8">
 				<label class="col-sm-2">닉네임</label>
 				<div class="col-sm-4">
-					<input class="form-control input-sm" maxlength="7" value="${member.id}"id="id" name="id" readonly="readonly" type="text">
+					<input class="form-control input-sm" maxlength="7" value="${member.id}"id="id" name="id" required="required"<c:if test="${sessionemail!='admin@admin.com'}">readonly="readonly"</c:if> type="text">
+					<c:if test="${sessionemail!='admin@admin.com'}">※닉네임 변경은 관리자에게 문의</c:if>
 				</div>
 			</div>
 			<div class="form-group col-sm-offset-3 col-sm-8">
@@ -124,10 +194,42 @@ $(document).ready(function(){
 					<input class="form-control input-sm" value="${member.phone3}"maxlength="4"id="phone3" name="phone3" required="required" type="text" placeholder="phone3">
 				</div>
 			</div>
+			<c:if test="${sessionemail=='admin@admin.com'}">
+				<div class="form-group col-sm-offset-3 col-sm-8">
+					<label class="col-sm-2">회원레벨</label>
+					<div class="col-sm-4">
+						<input class="form-control input-sm" value="${member.memlevel}"id="memlevel" name="memlevel" maxlength="1"type="text" required="required">
+					</div>
+			  	</div>
+			  	<div class="form-group col-sm-offset-3 col-sm-8">
+					<label class="col-sm-2">마일리지</label>
+					<div class="col-sm-4">
+						<input class="form-control input-sm" value="${member.mileage}"id="mileage" name="mileage" maxlength="7"type="text" required="required">
+					</div>
+			  	</div>
+			  	<div class="form-group col-sm-offset-3 col-sm-8">
+					<label class="col-sm-2">수강코드</label>
+					<div class="col-sm-4">
+						<select id="searchvender" name="searchvender" class="form-control"> 
+					    	<c:forEach var="program" items="${programs}">
+								<option value="${program.code}">${program.name}</option>
+							</c:forEach>
+					    </select>
+					</div>
+			  	</div>
+			</c:if>
 	</div>
  	<div class="col-sm-offset-4 col-sm-4" style="text-align:center;margin-top:50px;margin-bottom: 80px">
-		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn" type="button" onclick="history.back();">돌아가기</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<button class="btn" type="button" id="memberupdatebtn" name="memberupdatebtn">수정</button>
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn" type="button" onclick="history.back();">돌아가기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<c:choose>
+			<c:when test="${sessionemail=='admin@admin.com'}">
+				<button class="btn" type="button" id="memberdeletebtn" name="memberdeletebtn">회원삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button class="btn" type="button" id="admin_memberupdatebtn" name="admin_memberupdatebtn">정보수정</button>
+			</c:when>
+			<c:otherwise>
+				<button class="btn" type="button" id="memberupdatebtn" name="memberupdatebtn">정보수정</button>
+			</c:otherwise>
+		</c:choose>	
 	</div>
 	
 	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -155,7 +257,9 @@ $(document).ready(function(){
 		  </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-	      	<button type="button" id="confirmbtn" class="btn btn-default">변경</button>
+	      	<button type="button" id="udateconfirmbtn" style="display: none" class="btn btn-default">수정</button>
+	      	<button type="button" id="admin_updateconfirmbtn" style="display: none" class="btn btn-default">수정</button>
+	      	<button type="button" id="deleteconfirmbtn" style="display: none" class="btn btn-default">삭제</button>
 	      </div>
 	    </div>
 	  </div>

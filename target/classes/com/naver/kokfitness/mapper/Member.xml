@@ -19,6 +19,10 @@
 		<id property="program_code" column="program_code"/>
 		<id property="staff_code" column="staff_code"/>
 	</resultMap>
+		<resultMap type="com.naver.kokfitness.entities.Program" id="programMap">
+		<id property="code" column="code"/>
+		<id property="name" column="name"/>
+	</resultMap>
 
 	<select id="emailConfirm" parameterType="String" resultType="int">
 		select count(*) 
@@ -49,7 +53,13 @@
 		from member 
 		where email=#{email} and name=#{name}
 	</select>
-		<update id="passwordChange" parameterType="hashMap">
+	<select id="memberListAll" parameterType="String" resultMap="memberMap">
+		select *from member
+	</select>
+	<select id="programListAll" parameterType="String" resultMap="programMap">
+		select *from program
+	</select>
+	<update id="passwordChange" parameterType="hashMap">
 		update member 
 		set password=#{password} 
 		where email=#{email}
@@ -61,4 +71,15 @@
 		phone1=#{phone1},phone2=#{phone2},phone3=#{phone3}
 		where email=#{email}
 	</update>
+	<update id="adminMemberUpdate" parameterType="hashMap">
+		update member
+		set password=#{password},name=#{name},
+		zipcode=#{zipcode},newaddr=#{newaddr},detailaddr=#{detailaddr},
+		phone1=#{phone1},phone2=#{phone2},phone3=#{phone3},
+		memlevel=#{memlevel},mileage=#{mileage},program_code=#{program_code}
+		where email=#{email}
+	</update>
+	<delete id="memberDelete" parameterType="String">
+		delete from member where email=#{email}
+	</delete>
 </mapper>

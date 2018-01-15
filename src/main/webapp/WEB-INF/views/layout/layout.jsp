@@ -13,12 +13,14 @@
   <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 <![endif]-->
 <!-- bootstrap-->
+
+<link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://cdn.datatables.net/buttons/1.4.2/css/buttons.dataTables.min.css">
 <script src="resources/js/jquery-1.12.4.js"></script>
-<script src="resources/js/parsley.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="resources/js/parsley.min.js"></script>
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
 <!-- Fonts-->
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/fonts/fontawesome/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/fonts/themify-icons/themify-icons.css">
@@ -50,8 +52,11 @@
 </div>
 
 <decorator:getProperty property="page.local_script"></decorator:getProperty>
-
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/dataTables.bootstrap4.min.js"></script>
+		<script src="https://cdn.datatables.net/buttons/1.4.2/js/dataTables.buttons.min.js"></script>
 	<!-- Vendors-->
+		<script type="text/javascript" src="<c:url value="/resources/assets/vendors/imagesloaded/imagesloaded.pkgd.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/assets/vendors/imagesloaded/imagesloaded.pkgd.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/assets/vendors/isotope-layout/isotope.pkgd.js"/>"></script>
 		<script type="text/javascript" src="<c:url value="/resources/assets/vendors/jquery.countdown/jquery.countdown.min.js"/>"></script>

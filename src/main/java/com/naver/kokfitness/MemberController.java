@@ -2,7 +2,9 @@ package com.naver.kokfitness;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Properties;
 
 import javax.mail.Message;
@@ -28,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.naver.kokfitness.entities.Member;
+import com.naver.kokfitness.entities.Program;
 import com.naver.kokfitness.service.MemberDAO;
 
 @Controller
@@ -49,12 +52,23 @@ public class MemberController {
 		
 		return "member/member_insert";
 	}
-	@RequestMapping(value = "memberUpdateForm", method = RequestMethod.GET)
-	public ModelAndView memberUpdateForm(@RequestParam String email) {
+	@RequestMapping(value = "memberList", method = RequestMethod.GET)
+	public ModelAndView memberList() {
+		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
+		ModelAndView mav = new ModelAndView("member/member_list");
+		ArrayList<Member> members = dao.memberListAll();
+		mav.addObject("members",members);
+		
+		return mav;
+	}
+	@RequestMapping(value = "memberDetail", method = RequestMethod.GET)
+	public ModelAndView memberDetail(@RequestParam String email) {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
 		Member member=dao.memberGetOne(email);
+		ArrayList<Program> programs=dao.programListAll();
 		ModelAndView mav = new ModelAndView("member/member_update");
 		mav.addObject("member",member);
+		mav.addObject("programs",programs);
 		return mav;
 	}
 	@RequestMapping(value = "emailConfirm", method = RequestMethod.POST)
@@ -109,6 +123,37 @@ public class MemberController {
 		mav.addObject("member",member);
 		session.invalidate();
 		return mav;
+	}
+	@RequestMapping(value = "adminMemberUpdate", method = RequestMethod.POST)
+	public ModelAndView adminMemberUpdate(@ModelAttribute("member") Member member,HttpSession session) {
+		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
+		System.out.println("----------------"+member.getEmail());
+		try {
+			String encodepassword=passwordEncoder.encode(member.getPassword());
+			member.setPassword(encodepassword);
+			dao.adminMemberUpdate(member);
+		}catch(Exception e){
+			System.out.println("error : "+e.getMessage());
+		}
+		ModelAndView mav = new ModelAndView("result_page");
+		mav.addObject("member",member);
+		return mav;
+	}
+	@RequestMapping(value = "memberSelectedDelete", method = RequestMethod.POST)
+	public String memberSelectedDelete(@RequestParam ("memberunitchk") List<String> memberunitchk) {
+		MemberDAO dao=null;
+		dao=sqlSession.getMapper(MemberDAO.class);
+		for(String unit : memberunitchk) {
+			dao.memberDelete(unit);
+	    }
+		return "redirect:memberList";
+	}
+	@RequestMapping(value = "memberDelete", method = RequestMethod.POST)
+	public String memberDelete(@RequestParam String email) {
+		MemberDAO dao=null;
+		dao=sqlSession.getMapper(MemberDAO.class);
+		dao.memberDelete(email);
+		return "redirect:memberList";
 	}
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public void login(@ModelAttribute("member") Member member,HttpSession session,HttpServletResponse response) throws IOException {
