@@ -9,6 +9,11 @@
 <content tag="local_script">
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script>
+function phone2_lengthchk(code){
+	if(code.value.length==4){
+		document.update_form.phone3.focus();
+	}
+}
 function goPopup(){
 	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
     var pop = window.open("","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
@@ -190,7 +195,7 @@ $(document).ready(function(){
 				    </select>
 				</div>
 				<div class="col-sm-2">
-					<input class="form-control input-sm" value="${member.phone2}" maxlength="4"id="phone2" name="phone2" numberonly="true" required="required" type="text" placeholder="phone2">
+					<input class="form-control input-sm" value="${member.phone2}" maxlength="4"id="phone2" name="phone2" numberonly="true" required="required" onkeyup="phone2_lengthchk(this)"type="text" placeholder="phone2">
 				</div>
 				<div class="col-sm-2">
 					<input class="form-control input-sm" value="${member.phone3}"maxlength="4"id="phone3" name="phone3" numberonly="true" required="required" type="text" placeholder="phone3">
@@ -222,7 +227,7 @@ $(document).ready(function(){
 			</c:if>
 	</div>
  	<div class="col-sm-offset-4 col-sm-4" style="text-align:center;margin-top:50px;margin-bottom: 80px">
-		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn" type="button" onclick="history.back();">돌아가기</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn" type="button" onclick="history.back();">돌아가기</button>&nbsp;&nbsp;&nbsp;
 		<c:choose>
 			<c:when test="${sessionemail=='admin@admin.com'}">
 				<button class="btn" type="button" id="memberdeletebtn" name="memberdeletebtn">회원삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

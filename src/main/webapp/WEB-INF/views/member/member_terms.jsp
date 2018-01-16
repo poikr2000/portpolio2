@@ -30,7 +30,7 @@ $(document).ready(function(){
 </script>
 </content>
 <body>
-<form method="post" action="">
+<form method="post">
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
 	<div class="page-title">

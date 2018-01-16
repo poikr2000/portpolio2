@@ -127,7 +127,6 @@ public class MemberController {
 	@RequestMapping(value = "adminMemberUpdate", method = RequestMethod.POST)
 	public ModelAndView adminMemberUpdate(@ModelAttribute("member") Member member,HttpSession session) {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
-		System.out.println("----------------"+member.getEmail());
 		try {
 			String encodepassword=passwordEncoder.encode(member.getPassword());
 			member.setPassword(encodepassword);

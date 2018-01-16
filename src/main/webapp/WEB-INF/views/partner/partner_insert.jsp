@@ -8,6 +8,21 @@
 <title>Insert title here</title>
 <content tag="local_script">
 <script>
+function officeno2_lengthchk(code){
+	if(code.value.length==4){
+		document.partnerinsert_form.officeno3.focus();
+	}
+}
+function busno1_lengthchk(code){
+	if(code.value.length==3){
+		document.partnerinsert_form.busno2.focus();
+	}
+}
+function busno2_lengthchk(code){
+	if(code.value.length==2){
+		document.partnerinsert_form.busno3.focus();
+	}
+}
 function goPopup(){
 	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
     var pop = window.open("","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
@@ -29,6 +44,66 @@ $(document).ready(function(){
 	$(document).on("keyup","input:text[numberOnly]",function(){
 		$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
 	});
+	$('#codeconfirm').on("click",function(){
+		var code = $('#code').val()
+		if($('#code').val()==""){
+			$('#partnerInsertModalMsg').text("코드를 입력해주세요.");
+			$('#usebtn').text("확인");
+			$('#partnerInsertModal').modal('show');
+			return;
+		}else{
+			$.ajax({
+				type:'Post',
+				data:"code="+code,
+				datatype:'json',
+				url : 'codeConfirm',
+				success : function(data){
+					if(data>0){
+						$('#partnerInsertModalMsg').text("이미 사용중인 코드입니다.");
+						$('#usebtn').text("확인");
+						$('#partnerInsertModal').modal('show');
+						$('#code').val('');
+						return;
+					}else{
+						$('#partnerInsertModalMsg').text("사용가능 합니다.");
+						$('#usebtn').text("사용");
+						$('#partnerInsertModal').modal('show');
+						$('#codeconfirmchk').attr("value","yes");
+					}
+				},
+				error : function(xhr,status,error){
+					alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+				}
+			});
+		}
+	});
+	$('#partnersave').click(function(){
+		var code=$('#code').val();
+		var name=$('#name').val();
+		var busno1=$('#busno1').val();
+		var busno2=$('#busno2').val();
+		var busno3=$('#busno3').val();
+		var zipcode=$('#zipcode').val();
+		var newaddr=$('#newaddr').val();
+		var detailaddr=$('#detailaddr').val();
+		var officeno2=$('#officeno2').val();
+		var officeno3=$('#officeno3').val();
+		if(code==""||name==""||busno1==""||busno2==""||busno3==""||
+				zipcode==""||newaddr==""||detailaddr==""||officeno2==""||officeno3==""){
+			$('#requirechk').click();
+			return;
+		}
+		var msg=""
+		if($('#codeconfirmchk').val()=="no"){
+			msg+="- 코드 중복 검사를 해주시기 바랍니다 -";
+			$('#partnerInsertModalMsg').text(msg);
+			$('#usebtn').text("확인");
+			$('#partnerInsertModal').modal('show');
+			return;
+		}
+		$('#partnerinsert_form').attr('action','partnerInsert');
+		$('#partnerinsert_form').submit();
+	})
 });
 </script>
 </content>
@@ -37,6 +112,7 @@ $(document).ready(function(){
 <form class="partnerinsert_form" name="partnerinsert_form"id="partnerinsert_form" method="POST" role="form">
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
+	<input type="submit" style="display: none" id="requirechk" name="requirechk">
 	<div class="container col-sm-12">
 		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;text-align:center;">
 			  <h2>거래처 등록</h2>
@@ -60,13 +136,13 @@ $(document).ready(function(){
 		<div class="form-group col-sm-offset-3 col-sm-8">
 			<label class="col-sm-2">사업자번호</label>
 			<div class="col-sm-2">
-				<input class="form-control input-sm" maxlength="3"id="busno1" name="busno1" numberonly="true" required="required" type="text" placeholder="세자리">
+				<input class="form-control input-sm" maxlength="3"id="busno1" name="busno1" numberonly="true" required="required" onkeyup="busno1_lengthchk(this)"type="text">
+			</div>
+			<div class="col-sm-1">
+				<input class="form-control input-sm" maxlength="2"id="busno2" name="busno2" numberonly="true" required="required" onkeyup="busno2_lengthchk(this)"type="text">
 			</div>
 			<div class="col-sm-2">
-				<input class="form-control input-sm" maxlength="2"id="busno2" name="busno2" numberonly="true" required="required" type="text" placeholder="두자리">
-			</div>
-			<div class="col-sm-2">
-				<input class="form-control input-sm" maxlength="5"id="busno3" name="busno3" numberonly="true" required="required" type="text" placeholder="다섯자리">
+				<input class="form-control input-sm" maxlength="5"id="busno3" name="busno3" numberonly="true" required="required" type="text">
 			</div>
 		</div>
 		<div class="form-group col-sm-offset-3 col-sm-8">
@@ -108,7 +184,7 @@ $(document).ready(function(){
 			    </select>
 			</div>
 			<div class="col-sm-2">
-				<input class="form-control input-sm" maxlength="4"id="officeno2" name="officeno2" numberonly="true" required="required" type="text" placeholder="phone2">
+				<input class="form-control input-sm" maxlength="4"id="officeno2" name="officeno2" numberonly="true" required="required" onkeyup="officeno2_lengthchk(this)" type="text" placeholder="phone2">
 			</div>
 			<div class="col-sm-2">
 				<input class="form-control input-sm" maxlength="4"id="officeno3" name="officeno3" numberonly="true" required="required" type="text" placeholder="phone3">
@@ -116,8 +192,22 @@ $(document).ready(function(){
 		</div>
 		<div class="col-sm-offset-4 col-sm-4" style="text-align:center;margin-top:50px;margin-bottom: 80px">
 			&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn" type="button" onclick="history.back();">돌아가기</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-			<button class="btn" type="button" id="membersave" name="membersave">등&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;록</button>
+			<button class="btn" type="button" id="partnersave" name="partnersave">등&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;록</button>
 		</div>
+	</div>
+	<div class="modal fade" id="partnerInsertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      </div>
+	      <div class="modal-body">
+	        <span id="partnerInsertModalMsg">...</span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="usebtn" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 </form>
 </body>

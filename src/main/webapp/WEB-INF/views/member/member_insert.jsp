@@ -9,12 +9,17 @@
 <content tag="local_script">
 <script src='https://www.google.com/recaptcha/api.js'></script>
 <script>
+function phone2_lengthchk(code){
+	if(code.value.length==4){
+		document.memberinsert_form.phone3.focus();
+	}
+}
 function goPopup(){
 	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
     var pop = window.open("","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
-    document.insert_form.target = "pop";
-    document.insert_form.action = "jusoPopup";
-    document.insert_form.submit() ;
+    document.memberinsert_form.target = "pop";
+    document.memberinsert_form.action = "jusoPopup";
+    document.memberinsert_form.submit() ;
 	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
     //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
 }
@@ -22,9 +27,9 @@ function goPopup(){
 function jusoCallBack(roadFullAddr,roadAddrPart1,addrDetail,roadAddrPart2,engAddr, jibunAddr, zipNo, admCd, rnMgtSn, bdMgtSn
 						, detBdNmList, bdNm, bdKdcd, siNm, sggNm, emdNm, liNm, rn, udrtYn, buldMnnm, buldSlno, mtYn, lnbrMnnm, lnbrSlno, emdNo){
 	// 팝업페이지에서 주소입력한 정보를 받아서, 현 페이지에 정보를 등록합니다.
-	document.insert_form.newaddr.value = roadAddrPart1;
-	document.insert_form.detailaddr.value = addrDetail;
-	document.insert_form.zipcode.value = zipNo;
+	document.memberinsert_form.newaddr.value = roadAddrPart1;
+	document.memberinsert_form.detailaddr.value = addrDetail;
+	document.memberinsert_form.zipcode.value = zipNo;
 }
 $(document).ready(function(){
 	$(document).on("keyup","input:text[numberOnly]",function(){
@@ -97,6 +102,20 @@ $(document).ready(function(){
 		}
 	});
 	$('#membersave').click(function(){
+		var id=$('#id').val();
+		var name=$('#name').val();
+		var password=$('#userpassword').val();
+		var passwordchk=$('#passwordchk').val();
+		var zipcode=$('#zipcode').val();
+		var newaddr=$('#newaddr').val();
+		var detailaddr=$('#detailaddr').val();
+		var phone2=$('#phone2').val();
+		var phone3=$('#phone3').val();
+		if(name==""||id==""||password==""||passwordchk==""||zipcode==""||
+				newaddr==""||detailaddr==""||phone2==""||phone3==""){
+			$('#requirechk').click();
+			return;
+		}
 		var msg=""
 		if($('#emailconfirmchk').val()=="no"){
 			msg+="- 이메일 중복 검사를 해주시기 바랍니다 -";
@@ -129,17 +148,18 @@ $(document).ready(function(){
 				return;
 			}
 		}
-		$('#insert_form').attr('action','memberInsert');
-		$('#insert_form').submit();
+		$('#memberinsert_form').attr('action','memberInsert');
+		$('#memberinsert_form').submit();
 	})
 });
 </script>
 </content>
 </head>
 <body>
-<form name="insert_form" id="insert_form" method="post" role="form" data-parsley-validate="true"enctype="multipart/form-data">
+<form name="memberinsert_form" id="memberinsert_form" method="post" role="form" data-parsley-validate="true"enctype="multipart/form-data">
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
+	<input type="submit" style="display: none" id="requirechk" name="requirechk">
 	<div class="container col-sm-12" style="text-align:left;">
 			<div class="col-sm-offset-3" style="margin-top:50px;">
 				<h3>회원 가입</h3>
@@ -213,7 +233,7 @@ $(document).ready(function(){
 				    </select>
 				</div>
 				<div class="col-sm-2">
-					<input class="form-control input-sm" maxlength="4"id="phone2" name="phone2" numberonly="true" required="required" type="text" placeholder="phone2">
+					<input class="form-control input-sm" maxlength="4"id="phone2" name="phone2" numberonly="true" required="required" onkeyup="phone2_lengthchk(this)" type="text" placeholder="phone2">
 				</div>
 				<div class="col-sm-2">
 					<input class="form-control input-sm" maxlength="4"id="phone3" name="phone3" numberonly="true" required="required" type="text" placeholder="phone3">
