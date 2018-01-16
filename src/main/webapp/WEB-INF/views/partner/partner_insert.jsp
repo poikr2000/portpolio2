@@ -8,6 +8,12 @@
 <title>Insert title here</title>
 <content tag="local_script">
 <script>
+function partnercheck(strValue){
+	if(strValue.length==5)
+		return true;
+	else
+		return false;
+}
 function officeno2_lengthchk(code){
 	if(code.value.length==4){
 		document.partnerinsert_form.officeno3.focus();
@@ -52,6 +58,13 @@ $(document).ready(function(){
 			$('#partnerInsertModal').modal('show');
 			return;
 		}else{
+			var boolcode = partnercheck(code);
+			if(boolcode==false){
+				$('#partnerInsertModalMsg').text("코드번호 5자리를  입력해주세요.");
+				$('#usebtn').text("확인");
+				$('#partnerInsertModal').modal('show');
+				return;
+			}
 			$.ajax({
 				type:'Post',
 				data:"code="+code,

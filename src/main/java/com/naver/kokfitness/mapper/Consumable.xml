@@ -2,5 +2,50 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.naver.kokfitness.service.ConsumableDAO">
-
+	<resultMap type="com.naver.kokfitness.entities.Category" id="categoryMap">
+		<id property="code" column="code"/>
+		<id property="name" column="name"/>
+	</resultMap>
+	<resultMap type="com.naver.kokfitness.entities.Consumable" id="consumableMap">
+		<id property="code" column="code"/>
+		<id property="name" column="name"/>
+		<id property="capacity" column="capacity"/>
+		<id property="stock" column="stock"/>
+		<id property="price" column="price"/>
+		<id property="preyystock" column="preyystock"/>
+		<id property="premmstock" column="premmstock"/>
+		<id property="preddstock" column="preddstock"/>
+		<id property="buy01" column="buy01"/>
+		<id property="buy02" column="buy02"/>
+		<id property="buy03" column="buy03"/>
+		<id property="buy04" column="buy04"/>
+		<id property="buy05" column="buy05"/>
+		<id property="buy06" column="buy06"/>
+		<id property="buy07" column="buy07"/>
+		<id property="buy08" column="buy08"/>
+		<id property="buy09" column="buy09"/>
+		<id property="buy10" column="buy10"/>
+		<id property="buy11" column="buy11"/>
+		<id property="buy12" column="buy12"/>
+		<id property="bp_code" column="bp_code"/>
+		<id property="category_code" column="category_code"/>
+		<id property="explanation" column="explanation"/>
+	</resultMap>
+	
+	<select id="categoryListAll" resultMap="categoryMap">
+		select *from category
+	</select>
+	<select id="codeConfirm" parameterType="String" resultType="int">
+		select count(*) 
+		from consumable 
+		where code=#{code}
+	</select>
+	<insert id="consumableInsert" parameterType="hashMap">
+		insert into consumable(
+		code,name,capacity,price,bp_code,category_code,explanation
+		)values(
+		#{code,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{capacity,jdbcType=VARCHAR},#{price,jdbcType=INTEGER},
+		#{bp_code,jdbcType=VARCHAR},#{category_code,jdbcType=VARCHAR},#{explanation,jdbcType=VARCHAR}
+		)
+	</insert>
 </mapper>

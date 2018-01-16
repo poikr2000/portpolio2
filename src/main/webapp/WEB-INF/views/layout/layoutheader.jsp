@@ -164,6 +164,7 @@ $(document).ready(function(){
 										<li><a href="memberList">회원 리스트</a></li>
 										<li><a href="partnerInsertForm">거래처 등록</a></li>
 										<li><a href="partnerList">거래처 리스트</a></li>
+										<li><a href="consumableInsertForm">상품 등록</a></li>
 									</ul>
 								</li>
 							</c:when>
