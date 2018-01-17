@@ -8,7 +8,7 @@ public interface F_boardDAO {
 
 	int f_insert(F_board f_board);
 
-	void updateHit(Object f_seq);
+	void f_board_updateHit(Object f_seq);
 
 	F_board selectDetail(int f_seq);
 	

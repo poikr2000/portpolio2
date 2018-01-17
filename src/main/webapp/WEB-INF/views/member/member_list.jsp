@@ -71,8 +71,8 @@ $(document).ready(function(){
 						<tr>
 							<td class="text-center"><input type="checkbox" id="memberunitchk" name="memberunitchk" value="${member.email}"></td>
 							<td style="text-align:center;vertical-align:middle;"><a href="memberDetail?email=${member.email}">${member.email}</a></td>
-							<td style="text-align:center;vertical-align:middle;">${member.id}</td>
-							<td style="text-align:center;vertical-align:middle;">${member.name}</td>
+							<td style="text-align:center;vertical-align:middle;"><a href="memberDetail?email=${member.email}">${member.id}</a></td>
+							<td style="text-align:center;vertical-align:middle;"><a href="memberDetail?email=${member.email}">${member.name}</a></td>
 							<td style="text-align:center;vertical-align:middle;">${member.phone1}-${member.phone2}-${member.phone3}</td>
 							<td style="text-align:center;vertical-align:middle;">${member.mileage}</td>
 						</tr>

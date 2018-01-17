@@ -9,6 +9,19 @@
 <content tag="local_script">
 <script>
 $(document).ready(function(){
+	 $(function(){
+		  var current_page_URL = location.href;
+		  $("nav a").each(function() {
+		     if ($(this).attr("href") != "#") {
+		       var target_URL = $(this).prop("href");
+		       if (target_URL == current_page_URL) {
+		          $('a').closest('li').removeClass('current-menu-item');
+		          $(this).closest('li').addClass('current-menu-item');
+		          return false;
+		       }
+		     }
+		  });
+		});
 	$('#passwordfindbtn').click( function () {
 		$('#login_form').hide();
 		$('#lost_form').show();
@@ -110,7 +123,7 @@ $(document).ready(function(){
 	<div class="page-wrap">
 		<header class="header header__style-02">
 			<div class="container">
-				<div class="header__logo"><a href="index.html"><img src="resources/assets/img/logo.png" alt=""/></a></div>
+				<div class="header__logo"><a href="index"><img src="resources/assets/img/logo.png" alt=""/></a></div>
 				<div class="header__toogleGroup">
 					<div class="btn">
 					<c:choose>
@@ -133,38 +146,29 @@ $(document).ready(function(){
 					
 					<!-- consult-menu -->
 					<ul class="consult-menu">
-						<li class="current-menu-item"><a href="index.html">Home</a>
-						</li>
-						<li><a href="about.html">program</a>
-						</li>
-						<li><a href="service.html">staff</a>
-						</li>
+						<li class="current-menu-item"><a href="index">Home</a></li>
+						<li><a href="program">program</a></li>
+						<li><a href="staff">staff</a></li>
 						<li class="menu-item-has-children"><a href="#">community</a>
 							<ul class="sub-menu">
-								<li><a href="n_board">공지사항</a>
-								</li>
-								<li><a href="f_board">자유게시판</a>
-								</li>
-								<li><a href="q_board">질문게시판</a>
-								</li>
+								<li><a href="n_board">공지사항</a></li>
+								<li><a href="f_board">자유게시판</a></li>
+								<li><a href="q_board">질문게시판</a></li>
 							</ul>
 						</li>
-						<li class="menu-item-has-children"><a href="project.html">services</a>
-							<ul class="sub-menu">
-								<li><a href="project-detail.html">Project detail</a>
-								</li>
-							</ul>
+						<li><a href="services">services</a>
 						</li>
-						<li><a href="contact.html">mileage</a>
+						<li><a href="mileage">mileage</a>
 						</li>
 						<c:choose>
 							<c:when test="${sessionemail=='admin@admin.com'}">
-								<li class="menu-item-has-children"><a href=""><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;option</a>
+								<li class="menu-item-has-children"><a href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;option</a>
 									<ul class="sub-menu">
 										<li><a href="memberList">회원 리스트</a></li>
 										<li><a href="partnerInsertForm">거래처 등록</a></li>
 										<li><a href="partnerList">거래처 리스트</a></li>
 										<li><a href="consumableInsertForm">상품 등록</a></li>
+										<li><a href="consumableList">수불장</a></li>
 									</ul>
 								</li>
 							</c:when>

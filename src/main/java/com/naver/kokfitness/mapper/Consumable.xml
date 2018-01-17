@@ -15,18 +15,30 @@
 		<id property="preyystock" column="preyystock"/>
 		<id property="premmstock" column="premmstock"/>
 		<id property="preddstock" column="preddstock"/>
-		<id property="buy01" column="buy01"/>
-		<id property="buy02" column="buy02"/>
-		<id property="buy03" column="buy03"/>
-		<id property="buy04" column="buy04"/>
-		<id property="buy05" column="buy05"/>
-		<id property="buy06" column="buy06"/>
-		<id property="buy07" column="buy07"/>
-		<id property="buy08" column="buy08"/>
-		<id property="buy09" column="buy09"/>
-		<id property="buy10" column="buy10"/>
-		<id property="buy11" column="buy11"/>
-		<id property="buy12" column="buy12"/>
+		<id property="rcv01" column="rcv01"/>
+		<id property="rcv02" column="rcv02"/>
+		<id property="rcv03" column="rcv03"/>
+		<id property="rcv04" column="rcv04"/>
+		<id property="rcv05" column="rcv05"/>
+		<id property="rcv06" column="rcv06"/>
+		<id property="rcv07" column="rcv07"/>
+		<id property="rcv08" column="rcv08"/>
+		<id property="rcv09" column="rcv09"/>
+		<id property="rcv10" column="rcv10"/>
+		<id property="rcv11" column="rcv11"/>
+		<id property="rcv12" column="rcv12"/>
+		<id property="ship01" column="ship01"/>
+		<id property="ship02" column="ship02"/>
+		<id property="ship03" column="ship03"/>
+		<id property="ship04" column="ship04"/>
+		<id property="ship05" column="ship05"/>
+		<id property="ship06" column="ship06"/>
+		<id property="ship07" column="ship07"/>
+		<id property="ship08" column="ship08"/>
+		<id property="ship09" column="ship09"/>
+		<id property="ship10" column="ship10"/>
+		<id property="ship11" column="ship11"/>
+		<id property="ship12" column="ship12"/>
 		<id property="bp_code" column="bp_code"/>
 		<id property="category_code" column="category_code"/>
 		<id property="explanation" column="explanation"/>
@@ -35,9 +47,17 @@
 	<select id="categoryListAll" resultMap="categoryMap">
 		select *from category
 	</select>
+	<select id="consumableListAll" resultMap="consumableMap">
+		select *from consumable
+	</select>
 	<select id="codeConfirm" parameterType="String" resultType="int">
 		select count(*) 
 		from consumable 
+		where code=#{code}
+	</select>
+	<select id="consumableGetOne" parameterType="String" resultMap="consumableMap">
+		select *
+		from consumable
 		where code=#{code}
 	</select>
 	<insert id="consumableInsert" parameterType="hashMap">
@@ -48,4 +68,17 @@
 		#{bp_code,jdbcType=VARCHAR},#{category_code,jdbcType=VARCHAR},#{explanation,jdbcType=VARCHAR}
 		)
 	</insert>
+	<update id="consumableUpdate" parameterType="hashMap">
+		update consumable
+		set name=#{name},capacity=#{capacity},stock=#{stock},price=#{price},bp_code=#{bp_code},category_code=#{category_code},
+		preyystock=#{preyystock},premmstock=#{premmstock},preddstock=#{preddstock},explanation=#{explanation},
+		rcv01=#{rcv01},rcv02=#{rcv02},rcv03=#{rcv03},rcv04=#{rcv04},rcv05=#{rcv05},rcv06=#{rcv06},
+		rcv07=#{rcv07},rcv08=#{rcv08},rcv09=#{rcv09},rcv10=#{rcv10},rcv11=#{rcv11},rcv12=#{rcv12},
+		ship01=#{ship01},ship02=#{ship02},ship03=#{ship03},ship04=#{ship04},ship05=#{ship05},ship06=#{ship06},
+		ship07=#{ship07},ship08=#{ship08},ship09=#{ship09},ship10=#{ship10},ship11=#{ship11},ship12=#{ship12}
+		where code=#{code}
+	</update>
+	<delete id="consumableDelete" parameterType="String">
+		delete from consumable where code=#{code}
+	</delete>
 </mapper>

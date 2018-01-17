@@ -9,4 +9,8 @@ public interface ConsumableDAO {
 	ArrayList<Category> categoryListAll();
 	int codeConfirm(String code);
 	void consumableInsert(Consumable consumable);
+	ArrayList<Consumable> consumableListAll();
+	void consumableDelete(String code);
+	Consumable consumableGetOne(String code);
+	void consumableUpdate(Consumable consumable);
 }

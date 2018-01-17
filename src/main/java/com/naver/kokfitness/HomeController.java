@@ -1,11 +1,8 @@
 package com.naver.kokfitness;
 
-import java.util.Locale;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -21,19 +18,39 @@ public class HomeController {
 	 * Simply selects the home view to render by returning its name.
 	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
+	public String home() {
 		
 		return "index";
 	}
 	
 	@RequestMapping(value = "index", method = RequestMethod.GET)
-	public String index(Locale locale, Model model) {
+	public String index() {
 		
 		return "index";
 	}
 	@RequestMapping(value = "jusoPopup", method = RequestMethod.POST)
-	public String jusoPopup(Locale locale, Model model) {
+	public String jusoPopup() {
 		
 		return "jusoPopup";
+	}
+	@RequestMapping(value = "program", method = RequestMethod.GET)
+	public String program() {
+		
+		return "program";
+	}
+	@RequestMapping(value = "staff", method = RequestMethod.GET)
+	public String staff() {
+		
+		return "staff";
+	}
+	@RequestMapping(value = "services", method = RequestMethod.GET)
+	public String services() {
+		
+		return "services";
+	}
+	@RequestMapping(value = "mileage", method = RequestMethod.GET)
+	public String mileage() {
+		
+		return "mileage";
 	}
 }

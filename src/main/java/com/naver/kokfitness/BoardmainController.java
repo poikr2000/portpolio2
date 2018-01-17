@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.naver.kokfitness.entities.CF_comment;
 import com.naver.kokfitness.entities.F_board;
+import com.naver.kokfitness.service.CF_commentDAO;
 import com.naver.kokfitness.service.F_boardDAO;
 
 @Controller
@@ -26,6 +28,12 @@ public class BoardmainController {
 	private SqlSession sqlSession;
 	@Autowired
 	F_board f_board;
+	
+	@RequestMapping(value = "index1", method = RequestMethod.GET)
+	public ModelAndView index1() {
+		ModelAndView mav = new ModelAndView("index1");
+		return mav;
+	}
 
 	@RequestMapping(value = "f_board", method = RequestMethod.GET)
 	public ModelAndView f_board() {
@@ -43,25 +51,10 @@ public class BoardmainController {
 	}
 
 	@RequestMapping(value = "f_insert", method = RequestMethod.POST)
-	public ModelAndView f_insert(@ModelAttribute("f_board") F_board f_board,HttpServletRequest request) {
+	public ModelAndView f_insert(@ModelAttribute("f_board") F_board f_board,HttpServletRequest request, HttpSession session) {
 		ModelAndView mav = new ModelAndView("boardmain/f_board");
 		F_boardDAO dao=sqlSession.getMapper(F_boardDAO.class);
-//		if(!file.getOriginalFilename().equals("")) {
-//			String filetime=System.currentTimeMillis()+"";
-//			String path="D:/STSsourece/kokfitness/src/main/webapp/resources/uploadattachs";
-//			String realpath="resources/uploadattachs/";
-//			String originalname =file.getOriginalFilename();
-//			try {
-//				byte bytes[] = file.getBytes();
-//				BufferedOutputStream output=new BufferedOutputStream(new FileOutputStream(path+filetime+originalname));
-//				output.write(bytes);
-//				output.flush();
-//				output.close();
-//			} catch (Exception e) {
-//				
-//			}
-//			f_board.setF_attach(realpath+filetime+originalname);
-//		}
+		CF_commentDAO dao1 = sqlSession.getMapper(CF_commentDAO.class);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date date=new Date();
 		String today=df.format(date);
@@ -72,17 +65,26 @@ public class BoardmainController {
 		String message = "저장되었습니다.";
 		result=dao.f_insert(f_board);
 		mav.addObject("msg", message);
+		ArrayList<F_board> f_boards = dao.f_boardselectListAll();
+		mav.addObject("f_boards",f_boards);
 		return mav;
 	}
 
-	@RequestMapping(value = "f_board_update", method = RequestMethod.GET)
-	public ModelAndView f_board_update(HttpSession session,@RequestParam int f_seq) {
+	@RequestMapping(value = "f_board_detail", method = RequestMethod.GET)
+	public ModelAndView f_board_detail(HttpSession session,@RequestParam int f_seq) {
 		ModelAndView mav = new ModelAndView("boardmain/f_board_update");
 		F_boardDAO dao=sqlSession.getMapper(F_boardDAO.class);
+		CF_commentDAO dao1 = sqlSession.getMapper(CF_commentDAO.class);
+		//상세
+		dao.f_board_updateHit(f_seq);
 		f_board = dao.selectDetail(f_seq);
+		dao.f_modify(f_board);
 		ArrayList<F_board> f_boards = dao.f_boardselectListAll();
+		ArrayList<CF_comment> cf_comments = dao1.cf_selectListAll();
 		mav.addObject("f_boards",f_boards);
-		mav.addObject(f_board);
+		mav.addObject("f_board", f_board);
+		mav.addObject("cf_comments",cf_comments);
+		
 		return mav;
 	}
 	
@@ -93,20 +95,24 @@ public class BoardmainController {
 		ArrayList<F_board> f_boards = dao.f_boardselectListAll();
 		mav.addObject("f_boards",f_boards);
 		mav.addObject(f_board);
+		dao.f_modify(f_board);
 		return mav;
 	}
+	
 	@RequestMapping(value = "f_modify", method = RequestMethod.POST)
 	public ModelAndView f_modify(@ModelAttribute("f_board") F_board f_board,HttpServletRequest request) {
-		ModelAndView mav = new ModelAndView("boardmain/f_board");
+		ModelAndView mav = new ModelAndView("boardmain/f_board"); 
 		F_boardDAO dao=sqlSession.getMapper(F_boardDAO.class);
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		ArrayList<F_board> f_boards = dao.f_boardselectListAll();
+		mav.addObject("f_boards",f_boards);
 		Date date=new Date();
 		String today=df.format(date);
 		f_board.setF_date(today);
 		String ip = request.getRemoteAddr();
 		f_board.setF_ip(ip);
-		dao.f_modify(f_board);
 		mav.addObject(f_board);
+		dao.f_modify(f_board);
 		return mav;
 	}
 }

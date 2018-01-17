@@ -104,7 +104,7 @@ $(document).ready(function(){
 		<div class="form-group col-sm-offset-4 col-sm-4" style="margin-top:50px;">
 			<div class="input-group">
 			    <span class="input-group-addon"><i class="fa fa-barcode" aria-hidden="true"></i>&nbsp; 상품코드</span>
-			    <input id="code" name="code" type="text" required="true" maxlength="8" class="form-control" placeholder="8자리 입력">
+			    <input id="code" name="code" type="text" numberonly="true" required="true" maxlength="8" class="form-control" placeholder="8자리 입력">
 			    <input type="hidden" name="consumableconfirmchk" id="consumableconfirmchk" value="no">
 			    <div class="input-group-btn">
 			      <button id="consumableconfirm" class="btn btn-default" type="button">중복검사</button>
@@ -152,7 +152,7 @@ $(document).ready(function(){
 		<div class="form-group col-sm-offset-4 col-sm-4">
 			<div class="input-group">
 			    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 상품설명</span>
-			    <input id="explanation" name="explanation" type="text" required="true" class="form-control" placeholder="explanation">
+			    <textarea class="form-control"id="explanation" name="explanation"></textarea>
 			</div>
 		</div>
 		<div class="col-sm-offset-4 col-sm-4" style="text-align:center;margin-top:30px;margin-bottom: 80px">

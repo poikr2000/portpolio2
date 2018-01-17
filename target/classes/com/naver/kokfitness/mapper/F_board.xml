@@ -27,7 +27,7 @@
 	</insert>
 	
 	<select id="f_boardselectListAll" resultMap="f_boardMap">
-		select * from f_board
+		select * from f_board order by f_seq desc
 	</select>
 	
 	<select id="selectDetail" parameterType="Integer" resultMap="f_boardMap">
@@ -35,12 +35,17 @@
 	</select>
 	
 	<update id="f_modify" parameterType="hashMap">
-		update f_board set f_content=#{f_content} where f_seq=#{f_seq}
+		update f_board set
+		f_content=#{f_content}
+		,f_attach=#{f_attach}
+		,f_ip=#{f_ip}
+		,f_date=#{f_date}
+		where f_seq=#{f_seq}
 	</update>
 	
-<!-- 	<update id="updateHit" parameterType="Integer"> -->
-<!-- 		update f_board set f_hit=f_hit + 1 where f_seq=#{b_seq} -->
-<!-- 	</update> -->
+	<update id="f_board_updateHit" parameterType="Integer">
+		update f_board set f_hit=f_hit + 1 where f_seq=#{b_seq}
+	</update>
 	
 </mapper>
 	

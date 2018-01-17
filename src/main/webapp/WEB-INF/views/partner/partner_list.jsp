@@ -20,6 +20,13 @@ $(document).ready(function(){
 	$('#partnertable').DataTable({
 		dom: 'ftBp',
         buttons: [
+        	{
+                text: 'insert',
+                action: function ( e, dt, node, config ) {
+                	var url="partnerInsertForm";
+        			$(location).attr('href',url);
+                }
+            },
             {
                 text: 'delete',
                 action: function ( e, dt, node, config ) {
@@ -71,7 +78,7 @@ $(document).ready(function(){
 						<tr>
 							<td class="text-center"><input type="checkbox" id="partnerunitchk" name="partnerunitchk" value="${partner.code}"></td>
 							<td style="text-align:center;vertical-align:middle;"><a href="partnerDetail?code=${partner.code}">${partner.code}</a></td>
-							<td style="text-align:center;vertical-align:middle;">${partner.name}</td>
+							<td style="text-align:center;vertical-align:middle;"><a href="partnerDetail?code=${partner.code}">${partner.name}</a></td>
 							<td style="text-align:center;vertical-align:middle;">${partner.busno1}-${partner.busno2}-${partner.busno3}</td>
 							<td style="text-align:center;vertical-align:middle;">${partner.ceoname}</td>
 							<td style="text-align:center;vertical-align:middle;">${partner.officeno1}-${partner.officeno2}-${partner.officeno3}</td>
