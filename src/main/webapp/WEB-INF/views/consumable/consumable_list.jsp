@@ -60,13 +60,14 @@ $(document).ready(function(){
 		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;text-align:center;">
 			  <h2>수불장</h2>
 		</div>
-		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;margin-bottom: 70px;">
+		<div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 70px;">
 			<table id="consumabletable" class="table table-striped table-bordered" cellspacing="0" width="100%">
 		        <thead>
 		            <tr>
 		            	<th><input type="checkbox" id="consumableallchk"></th>
 		                <th>코드</th>
 		                <th>품명</th>
+		                <th>거래처</th>
 		                <th>전년말</th>
 		                <th>구분</th>
 						<th>1월</th>
@@ -94,6 +95,7 @@ $(document).ready(function(){
 									<td class="text-center" style="vertical-align:middle;"><input type="checkbox" id="consumableunitchk" name="consumableunitchk" value="${consumable.code}"></td>
 									<td class="text-center" style="vertical-align:middle;"><a href="consumableDetail?code=${consumable.code}">${consumable.code}</a></td>
 									<td class="text-center" style="vertical-align:middle;"><a href="consumableDetail?code=${consumable.code}">${consumable.name}</a></td>
+									<td class="text-center" style="vertical-align:middle;">${consumable.bp_name}</td>
 									<td class="text-center" style="vertical-align:middle;">${consumable.preyystock}</td>
 									<td class="text-center" style="vertical-align:middle;">
 										<div class="bg-danger text-white">입고</div>

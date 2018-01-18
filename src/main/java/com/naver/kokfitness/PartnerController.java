@@ -1,7 +1,6 @@
 package com.naver.kokfitness;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.naver.kokfitness.entities.Partner;
+import com.naver.kokfitness.service.ConsumableDAO;
 import com.naver.kokfitness.service.PartnerDAO;
 
 @Controller
@@ -65,14 +65,6 @@ public class PartnerController {
 		mav.addObject("partner",partner);
 		return mav;
 	}
-	@RequestMapping(value = "partnerSelectedDelete", method = RequestMethod.POST)
-	public String partnerSelectedDelete(@RequestParam ("partnerunitchk") List<String> partnerunitchk) {
-		PartnerDAO dao=sqlSession.getMapper(PartnerDAO.class);
-		for(String unit : partnerunitchk) {
-			dao.partnerDelete(unit);
-	    }
-		return "redirect:partnerList";
-	}
 	@RequestMapping(value = "partnerUpdate", method = RequestMethod.POST)
 	public String partnerUpdate(@ModelAttribute("partner") Partner partner) {
 		PartnerDAO dao=sqlSession.getMapper(PartnerDAO.class);
@@ -88,5 +80,17 @@ public class PartnerController {
 		PartnerDAO dao=sqlSession.getMapper(PartnerDAO.class);
 		dao.partnerDelete(code);
 		return "redirect:partnerList";
+	}
+	@RequestMapping(value = "GoodsConfirm", method = RequestMethod.POST)
+	@ResponseBody
+	public int GoodsConfirm(@RequestParam String bp_code) {
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		int result=0;
+		try {
+			result=consumabledao.GoodsConfirm(bp_code);
+		}catch(Exception e){
+			System.out.println("error : "+e.getMessage());
+		}
+		return result;
 	}
 }

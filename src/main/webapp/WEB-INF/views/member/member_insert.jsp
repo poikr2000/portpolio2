@@ -36,7 +36,7 @@ $(document).ready(function(){
 		$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
 	});
 	$('#emailconfirm').on("click",function(){
-		var email = $('#useremail').val()
+		var email = $('#useremail').val();
 		if($('#useremail').val()==""){
 			$('#signUpModalMsg').text("메일주소를 입력해주세요.");
 			$('#usebtn').text("확인");

@@ -37,6 +37,7 @@ public class Consumable {
 	private int ship11;
 	private int ship12;
 	private String bp_code;
+	private String bp_name;
 	private String category_code;
 	private String explanation;
 	public String getCode() {
@@ -236,6 +237,12 @@ public class Consumable {
 	}
 	public void setBp_code(String bp_code) {
 		this.bp_code = bp_code;
+	}
+	public String getBp_name() {
+		return bp_name;
+	}
+	public void setBp_name(String bp_name) {
+		this.bp_name = bp_name;
 	}
 	public String getCategory_code() {
 		return category_code;

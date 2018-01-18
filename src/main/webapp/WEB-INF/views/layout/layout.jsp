@@ -33,7 +33,7 @@
 <!-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
 <!-- App & fonts-->
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&amp;amp;subset=latin-ext">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/main.css?ver=1"><!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/main.css?ver=2"><!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 <head>

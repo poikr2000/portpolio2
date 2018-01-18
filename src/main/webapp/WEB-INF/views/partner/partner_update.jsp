@@ -73,12 +73,30 @@ $(document).ready(function(){
 		$('#partnerupdate_form').submit();
 	});
 	$('#partnerdeletebtn').click(function(){
-		$('#updateconfirmbtn').hide();
-		$('#deleteconfirmbtn').show();
-		var msg=""
-		msg="- 거래처를 삭제하시겠습니까 -";
-		$('#updateconfirmModalMsg').text(msg);
-		$('#updateconfirmModal').modal('show');
+		var bp_code = $('#code').val();
+		$.ajax({
+			type:'Post',
+			data:"bp_code="+bp_code,
+			datatype:'json',
+			url : 'GoodsConfirm',
+			success : function(data){
+				if(data>0){
+					$('#goodsconfirmModalMsg').text("해당 거래처와 연결된 상품을 먼저 삭제해야 합니다.");
+					$('#goodsconfirmModal').modal('show');
+					return;
+				}else{
+					$('#updateconfirmbtn').hide();
+					$('#deleteconfirmbtn').show();
+					var msg=""
+					msg="- 거래처를 삭제하시겠습니까 -";
+					$('#updateconfirmModalMsg').text(msg);
+					$('#updateconfirmModal').modal('show');
+				}
+			},
+			error : function(xhr,status,error){
+				alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+			}
+		});
 	})
 	$('#deleteconfirmbtn').click(function(){
 		$('#partnerupdate_form').attr('action','partnerDelete');
@@ -171,6 +189,20 @@ $(document).ready(function(){
 			<button class="btn" type="button" id="partnerdeletebtn" name="partnerdeletebtn">거래처삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 			<button class="btn" type="button" id="partnerupdatebtn" name="partnerupdatebtn">정보수정</button>
 		</div>
+	</div>
+	<div class="modal fade" id="goodsconfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      </div>
+	      <div class="modal-body">
+	        <span id="goodsconfirmModalMsg">...</span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="updatebtn" class="btn btn-default" data-dismiss="modal">Close</button>
+	      </div>
+	    </div>
+	  </div>
 	</div>
 	<div class="modal fade" id="updateconfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">

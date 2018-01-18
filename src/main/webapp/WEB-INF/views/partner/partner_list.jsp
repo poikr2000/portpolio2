@@ -26,26 +26,6 @@ $(document).ready(function(){
                 	var url="partnerInsertForm";
         			$(location).attr('href',url);
                 }
-            },
-            {
-                text: 'delete',
-                action: function ( e, dt, node, config ) {
-                	var checkboxarr=[];
-                	$("input[name='partnerunitchk']:checked").each(function(){
-                		checkboxarr.push($(this).val());
-                	});
-                	if(checkboxarr.length>0){
-                		$('#partnerselectedmodalmsg').text("삭제 하시겠습니까?")
-                		$('#partnerSelectedDeleteModal').modal('show');
-                		$('#partnerSelectedModalDeleteBtn').on('click',function(){
-                			$('.partnerlist_form').submit();
-                		});
-                	}else{
-            			$('#partnerNoticeModalMsg').text("선택된 항목이 없습니다.")
-                		$('#partnerNoticeModal').modal('show');
-            			return;
-            		}
-                }
             }
         ]
 	});
@@ -61,11 +41,10 @@ $(document).ready(function(){
 		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;text-align:center;">
 			  <h2>거래처 리스트</h2>
 		</div>
-		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;margin-bottom: 70px;">
+		<div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 70px;">
 			<table class="table table-striped table-bordered" id="partnertable">
 				<thead>
 					<tr style="text-align:center;">
-						<th style="text-align:center;vertical-align:middle;"><input type="checkbox" id="partnerallchk"></th>
 						<th style="text-align:center;vertical-align:middle;">코드</th>
 						<th style="text-align:center;vertical-align:middle;">상호명</th>
 						<th style="text-align:center;vertical-align:middle;">사업자번호</th>
@@ -75,14 +54,19 @@ $(document).ready(function(){
 				</thead>
 				<tbody>
 					<c:forEach var="partner" items="${partners}">
-						<tr>
-							<td class="text-center"><input type="checkbox" id="partnerunitchk" name="partnerunitchk" value="${partner.code}"></td>
-							<td style="text-align:center;vertical-align:middle;"><a href="partnerDetail?code=${partner.code}">${partner.code}</a></td>
-							<td style="text-align:center;vertical-align:middle;"><a href="partnerDetail?code=${partner.code}">${partner.name}</a></td>
-							<td style="text-align:center;vertical-align:middle;">${partner.busno1}-${partner.busno2}-${partner.busno3}</td>
-							<td style="text-align:center;vertical-align:middle;">${partner.ceoname}</td>
-							<td style="text-align:center;vertical-align:middle;">${partner.officeno1}-${partner.officeno2}-${partner.officeno3}</td>
-						</tr>
+						<c:choose>
+							<c:when test="${partner.code=='00000'}">
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<td style="text-align:center;vertical-align:middle;"><a href="partnerDetail?code=${partner.code}">${partner.code}</a></td>
+									<td style="text-align:center;vertical-align:middle;"><a href="partnerDetail?code=${partner.code}">${partner.name}</a></td>
+									<td style="text-align:center;vertical-align:middle;">${partner.busno1}-${partner.busno2}-${partner.busno3}</td>
+									<td style="text-align:center;vertical-align:middle;">${partner.ceoname}</td>
+									<td style="text-align:center;vertical-align:middle;">${partner.officeno1}-${partner.officeno2}-${partner.officeno3}</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
 					</c:forEach>
 				</tbody>
 			</table>

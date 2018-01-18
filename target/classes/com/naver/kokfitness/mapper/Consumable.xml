@@ -40,6 +40,7 @@
 		<id property="ship11" column="ship11"/>
 		<id property="ship12" column="ship12"/>
 		<id property="bp_code" column="bp_code"/>
+		<id property="bp_name" column="bp_name"/>
 		<id property="category_code" column="category_code"/>
 		<id property="explanation" column="explanation"/>
 	</resultMap>
@@ -48,17 +49,29 @@
 		select *from category
 	</select>
 	<select id="consumableListAll" resultMap="consumableMap">
-		select *from consumable
+		select A.*, B.name bp_name
+		from consumable A,business_partner B
+		where A.bp_code=B.code
 	</select>
 	<select id="codeConfirm" parameterType="String" resultType="int">
 		select count(*) 
 		from consumable 
 		where code=#{code}
 	</select>
+	<select id="GoodsConfirm" parameterType="String" resultType="int">
+		select count(*) 
+		from consumable 
+		where bp_code=#{bp_code}
+	</select>
 	<select id="consumableGetOne" parameterType="String" resultMap="consumableMap">
 		select *
 		from consumable
 		where code=#{code}
+	</select>
+	<select id="selectGetOne" parameterType="String" resultMap="consumableMap">
+		select A.code,A.name,B.code bp_code,B.name bp_name,price,stock
+		from consumable A,business_partner B
+		where A.bp_code=B.code and A.code=#{code}
 	</select>
 	<insert id="consumableInsert" parameterType="hashMap">
 		insert into consumable(
@@ -77,6 +90,11 @@
 		ship01=#{ship01},ship02=#{ship02},ship03=#{ship03},ship04=#{ship04},ship05=#{ship05},ship06=#{ship06},
 		ship07=#{ship07},ship08=#{ship08},ship09=#{ship09},ship10=#{ship10},ship11=#{ship11},ship12=#{ship12}
 		where code=#{code}
+	</update>
+	<update id="receivingAdd" parameterType="hashMap">
+		update consumable 
+		set stock=stock+#{qty}, ${columnname} = ${columnname}+#{qty}
+		where code=#{consume_code}
 	</update>
 	<delete id="consumableDelete" parameterType="String">
 		delete from consumable where code=#{code}
