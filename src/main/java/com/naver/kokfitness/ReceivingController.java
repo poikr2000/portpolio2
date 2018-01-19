@@ -3,6 +3,7 @@ package com.naver.kokfitness;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +52,11 @@ public class ReceivingController {
 		mav.addObject("receiving",receiving);
 		mav.addObject("consumables",consumables);
 		mav.addObject("partners",partners);
+		return mav;
+	}
+	@RequestMapping(value = "receivingStatement", method = RequestMethod.GET)
+	public ModelAndView receivingStatement() {
+		ModelAndView mav = new ModelAndView("receiving/receiving_statement");
 		return mav;
 	}
 	@RequestMapping(value = "consumableSelected", method = RequestMethod.POST)
@@ -134,6 +140,42 @@ public class ReceivingController {
 		}
 		return mav;
 	}
+	@RequestMapping(value = "receivingSearchNotingPartner", method = RequestMethod.POST)
+	 public ModelAndView receivingSearchNotingPartner(@ModelAttribute("receivingsearch")ReceivingSearch receivingsearch) {
+		ModelAndView mav = new ModelAndView("receiving/receiving_insert");
+		ReceivingDAO receivingdao=sqlSession.getMapper(ReceivingDAO.class);
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		PartnerDAO partnerdao=sqlSession.getMapper(PartnerDAO.class);
+		int resultmm=Integer.parseInt(receivingsearch.getSearchmm());
+		if(resultmm<10) {
+			String mm = String.format("%02d", resultmm);
+			receivingsearch.setSearchmm(mm);
+		}
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sm.format(new Date());
+		String yyyy= date.substring(0,4);
+		String mm = date.substring(5,7);
+		String dd = date.substring(8,10);
+		receiving.setYyyy(yyyy);
+		receiving.setMm(mm);
+		receiving.setDd(dd);
+		int no = receivingdao.selectSequenceNo(receiving);
+		receiving.setNo(no);
+		receiving.setHang(1);
+		mav.addObject("receiving",receiving);
+		try {
+			ArrayList<Receiving> receivings =  receivingdao.SelectReceivingSearchRollupNotingPartner(receivingsearch);
+			ArrayList<Consumable> consumables = consumabledao.consumableListAll();
+			ArrayList<Partner> partners = partnerdao.partnerListAll();
+			mav.addObject("receivings",receivings);
+			mav.addObject("consumables",consumables);
+			mav.addObject("partners",partners);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return mav;
+	}
+	
 	@RequestMapping(value = "receivingListDelete", method = RequestMethod.GET)
 	 public String receivingListDelete(@RequestParam String seq) {
 		ReceivingDAO receivingdao=sqlSession.getMapper(ReceivingDAO.class);
@@ -181,6 +223,41 @@ public class ReceivingController {
 		mav.addObject("receivings",receivings);
 		mav.addObject("consumables",consumables);
 		mav.addObject("partners",partners);
+		return mav;
+	}
+	@RequestMapping(value = "receivingStatementMm", method = RequestMethod.POST)
+	 public ModelAndView receivingStatementMm(@RequestParam String yyyy , @RequestParam String mm) {
+		ModelAndView mav = new ModelAndView("receiving/receiving_statement");
+		ReceivingDAO receivingdao=sqlSession.getMapper(ReceivingDAO.class);
+		int resultmm=Integer.parseInt(mm);
+		if(resultmm<10) {
+			mm = String.format("%02d", resultmm);
+		}
+		HashMap yyyymm = new HashMap();
+		yyyymm.put("yyyy", yyyy);
+		yyyymm.put("mm", mm);
+		ArrayList<Receiving>receivings=receivingdao.SelectReceivingStatementMm(yyyymm);
+		mav.addObject("receivings",receivings);
+		mav.addObject("yyyy",yyyy);
+		mav.addObject("mm",mm);
+		mav.addObject("number",1);
+		return mav;
+	}
+	@RequestMapping(value = "receivingStatementDd", method = RequestMethod.POST)
+	 public ModelAndView receivingStatementDd(@ModelAttribute("receiving")Receiving receiving) {
+		ModelAndView mav = new ModelAndView("receiving/receiving_statement");
+		ReceivingDAO receivingdao=sqlSession.getMapper(ReceivingDAO.class);
+		int resultmm=Integer.parseInt(receiving.getMm());
+		if(resultmm<10) {
+			String mm = String.format("%02d", resultmm);
+			receiving.setMm(mm);
+		}
+		ArrayList<Receiving>receivings=receivingdao.SelectReceivingStatementDd(receiving);
+		mav.addObject("receivings",receivings);
+		mav.addObject("yyyy",receiving.getYyyy());
+		mav.addObject("mm",receiving.getMm());
+		mav.addObject("dd",receiving.getDd());
+		mav.addObject("number",1);
 		return mav;
 	}
 }

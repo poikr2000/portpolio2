@@ -105,22 +105,20 @@ $(document).ready(function(){
 		var searchyyyy = $('#searchyyyy').val();
 		var searchmm = $('#searchmm').val();
 		var searchdd = $('#searchdd').val();
-		if(vendercode == '00000'){
-			$('#modalmsgconsume').text('- 매입처를 선택하세요! -');
-			
-		}else{
-			$('#modalmsgconsume').text('');
-		}
 		if(searchyyyy == ""){
 			$('#qtyConfirmModalMsg').text('- 날짜를 입력하세요! -');
 			
 		}else{
 			$('#qtyConfirmModalMsg').text('');
 		}
-		if(vendercode == '00000'||searchyyyy == ""){
+		if(searchyyyy == ""){
 			$('#qtyConfirmModal').modal('show');
 			return;
+		}else if(vendercode != '00000'&&searchyyyy != ""){
+			$('.receivingsearch_form').attr('action','receivingSearch');
+			$('.receivingsearch_form').submit();
 		}else{
+			$('.receivingsearch_form').attr('action','receivingSearchNotingPartner');
 			$('.receivingsearch_form').submit();
 		}
 	});

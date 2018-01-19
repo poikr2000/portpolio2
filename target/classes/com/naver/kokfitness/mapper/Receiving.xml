@@ -40,11 +40,30 @@
 		A.bp_code=#{searchpartner} and yyyy=#{searchyyyy} and mm=#{searchmm} and dd=#{searchdd}
 		group by no,hang with rollup;
 	</select>
+	<select id="SelectReceivingSearchRollupNotingPartner" parameterType="hashMap" resultMap="receivingMap">
+		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,consume_code,C.name consume_name,A.price,qty,memo,sum(A.price*qty) as total 
+		from receiving A, business_partner B, consumable C 
+		where A.bp_code=B.code and A.consume_code=C.code and 
+		yyyy=#{searchyyyy} and mm=#{searchmm} and dd=#{searchdd}
+		group by no,hang with rollup;
+	</select>
 	<select id="receivingSelectOne" parameterType="String" resultMap="receivingMap">
 		select A.*, B.name bp_name,C.stock
 		from receiving A, business_partner B,consumable C
 		where A.bp_code=B.code and A.consume_code=C.code 
 		and seq=#{seq}
+	</select>
+	<select id="SelectReceivingStatementMm" parameterType="hashMap" resultMap="receivingMap">
+		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,consume_code,C.name consume_name,A.price,qty,memo,sum(A.price*qty) as total 
+		from receiving A, business_partner B, consumable C 
+		where A.bp_code=B.code and A.consume_code=C.code and yyyy=#{yyyy} and mm=#{mm}
+		group by dd,A.bp_code,no,hang with rollup;
+	</select>
+	<select id="SelectReceivingStatementDd" parameterType="hashMap" resultMap="receivingMap">
+		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,consume_code,C.name consume_name,A.price,qty,memo,sum(A.price*qty) as total 
+		from receiving A, business_partner B, consumable C 
+		where A.bp_code=B.code and A.consume_code=C.code and yyyy=#{yyyy} and mm=#{mm} and dd=#{dd}
+		group by A.bp_code,no,hang with rollup;
 	</select>
 	<insert id="receivingInsert" parameterType="hashMap">
 		insert into receiving(seq,bp_code,yyyy,mm,dd,no,hang,consume_code,price,qty,memo
