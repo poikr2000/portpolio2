@@ -8,6 +8,7 @@ public class Receiving {
 	private String bp_code;
 	private String bp_name;
 	private String consume_code;
+	private String beforeconsume_code;
 	private String consume_name;
 	private String yyyy;
 	private String mm;
@@ -16,6 +17,7 @@ public class Receiving {
 	private int hang;
 	private int price;
 	private int qty;
+	private int beforeqty;
 	private int total;
 	private int stock;
 	private String columnname;
@@ -115,5 +117,17 @@ public class Receiving {
 	}
 	public void setTotal(int total) {
 		this.total = total;
+	}
+	public String getBeforeconsume_code() {
+		return beforeconsume_code;
+	}
+	public void setBeforeconsume_code(String beforeconsume_code) {
+		this.beforeconsume_code = beforeconsume_code;
+	}
+	public int getBeforeqty() {
+		return beforeqty;
+	}
+	public void setBeforeqty(int beforeqty) {
+		this.beforeqty = beforeqty;
 	}
 }

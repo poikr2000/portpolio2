@@ -13,6 +13,41 @@ function myFunction() {
 	var price = document.receivinginsert_form.price.value;
 	$('#total').attr("value",qty*price);
 }
+function selectedSeq(seq){
+	$.ajax({
+		type:'Post',
+		data:"seq="+seq,
+		datatype:'json',
+		url : 'receivingDetail',
+		success : function(data){
+			$("#receivinginsertbtn").hide();
+			$("#receivingreset").hide();
+			$("#receivingupdate").show();
+			
+			$('#yyyy').attr("value",data.yyyy);
+			$('#mm').attr("value",data.mm);
+			$('#dd').attr("value",data.dd);
+			$('#no').attr("value",data.no);
+			$('#hang').attr("value",data.hang);
+			$('#bp_name').attr("value",data.bp_name);
+			$("#select_consumable").val(data.consume_code).prop("selected", true);
+			$('#bp_code').attr("value",data.bp_code);
+			$('#consume_code').attr("value",data.consume_code);
+			$('#beforeconsume_code').attr("value",data.consume_code);
+			$('#price').attr("value",data.price);
+			$('#qty').attr("value",data.qty);
+			$('#stock').attr("value",data.stock);
+			$('#beforeqty').attr("value",data.qty);
+			var total = data.price*data.qty;
+			$('#total').attr("value",total);
+			$('#memo').attr("value",data.memo);
+			$('#seq').attr("value",data.seq);
+		},
+		error : function(xhr,status,error){
+			alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+		}
+	});
+}
 $(document).ready(function(){
 	$(document).on("keyup","input:text[numberOnly]",function(){
 		$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
@@ -24,6 +59,7 @@ $(document).ready(function(){
 	$('#searchyyyy').attr("value",year);
 	$('#searchmm').val(mm).prop("selected", true);
 	$('#searchdd').val(dd).prop("selected", true);
+	
 	$("#select_consumable").change(function() {
 		var code = $(this).val();
 		$.ajax({
@@ -64,6 +100,50 @@ $(document).ready(function(){
 			$('.receivinginsert_form').submit();
 		}
 	});
+	$('#receivingsearch_btn').click(function(){
+		var vendercode = $('#searchpartner').val();
+		var searchyyyy = $('#searchyyyy').val();
+		var searchmm = $('#searchmm').val();
+		var searchdd = $('#searchdd').val();
+		if(vendercode == '00000'){
+			$('#modalmsgconsume').text('- 매입처를 선택하세요! -');
+			
+		}else{
+			$('#modalmsgconsume').text('');
+		}
+		if(searchyyyy == ""){
+			$('#qtyConfirmModalMsg').text('- 날짜를 입력하세요! -');
+			
+		}else{
+			$('#qtyConfirmModalMsg').text('');
+		}
+		if(vendercode == '00000'||searchyyyy == ""){
+			$('#qtyConfirmModal').modal('show');
+			return;
+		}else{
+			$('.receivingsearch_form').submit();
+		}
+	});
+	$('#receivingupdate').click(function(){
+		var selectconsumable = $('#select_consumable').val();
+		if(selectconsumable == '00000000'){
+			$('#modalmsgconsume').text('- 매입 상품을 선택하세요! -');
+		}else{
+			$('#modalmsgconsume').text('');
+		}
+		if($('#qty').val()==0){
+			$('#qtyConfirmModalMsg').text('- 수량을 입력하세요! -');
+		}else{
+			$('#qtyConfirmModalMsg').text('');
+		}
+		if(selectconsumable == '0000000000000'||$('#qty').val()==""){
+			$('#qtyConfirmModal').modal('show');
+			return;
+		}else{
+			$('.receivinginsert_form').attr('action','receivingUpdate');
+			$('.receivinginsert_form').submit();
+		}	
+	});
 });
 </script>
 </content>
@@ -85,9 +165,8 @@ $(document).ready(function(){
 								<option value="${consumable.code}">${consumable.name}</option>
 							</c:forEach>
 					    </select>
-					    <input type="hidden" id="vendname" name="vendname">
 					    <input type="hidden" id="seq" name="seq" value="0">
-					    <input type="hidden" id="beforeprocode" name="beforeprocode">
+					    <input type="hidden" id="beforeconsume_code" name="beforeconsume_code">
 					    <input type="hidden" id="beforeqty" name="beforeqty" value="0">
 				 	</div>
 				</div>
@@ -157,13 +236,13 @@ $(document).ready(function(){
 			</div>
 		</form>
 		<div class="col-sm-1"></div>
-		<form class="buysearch_form" name="buysearch_form" action="buySearch" method="POST"role="form" data-parsley-validate="true">
+		<form class="receivingsearch_form" name="receivingsearch_form" action="receivingSearch" method="POST"role="form" data-parsley-validate="true">
 			<div class="col-sm-6">
 				<div style="margin-top:50px;height: 470px;">
 					<table width="100%">
 						<tr>
 							<td>
-								 <input id="vendername" name="vendername" type="text" value="<c:if test="${receiving.bp_code!=null}">(${receiving.bp_code})${receiving.bp_name}</c:if>"class="form-control">
+								 <input id="bp_name" name="bp_name" type="text" value="<c:if test="${receiving.bp_code!=null}">(${receiving.bp_code})${receiving.bp_name}</c:if>"class="form-control">
 							</td>
 							<td>
 								 <input id="yymmdd" name="yymmdd" type="text" value="<c:if test="${receiving.yyyy!=null}">${receiving.yyyy}-${receiving.mm}-${receiving.dd}</c:if>"class="form-control">
@@ -216,7 +295,7 @@ $(document).ready(function(){
 							        			<td class="text-center">${receivings.price}</td>
 							        			<td class="text-center">${receivings.qty}</td>
 							        			<td class="text-center">${receivings.total}</td>
-							        			<td class="text-center"><a href="buyListDelete?seq=${receivings.seq}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+							        			<td class="text-center"><a href="receivingListDelete?seq=${receivings.seq}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
 											</tr>
 				        				</c:otherwise>
 				        			</c:choose>
@@ -226,7 +305,7 @@ $(document).ready(function(){
 				    </div>
 				</div>
 				<div class="input-group" style="margin-top:10px;margin-bottom: 80px">
-					<select id="searchvender" name="searchvender" class="form-control" style="width: 100px;"> 
+					<select id="searchpartner" name="searchpartner" class="form-control" style="width: 100px;"> 
 				    	<c:forEach var="partner" items="${partners}">
 							<option value="${partner.code}">${partner.name}</option>
 						</c:forEach>
@@ -246,7 +325,7 @@ $(document).ready(function(){
 						</c:forEach>
 					</select>
 					<div class="input-group-btn">
-						<button type="button" id="buysearch_btn" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp검&nbsp&nbsp&nbsp&nbsp&nbsp색</button>
+						<button type="button" id="receivingsearch_btn" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp검&nbsp&nbsp&nbsp&nbsp&nbsp색</button>
 					</div>
 				</div>
 			</div>

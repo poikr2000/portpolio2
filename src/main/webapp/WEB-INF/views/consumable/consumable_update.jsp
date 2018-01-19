@@ -84,13 +84,25 @@ $(document).ready(function(){
 			    <span class="input-group-addon"><i class="fa fa-archive" aria-hidden="true"></i>&nbsp 카테고리</span>
 			    <select id="category_code" name="category_code" class="form-control"> 
 			    	<c:forEach var="category" items="${categorys}">
-						<option <c:if test="${category.code==consumable.category_code}">selected</c:if> value="${category.code}">${category.name}</option>
+			    		<c:choose>
+		        			<c:when test="${category.code=='0000000000'}">
+	        				</c:when>
+		        			<c:otherwise>
+		        				<option <c:if test="${category.code==consumable.category_code}">selected</c:if> value="${category.code}">${category.name}</option>
+	        				</c:otherwise>
+	        			</c:choose>
 					</c:forEach>
 			    </select>
 			    <span class="input-group-addon"><i class="fa fa-gift" aria-hidden="true"></i>&nbsp 거&nbsp&nbsp래&nbsp&nbsp처</span>
 			    <select id="bp_code" name="bp_code" class="form-control"> 
 			    	<c:forEach var="partner" items="${partners}">
-						<option <c:if test="${partner.code==consumable.bp_code}">selected</c:if> value="${partner.code}">${partner.name}</option>
+			    		<c:choose>
+		        			<c:when test="${partner.code=='00000'}">
+	        				</c:when>
+		        			<c:otherwise>
+		        				<option <c:if test="${partner.code==consumable.bp_code}">selected</c:if> value="${partner.code}">${partner.name}</option>
+	        				</c:otherwise>
+	        			</c:choose>
 					</c:forEach>
 			    </select>
 		 	</div>

@@ -17,4 +17,6 @@ public interface ConsumableDAO {
 	void consumableUpdate(Consumable consumable);
 	int GoodsConfirm(String bp_code);
 	void receivingAdd(Receiving receiving);
+	void receivingUpdateSub(Receiving receiving);
+	void receivingDeleteSub(Receiving receiving);
 }

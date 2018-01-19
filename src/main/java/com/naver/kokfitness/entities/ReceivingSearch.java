@@ -1,19 +1,19 @@
-package com.naver.kokfitness.mapper;
+package com.naver.kokfitness.entities;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class ReceivingSearch {
-	private String bp_code;
+	private String searchpartner;
 	private String searchyyyy;
 	private String searchmm;
 	private String searchdd;
 	
-	public String getBp_code() {
-		return bp_code;
+	public String getSearchpartner() {
+		return searchpartner;
 	}
-	public void setBp_code(String bp_code) {
-		this.bp_code = bp_code;
+	public void setSearchpartner(String searchpartner) {
+		this.searchpartner = searchpartner;
 	}
 	public String getSearchyyyy() {
 		return searchyyyy;

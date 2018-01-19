@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.naver.kokfitness.entities.Consumable;
 import com.naver.kokfitness.entities.Partner;
 import com.naver.kokfitness.entities.Receiving;
+import com.naver.kokfitness.entities.ReceivingSearch;
 import com.naver.kokfitness.service.ConsumableDAO;
 import com.naver.kokfitness.service.PartnerDAO;
 import com.naver.kokfitness.service.ReceivingDAO;
@@ -96,6 +97,90 @@ public class ReceivingController {
 		ArrayList<Receiving> receivings = receivingdao.receivingSelectListAll(receiving);
 		mav.addObject("receivings",receivings);
 		
+		return mav;
+	}
+	@RequestMapping(value = "receivingSearch", method = RequestMethod.POST)
+	 public ModelAndView receivingSearch(@ModelAttribute("receivingsearch")ReceivingSearch receivingsearch) {
+		ModelAndView mav = new ModelAndView("receiving/receiving_insert");
+		ReceivingDAO receivingdao=sqlSession.getMapper(ReceivingDAO.class);
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		PartnerDAO partnerdao=sqlSession.getMapper(PartnerDAO.class);
+		int resultmm=Integer.parseInt(receivingsearch.getSearchmm());
+		if(resultmm<10) {
+			String mm = String.format("%02d", resultmm);
+			receivingsearch.setSearchmm(mm);
+		}
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sm.format(new Date());
+		String yyyy= date.substring(0,4);
+		String mm = date.substring(5,7);
+		String dd = date.substring(8,10);
+		receiving.setYyyy(yyyy);
+		receiving.setMm(mm);
+		receiving.setDd(dd);
+		int no = receivingdao.selectSequenceNo(receiving);
+		receiving.setNo(no);
+		receiving.setHang(1);
+		mav.addObject("receiving",receiving);
+		try {
+			ArrayList<Receiving> receivings =  receivingdao.SelectReceivingSearchRollup(receivingsearch);
+			ArrayList<Consumable> consumables = consumabledao.consumableListAll();
+			ArrayList<Partner> partners = partnerdao.partnerListAll();
+			mav.addObject("receivings",receivings);
+			mav.addObject("consumables",consumables);
+			mav.addObject("partners",partners);
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return mav;
+	}
+	@RequestMapping(value = "receivingListDelete", method = RequestMethod.GET)
+	 public String receivingListDelete(@RequestParam String seq) {
+		ReceivingDAO receivingdao=sqlSession.getMapper(ReceivingDAO.class);
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		Receiving receiving = receivingdao.receivingSelectOne(seq);
+		receiving.setColumnname("rcv"+receiving.getMm());
+		consumabledao.receivingDeleteSub(receiving);
+		receivingdao.deleteRow(seq);
+		return "redirect:receivingInsertForm";
+	}
+	@RequestMapping(value = "receivingDetail", method = RequestMethod.POST)
+	@ResponseBody
+	 public Receiving receivingDetail(@RequestParam String seq) {
+		ReceivingDAO receivingdao=sqlSession.getMapper(ReceivingDAO.class);
+		Receiving receiving = receivingdao.receivingSelectOne(seq);
+		return receiving;
+	}
+	@RequestMapping(value = "receivingUpdate", method = RequestMethod.POST)
+	 public ModelAndView buyUpdate(@ModelAttribute("receiving")Receiving receiving) {
+		ModelAndView mav = new ModelAndView("receiving/receiving_insert");
+		ReceivingDAO receivingdao=sqlSession.getMapper(ReceivingDAO.class);
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		PartnerDAO partnerdao=sqlSession.getMapper(PartnerDAO.class);
+		receiving.setColumnname("rcv"+receiving.getMm());
+		receivingdao.updateRow(receiving);
+		consumabledao.receivingUpdateSub(receiving);
+		consumabledao.receivingAdd(receiving);
+		
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		String date = sm.format(new Date());
+		String yyyy= date.substring(0,4);
+		String mm = date.substring(5,7);
+		String dd = date.substring(8,10);
+		receiving.setYyyy(yyyy);
+		receiving.setMm(mm);
+		receiving.setDd(dd);
+		int no = receivingdao.selectSequenceNo(receiving);
+		receiving.setNo(no);
+		receiving.setHang(1);
+		mav.addObject("receiving",receiving);
+		
+		ArrayList<Consumable> consumables = consumabledao.consumableListAll();
+		ArrayList<Partner> partners = partnerdao.partnerListAll();
+		ArrayList<Receiving> receivings = receivingdao.receivingSelectListAll(receiving);
+		mav.addObject("receivings",receivings);
+		mav.addObject("consumables",consumables);
+		mav.addObject("partners",partners);
 		return mav;
 	}
 }

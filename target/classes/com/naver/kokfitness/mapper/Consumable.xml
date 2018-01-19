@@ -96,6 +96,16 @@
 		set stock=stock+#{qty}, ${columnname} = ${columnname}+#{qty}
 		where code=#{consume_code}
 	</update>
+	<update id="receivingDeleteSub" parameterType="hashMap">
+		update consumable 
+		set stock=stock-#{qty}, ${columnname} = ${columnname}-#{qty}
+		where code=#{consume_code}
+	</update>
+	<update id="receivingUpdateSub" parameterType="hashMap">
+		update consumable 
+		set stock=stock-#{beforeqty}, ${columnname} = ${columnname}-#{beforeqty}
+		where code=#{beforeconsume_code}
+	</update>
 	<delete id="consumableDelete" parameterType="String">
 		delete from consumable where code=#{code}
 	</delete>

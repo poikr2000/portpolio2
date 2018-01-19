@@ -9,29 +9,7 @@
 <script>
 $(document).ready(function(){
 	$('#f_board').DataTable({
-		dom: 'Bftp',
-        buttons: [
-            {
-                text: 'delete',
-                action: function ( e, dt, node, config ) {
-                	var checkboxarr=[];
-                	$("input[name='memberunitchk']:checked").each(function(){
-                		checkboxarr.push($(this).val());
-                	});
-                	if(checkboxarr.length>0){
-                		$('#memberselectedmodalmsg').text("삭제 하시겠습니까?")
-                		$('#memberSelectedDeleteModal').modal('show');
-                		$('#memberSelectedModalDeleteBtn').on('click',function(){
-                			$('.memberlist_form').submit();
-                		});
-                	}else{
-            			$('#memberNoticeModalMsg').text("선택된 항목이 없습니다.")
-                		$('#memberNoticeModal').modal('show');
-            			return;
-            		}
-                }
-            }
-        ]
+		dom: 'ftp',
 	})
 });
 </script>
@@ -45,7 +23,6 @@ $(document).ready(function(){
 		<div class="container">
 			<table id="f_board" class="table fade in" style="margin-top: 60px">
 				<thead>
-				<button id="write" onclick="location.href='f_insert_form'" type="button" class="pull-right">글쓰기</button>
 					<tr style="text-algin: center">
 						<th>#</th>
 						<th>작성자</th>
@@ -66,6 +43,7 @@ $(document).ready(function(){
 					</c:forEach>
 				</tbody>
 			</table>
+			<button id="write" onclick="location.href='f_insert_form'" type="button" class="pull-right">글쓰기</button>
 		</div>
 	</form>
 </body>
