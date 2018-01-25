@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.N_boardDAO">
+	<resultMap type="com.naver.kokfitness.entities.N_board" id="n_boardMap">
+		<id property="n_seq" column="n_seq" />
+		<id property="n_name" column="n_name" />
+		<id property="n_title" column="n_title" />
+		<id property="n_content" column="n_content" />
+		<id property="n_hit" column="n_hit" />
+		<id property="n_date" column="n_date" />
+	</resultMap>
+	
+	<insert id="n_insert" parameterType="hashMap">
+		insert into	n_board(
+		n_seq,n_name,n_title,n_content,n_hit,n_date
+		)values(
+		((select ifnull(MAX(n_seq)+1,1) from n_board alias_seq))
+		,#{n_name,jdbcType=VARCHAR}
+		,#{n_title,jdbcType=VARCHAR}
+		,#{n_content,jdbcType=VARCHAR}
+		,#{n_hit,jdbcType=INTEGER}
+		,#{n_date,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="n_boardselectListAll" resultMap="n_boardMap">
+		select * from n_board order by n_seq desc
+	</select>
+	
+	<select id="selectDetail" parameterType="Integer" resultMap="n_boardMap">
+		select * from n_board where n_seq=#{n_seq}
+	</select>
+	
+	<update id="n_modify" parameterType="hashMap">
+		update n_board set
+		n_content=#{n_content}
+		,n_date=#{n_date}
+		where n_seq=#{n_seq}
+	</update>
+	
+	<update id="n_board_updateHit" parameterType="Integer">
+		update n_board set n_hit=n_hit + 1 where n_seq=#{n_seq}
+	</update>
+	
+	<delete id="n_board_delete" parameterType="Integer">
+		delete from n_board where n_seq=#{n_seq}
+	</delete>
+	
+</mapper>
+	

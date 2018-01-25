@@ -10,8 +10,11 @@
 		<id property="code" column="code"/>
 		<id property="name" column="name"/>
 		<id property="capacity" column="capacity"/>
+		<id property="photo" column="photo"/>
+		<id property="beforephoto" column="beforephoto"/>
 		<id property="stock" column="stock"/>
 		<id property="price" column="price"/>
+		<id property="mileageprice" column="mileageprice"/>
 		<id property="preyystock" column="preyystock"/>
 		<id property="premmstock" column="premmstock"/>
 		<id property="preddstock" column="preddstock"/>
@@ -53,6 +56,12 @@
 		from consumable A,business_partner B
 		where A.bp_code=B.code
 	</select>
+	<select id="consumableListMileage" resultMap="consumableMap">
+		select A.*, B.name bp_name
+		from consumable A,business_partner B
+		where A.bp_code=B.code
+		and <![CDATA[ A.code < 20000000 ]]> and <![CDATA[ A.code > 0 ]]>
+	</select>
 	<select id="codeConfirm" parameterType="String" resultType="int">
 		select count(*) 
 		from consumable 
@@ -75,16 +84,16 @@
 	</select>
 	<insert id="consumableInsert" parameterType="hashMap">
 		insert into consumable(
-		code,name,capacity,price,bp_code,category_code,explanation
+		code,name,capacity,photo,price,mileageprice,bp_code,category_code,explanation
 		)values(
-		#{code,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{capacity,jdbcType=VARCHAR},#{price,jdbcType=INTEGER},
-		#{bp_code,jdbcType=VARCHAR},#{category_code,jdbcType=VARCHAR},#{explanation,jdbcType=VARCHAR}
+		#{code,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{capacity,jdbcType=VARCHAR},#{photo,jdbcType=VARCHAR},#{price,jdbcType=INTEGER},
+		#{mileageprice,jdbcType=INTEGER},#{bp_code,jdbcType=VARCHAR},#{category_code,jdbcType=VARCHAR},#{explanation,jdbcType=VARCHAR}
 		)
 	</insert>
 	<update id="consumableUpdate" parameterType="hashMap">
 		update consumable
-		set name=#{name},capacity=#{capacity},stock=#{stock},price=#{price},bp_code=#{bp_code},category_code=#{category_code},
-		preyystock=#{preyystock},premmstock=#{premmstock},preddstock=#{preddstock},explanation=#{explanation},
+		set name=#{name},capacity=#{capacity},photo=#{photo},stock=#{stock},price=#{price},bp_code=#{bp_code},category_code=#{category_code},
+		preyystock=#{preyystock},premmstock=#{premmstock},preddstock=#{preddstock},explanation=#{explanation},mileageprice=#{mileageprice},
 		rcv01=#{rcv01},rcv02=#{rcv02},rcv03=#{rcv03},rcv04=#{rcv04},rcv05=#{rcv05},rcv06=#{rcv06},
 		rcv07=#{rcv07},rcv08=#{rcv08},rcv09=#{rcv09},rcv10=#{rcv10},rcv11=#{rcv11},rcv12=#{rcv12},
 		ship01=#{ship01},ship02=#{ship02},ship03=#{ship03},ship04=#{ship04},ship05=#{ship05},ship06=#{ship06},

@@ -44,7 +44,6 @@ public class MemberController {
 	
 	@RequestMapping(value = "memberTerms", method = RequestMethod.GET)
 	public String memberTerms() {
-		
 		return "member/member_terms";
 	}
 	@RequestMapping(value = "memberInsertForm", method = RequestMethod.GET)
@@ -70,6 +69,13 @@ public class MemberController {
 		mav.addObject("member",member);
 		mav.addObject("programs",programs);
 		return mav;
+	}
+	@RequestMapping(value = "memberAdminDetail", method = RequestMethod.POST)
+	@ResponseBody
+	 public Member memberAdminDetail(@RequestParam String email) {
+		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
+		Member member=dao.memberGetOne(email);
+		return member;
 	}
 	@RequestMapping(value = "emailConfirm", method = RequestMethod.POST)
 	@ResponseBody
@@ -125,7 +131,7 @@ public class MemberController {
 		return mav;
 	}
 	@RequestMapping(value = "adminMemberUpdate", method = RequestMethod.POST)
-	public ModelAndView adminMemberUpdate(@ModelAttribute("member") Member member,HttpSession session) {
+	public String adminMemberUpdate(@ModelAttribute("member") Member member,HttpSession session) {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
 		try {
 			String encodepassword=passwordEncoder.encode(member.getPassword());
@@ -134,9 +140,7 @@ public class MemberController {
 		}catch(Exception e){
 			System.out.println("error : "+e.getMessage());
 		}
-		ModelAndView mav = new ModelAndView("result_page");
-		mav.addObject("member",member);
-		return mav;
+		return "redirect:memberList";
 	}
 	@RequestMapping(value = "memberSelectedDelete", method = RequestMethod.POST)
 	public String memberSelectedDelete(@RequestParam ("memberunitchk") List<String> memberunitchk) {

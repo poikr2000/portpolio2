@@ -34,8 +34,11 @@ $(document).ready(function(){
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
 	<div class="col-sm-12">
-		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;text-align:center;">
-			  <h2>매입장</h2>
+		<div class="col-sm-offset-3" style="margin-top:50px;">
+			<h3>매입장</h3>
+		</div>
+		<div>
+			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
 		</div>
 		<div class="col-sm-offset-3 col-sm-6" style="margin-top:10px;margin-bottom:80px;">
 	  	  	<div class="input-group">
@@ -65,12 +68,12 @@ $(document).ready(function(){
 				<table class="table table-striped table-bordered" cellspacing="0"  width="100%" style="margin-bottom:80px;">
 			        <thead>
 			            <tr>
-			                <th>날짜</th>
-			                <th>거래처</th>
-			                <th>품명</th>
-			                <th>단가</th>
-							<th>수량</th>
-							<th>금액</th>
+			                <th class="text-center">매입번호</th>
+			                <th class="text-center">거래처</th>
+			                <th class="text-center">품명</th>
+			                <th class="text-center">단가</th>
+							<th class="text-center">수량</th>
+							<th class="text-center">금액</th>
 			            </tr>
 			        </thead>
 			        <tbody>

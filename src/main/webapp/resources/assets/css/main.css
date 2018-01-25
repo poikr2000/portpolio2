@@ -77,8 +77,6 @@ img {
     background-size: cover;
     background-position: center center;
     z-index: 9;
-    padding-top: 50px;
-    padding-bottom: 50px;
 }
 
 @media (min-width: 320px) {
@@ -90,8 +88,6 @@ img {
 
 @media (min-width: 1200px) {
     .md-section {
-        padding-top: 110px;
-        padding-bottom: 110px;
     }
 }
 
@@ -210,8 +206,6 @@ a:focus {
 }
 
 .md-section {
-    padding-top: 50px;
-    padding-bottom: 50px;
 }
 
 @media (min-width: 320px) {
@@ -223,8 +217,6 @@ a:focus {
 
 @media (min-width: 992px) {
     .md-section {
-        padding-top: 150px;
-        padding-bottom: 150px;
     }
 }
 
@@ -240,8 +232,8 @@ a:focus {
     background-image: none;
     border: 1px solid transparent;
     white-space: nowrap;
-    padding: 13px 25px;
-    font-size: 14px;
+    padding: 10px 20px;
+    font-size: 12px;
     line-height: 1.42857;
     border-radius: 0;
 }
@@ -772,9 +764,6 @@ input[type="button"].btn-block {
 .btn {
     font-weight: 700;
     text-transform: uppercase;
-    padding: 0 15px;
-    height: 46px;
-    line-height: 44px;
     border: 1px solid #f39c12;
     background-color: #f39c12;
 }
@@ -804,9 +793,8 @@ input[type="search"], input[type="tel"], input[type="color"] {
     color: #000;
     font-size: 14px;
     vertical-align: middle;
-    height: 46px;
+    height: 39px;
     width: 100%;
-    margin-bottom: 10px;
     background-color: #f7f7f7;
 }
 
@@ -1090,12 +1078,10 @@ h6 {
 
 h3, h1, h2, h3 {
     margin-top: 0;
-    margin-bottom: 15px;
 }
 
 h4, h5, h6 {
     margin-top: 0;
-    margin-bottom: 15px;
 }
 
 img {
@@ -1791,7 +1777,7 @@ mark, .mark {
 
 .form-sub__form .form-button {
     color: #f39c12;
-    height: 46px;
+    height: 36px;
     border: 1px solid #ebebeb;
     border-left: none;
     background-color: #f7f7f7;
@@ -3330,7 +3316,7 @@ mark, .mark {
 .textbox__title {
     font-size: 24px;
     font-weight: 400;
-    margin-bottom: 25px;
+    margin-bottom: 10px;
 }
 
 .textbox__description {
@@ -3342,7 +3328,7 @@ mark, .mark {
 }
 
 .textbox__style-02 .textbox__description {
-    margin-bottom: 15px;
+    margin-bottom: 5px;
 }
 
 @media (min-width: 768px) {
@@ -3776,7 +3762,6 @@ mark, .mark {
 
 .header.shrink .header__logo {
     height: 60px;
-    line-height: 60px;
 }
 
 .header.shrink .header__chooseLanguage, .header.shrink .search-form__toggle {
@@ -3787,7 +3772,6 @@ mark, .mark {
 @media (min-width: 992px) {
     .header.shrink .consult-nav .consult-menu > li > a {
         height: 70px;
-        line-height: 70px;
     }
 }
 
@@ -3830,6 +3814,7 @@ mark, .mark {
 
 .header__toogleGroup {
     float: right;
+    line-height: 100px;
 }
 
 .search-form__toggle {

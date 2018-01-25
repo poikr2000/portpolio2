@@ -7,8 +7,11 @@ public class Consumable {
 	private String code;
 	private String name;
 	private String capacity;
+	private String photo;
+	private String beforephoto;
 	private int stock;
 	private int price;
+	private int mileageprice;
 	private int preyystock;
 	private int premmstock;
 	private int preddstock;
@@ -58,6 +61,18 @@ public class Consumable {
 	public void setCapacity(String capacity) {
 		this.capacity = capacity;
 	}
+	public String getPhoto() {
+		return photo;
+	}
+	public void setPhoto(String photo) {
+		this.photo = photo;
+	}
+	public String getBeforephoto() {
+		return beforephoto;
+	}
+	public void setBeforephoto(String beforephoto) {
+		this.beforephoto = beforephoto;
+	}
 	public int getStock() {
 		return stock;
 	}
@@ -69,6 +84,12 @@ public class Consumable {
 	}
 	public void setPrice(int price) {
 		this.price = price;
+	}
+	public int getMileageprice() {
+		return mileageprice;
+	}
+	public void setMileageprice(int mileageprice) {
+		this.mileageprice = mileageprice;
 	}
 	public int getPreyystock() {
 		return preyystock;
@@ -256,4 +277,5 @@ public class Consumable {
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
 	}
+	
 }

@@ -48,9 +48,4 @@ public class HomeController {
 		
 		return "services";
 	}
-	@RequestMapping(value = "mileage", method = RequestMethod.GET)
-	public String mileage() {
-		
-		return "mileage";
-	}
 }

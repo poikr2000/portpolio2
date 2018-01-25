@@ -1,70 +1,92 @@
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<!-- Latest compiled and minified CSS -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="http://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<content tag="local_script">
+<c:choose>
+	<c:when test="${sessionemail == null }">
+		<script>
+		$(document).ready(function() {
+		    $('#q_board').DataTable( {
+		        dom: 'frtip',
+		        buttons: [
+		            {
+		                text: '글쓰기',
+		                action: function ( e, dt, node, config ) {
+		                	$('.q_insert_form').submit();
+		                }
+		            }
+		        ]
+		    } );
+		} );
+		</script>
+	</c:when>
+	<c:otherwise>
+		<script>
+			$(document).ready(function() {
+			    $('#q_board').DataTable( {
+			        dom: 'Bfrtip',
+			        buttons: [
+			            {
+			                text: '글쓰기',
+			                action: function ( e, dt, node, config ) {
+			                	$('.q_insert_form').submit();
+			                }
+			            }
+			        ]
+			    } );
+			} );
+		</script>
+	</c:otherwise>
+</c:choose>
 
-<!-- jQuery library -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-<script src="resources/js/parsley.min.js"></script>
-<script src="resources/js/ncs3.js"></script>
+</content>
 </head>
 <body>
-<div class="col-sm-12" style="background: black;height:90px;">
-   </div>
-	<form action="f_board">
+	<div class="col-sm-12" style="background: black; height: 90px;">
+	</div>
+	<form class="q_insert_form" action="q_insert_form">
+		<h3 style="text-align: center;">질 문 게 시 판</h3>
 		<div class="container">
-			<h1 align="center" style="margin-top: 50pt">자유 게시판</h1>
-			<table id="example" class="table table-striped table-bordered"
-				cellspacing="0" width="100%" style="margin-top: 60px">
+			<table id="q_board" class="table fade in" style="margin-top: 60px">
 				<thead>
 					<tr style="text-algin: center">
-						<td><input type="checkbox" id="allchek"></td>
-						<td>#</td>
-						<td>작성자</td>
-						<td>제목</td>
-						<td>작성일</td>
-						<td>조회수</td>
+						<th style="width: 10pt;text-align: center">#</th>
+						<th style="width: 100pt;text-align: center">작성자</th>
+						<th style="width: 60%">제목</th>
+						<th style="width: 10%; text-align: center">작성일</th>
+						<th style="text-align: center">조회수</th>
 					</tr>
 				</thead>
 				<tbody>
-					<c:forEach var="boards" items="${boards}">
+					<c:forEach var="n_boards" items="${n_boards}">
 						<tr style="text-algin: center; vertical-algin: middle;">
-							<td><input type="checkbox" id="allchek" name="unitchek"
-								value="${boards.f_seq}"></td>
-
-							<td>${boards.f_step}${boards.f_seq}</td>
-							<td>${boards.f_name}</td>
-							<td><a
-								href="boardDetail?f_seq=${boards.f_seq}">
-									<c:if test="${boards.f_step == 1}">
-										<img src="resources/images/reply1.png" width="15pt">
-									</c:if>${boards.f_title}
-							</a></td>
-							<td>${boards.f_date}</td>
-							<td>${boards.f_hit}</td>
+							<td style="text-align: center;color: black; font-family: serif;"><h5>${n_boards.n_seq}<h5></td>
+							<td style="text-align: center;color: black;"><h5>${n_boards.n_name}<h5></td>
+							<td><h5><a href="n_board_detail?n_seq=${n_boards.n_seq}" style="color: black;">${n_boards.n_title}</a></h5></td>
+							<td style="text-align: center;color: black; "><h5>${n_boards.n_date}<h5></td>
+							<td style="text-align: center;color: black;"><h5>${n_boards.n_hit}<h5></td>
 						</tr>
 					</c:forEach>
 				</tbody>
+				<tfoot>
+					<c:forEach var="q_boards" items="${q_boards}">
+						<tr style="vertical-algin: middle;">
+							<td style="text-align: center;">${q_boards.q_seq}</td>
+							<td style="text-align: center">${q_boards.q_name}</td>
+							<td><a href="q_board_detail?q_seq=${q_boards.q_seq}">${q_boards.q_title}
+							<c:if test="${q_boards.q_cnt ne 0 }">[${q_boards.q_cnt}]</c:if>
+							<c:if test="${q_boards.q_date eq today }"><img src="resources/images/new.gif" style="width:6%; height:80%"></c:if>
+							</a></td>
+							<td style="text-align: center">${q_boards.q_date}</td>
+							<td style="text-align: center">${q_boards.q_hit}</td>
+						</tr>
+					</c:forEach>
+				</tfoot>
 			</table>
-			<button id="write" onclick="location.href='f_insert_form'"
-				type="button" style="margin-left: 94%">글쓰기</button>
-			<button id="write" type="button"
-				onclick="location.href='f_board_update'">삭제</button>
 		</div>
 	</form>
 </body>

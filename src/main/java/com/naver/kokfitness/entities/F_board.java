@@ -13,7 +13,15 @@ public class F_board {
 	private String f_date;
 	private String f_attach;
 	private String f_ip;
+	private int f_cnt;
 	
+	
+	public int getF_cnt() {
+		return f_cnt;
+	}
+	public void setF_cnt(int f_cnt) {
+		this.f_cnt = f_cnt;
+	}
 	public int getF_seq() {
 		return f_seq;
 	}

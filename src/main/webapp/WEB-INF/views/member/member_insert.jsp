@@ -17,9 +17,9 @@ function phone2_lengthchk(code){
 function goPopup(){
 	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
     var pop = window.open("","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
-    document.memberinsert_form.target = "pop";
-    document.memberinsert_form.action = "jusoPopup";
-    document.memberinsert_form.submit() ;
+    document.popup_form.target = "pop";
+    document.popup_form.action = "jusoPopup";
+    document.popup_form.submit();
 	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
     //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
 }
@@ -164,7 +164,10 @@ $(document).ready(function(){
 			<div class="col-sm-offset-3" style="margin-top:50px;">
 				<h3>회원 가입</h3>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:50px;">
+			<div>
+				<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
+			</div>
+			<div class="form-group col-sm-offset-4 col-sm-6" style="margin-top:20px;">
 				<label class="col-sm-2">이메일</label>
 				<div class="col-sm-4">
 					<input class="form-control input-sm" id="useremail" name="email" required="required" type="email" placeholder="email">
@@ -174,7 +177,7 @@ $(document).ready(function(){
 				    <input type="hidden" id="emailconfirmchk" name="emailconfirmchk" value="no">
 			    </div>
 		  	</div>
-		  	<div class="form-group col-sm-offset-3 col-sm-8">
+		  	<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">닉네임</label>
 				<div class="col-sm-4">
 					<input class="form-control input-sm" maxlength="14" id="id" name="id" required="required" type="text" placeholder="7자 이내">
@@ -184,7 +187,7 @@ $(document).ready(function(){
 				    <input type="hidden" id="idconfirmchk" name="idconfirmchk" value="no">
 			    </div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">비밀번호</label>
 				<div class="col-sm-3">
 					<input class="form-control input-sm" maxlength="15"id="userpassword" name="password" required="required" type="password" placeholder="password">
@@ -194,13 +197,13 @@ $(document).ready(function(){
 					<input class="form-control input-sm" maxlength="15"id="passwordchk" name="passwordchk" required="required" type="password" placeholder="password">
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">이름</label>
 				<div class="col-sm-4">
 					<input class="form-control input-sm" maxlength="10"id="name" name="name"required="required" type="text" placeholder="name">
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">주소</label>
 				<div class="col-sm-2">
 					<input class="form-control input-sm" id="zipcode" name="zipcode"required="required" type="text">
@@ -211,7 +214,7 @@ $(document).ready(function(){
 				   	</button>
 			    </div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 		    	<div class="col-sm-offset-2 col-sm-4">
 					<input class="form-control input-sm" id="newaddr" name="newaddr"required="required" type="text">
 				</div>
@@ -219,7 +222,7 @@ $(document).ready(function(){
 					<input class="form-control input-sm" id="detailaddr" name="detailaddr"required="required" type="text" placeholder="상세 주소를 입력해 주세요.">
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">전화번호</label>
 				<div class="col-sm-2">
 					<select id="phone1" name="phone1" class="form-control"> 
@@ -240,12 +243,12 @@ $(document).ready(function(){
 				</div>
 			</div>
 	</div>
-	<div class="col-sm-offset-5 col-sm-4" style="text-align:center;margin-top:30px;">
+	<div class="col-sm-offset-5 col-sm-4" style="text-align:center;">
 		<div class="g-recaptcha" data-sitekey="6Lfj5D8UAAAAAIlcxEx4RbEWnwlJsNXqNXRpu-nC"></div>
 	</div>
- 	<div class="col-sm-offset-4 col-sm-4" style="text-align:center;margin-top:50px;margin-bottom: 80px">
-		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn" type="button" onclick="history.back();">돌아가기</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<button class="btn" type="button" id="membersave" name="membersave">회원가입</button>
+ 	<div class="col-sm-offset-4 col-sm-4" style="text-align:center;margin-top:10px;margin-bottom: 80px">
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn" type="button" id="membersave" name="membersave">회원가입</button>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+		<button class="btn" type="button" onclick="history.back();">돌아가기</button>
 	</div>
 	
 	<div class="modal fade" id="signUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -263,5 +266,6 @@ $(document).ready(function(){
 	  </div>
 	</div>
 </form>
+<form name="popup_form" id="popup_form" action="" method="post"> </form>
 </body>
 </html>

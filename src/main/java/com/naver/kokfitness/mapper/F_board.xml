@@ -11,6 +11,7 @@
 		<id property="f_date" column="f_date" />
 		<id property="f_attach" column="f_attach" />
 		<id property="f_ip" column="f_ip" />
+		<id property="f_cnt" column="f_cnt" />
 	</resultMap>
 	<insert id="f_insert" parameterType="hashMap">
 		insert into	f_board(
@@ -44,8 +45,16 @@
 	</update>
 	
 	<update id="f_board_updateHit" parameterType="Integer">
-		update f_board set f_hit=f_hit + 1 where f_seq=#{b_seq}
+		update f_board set f_hit=f_hit + 1 where f_seq=#{f_seq}
 	</update>
+	
+	<delete id="f_board_delete" parameterType="Integer">
+		delete from f_board where f_seq=#{f_seq}
+	</delete>
+	
+	<select id="cf_comcount" parameterType="Integer" resultType="int">
+      select count(*) f_cnt from cf_comment where cf_parseq = #{cf_parseq}
+    </select>
 	
 </mapper>
 	

@@ -12,6 +12,14 @@ $(document).ready(function(){
 	$(document).on("keyup","input:text[numberOnly]",function(){
 		$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
 	});
+	$('#image').on('click',function(){
+		$('input[type=file]').click();
+		return false;
+	});
+	$('#photo').change(function(event){
+		var tmppath=URL.createObjectURL(event.target.files[0]);
+		$('#image').attr('src',tmppath);
+	});
 	$('#consumableupdatebtn').click(function(){
 		var name=$('#name').val();
 		var capacity=$('#capacity').val();
@@ -59,15 +67,28 @@ $(document).ready(function(){
 </content>
 </head>
 <body>
-<form class="consumableupdate_form" name="consumableupdate_form" method="POST"role="form">
+<form class="consumableupdate_form" name="consumableupdate_form" method="POST"role="form" enctype="multipart/form-data">
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
 	<input type="submit" style="display: none" id="requirechk" name="requirechk">
-	<div class="container col-sm-12" align="center">
-		<div class="col-sm-offset-3 col-sm-6" style="margin-top:50px;text-align:center;">
-			  <h2><i class="fa fa-sign-in" aria-hidden="true"></i>${consumable.name} 상품 정보</h2>
+	<div class="container col-sm-12">
+		<div class="col-sm-offset-3" style="margin-top:50px;">
+			<h3><i class="fa fa-sign-in" aria-hidden="true"></i>${consumable.name} 상품 정보</h3>
 		</div>
-		<div class="form-group col-sm-offset-3 col-sm-6" style="margin-top:50px;">
+		<div>
+			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
+		</div>
+		<div class="col-sm-offset-4 col-sm-4" style="margin-top:50px;">
+			<div class="row">
+				<a href=#><img title="클릭후 이미지 변경"alt="클릭후 이미지 변경"style="WIDTH: 50%; border:1px solid"
+				id="image"name="image"src="${consumable.photo}"></a>
+				<input type="hidden" name="beforephoto" value="${consumable.photo}">
+			</div>
+			<div class="row">
+				<input type="file" id="photo"name="imgfile" style="visibility:hidden;">
+			</div>
+		</div>
+		<div class="form-group col-sm-offset-3 col-sm-6">
 	  	  <div class="input-group">
 		    <span class="input-group-addon"><i class="fa fa-barcode" aria-hidden="true"></i>&nbsp 상품코드</span>
 		    <input id="code" name="code" type="text" readonly="readonly" class="form-control"value="${consumable.code}">
@@ -119,6 +140,8 @@ $(document).ready(function(){
 	  	  	<div class="input-group">
 			    <span class="input-group-addon"><i class="fa fa-krw" aria-hidden="true"></i>&nbsp 매&nbsp&nbsp입&nbsp&nbsp가</span>
 			    <input id="price" name="price" type="text" value="${consumable.price}"required="true" class="form-control" placeholder="price">
+			    <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i>&nbsp; 마일리지</span>
+			    <input id="mileageprice" name="mileageprice" type="text" value="${consumable.mileageprice}" numberonly="true" class="form-control" placeholder="mileage">
 		 	</div>
 		</div>
 		<div class="bg-warning text-white col-sm-offset-3 col-sm-6" style="margin-top:20px;margin-bottom: 10px">재고 현황</div>

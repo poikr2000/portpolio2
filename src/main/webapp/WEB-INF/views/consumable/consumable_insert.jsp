@@ -18,6 +18,14 @@ $(document).ready(function(){
 	$(document).on("keyup","input:text[numberOnly]",function(){
 		$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
 	});
+	$('#image').on('click',function(){
+		$('input[type=file]').click();
+		return false;
+	});
+	$('#photo').change(function(event){
+		var tmppath=URL.createObjectURL(event.target.files[0]);
+		$('#image').attr('src',tmppath);
+	});
 	$('#consumableconfirm').click(function(){
 		var code = $('#code').val()
 		if($('#code').val()==""){
@@ -93,15 +101,28 @@ $(document).ready(function(){
 </content>
 </head>
 <body>
-<form class="consumableinsert_form" action="consumableInsert" method="post" role="form">
+<form class="consumableinsert_form" action="consumableInsert" method="post" role="form" enctype="multipart/form-data">
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
 	<input type="submit" style="display: none" id="requirechk" name="requirechk">
 	<div class="container col-sm-12">
-		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;text-align:center;">
-			  <h2>상품 등록</h2>
+		<div class="col-sm-offset-3" style="margin-top:50px;">
+			<h3>상품 등록</h3>
 		</div>
-		<div class="form-group col-sm-offset-4 col-sm-4" style="margin-top:50px;">
+		<div>
+			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
+		</div>
+		
+		<div class="col-sm-offset-4 col-sm-4" style="margin-top:50px;">
+			<div class="row">
+				<a href=#><img title="클릭후 이미지 변경"alt="클릭후 이미지 변경"style="WIDTH: 50%; border:1px solid"
+				id="image"name="image"src="resources/images/noimage.jpg"></a>
+			</div>
+			<div class="row">
+				<input type="file" id="photo"name="imgfile" style="visibility:hidden;">
+			</div>
+		</div>
+		<div class="form-group col-sm-offset-4 col-sm-4">
 			<div class="input-group">
 			    <span class="input-group-addon"><i class="fa fa-barcode" aria-hidden="true"></i>&nbsp; 상품코드</span>
 			    <input id="code" name="code" type="text" numberonly="true" required="true" maxlength="8" class="form-control" placeholder="8자리 입력">
@@ -137,6 +158,12 @@ $(document).ready(function(){
 			<div class="input-group">
 			    <span class="input-group-addon"><i class="fa fa-krw" aria-hidden="true"></i>&nbsp; 매&nbsp;&nbsp;입&nbsp;&nbsp;가</span>
 			    <input id="price" name="price" type="text" numberonly="true" required="true" class="form-control" placeholder="price">
+			</div>
+		</div>
+		<div class="form-group col-sm-offset-4 col-sm-4">
+			<div class="input-group">
+			    <span class="input-group-addon"><i class="fa fa-money" aria-hidden="true"></i>&nbsp; 마일리지</span>
+			    <input id="mileageprice" name="mileageprice" type="text" required="true" numberonly="true" class="form-control" placeholder="mileage">
 			</div>
 		</div>
 		<div class="form-group col-sm-offset-4 col-sm-4">

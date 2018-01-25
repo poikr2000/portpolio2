@@ -1,5 +1,7 @@
 package com.naver.kokfitness;
 
+import java.io.BufferedOutputStream;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.naver.kokfitness.entities.Category;
@@ -48,9 +51,25 @@ public class ConsumableController {
 		return result;
 	}
 	@RequestMapping(value = "consumableInsert", method = RequestMethod.POST)
-	public String consumableInsert(@ModelAttribute("consumable") Consumable consumable) {
+	public String consumableInsert(@ModelAttribute("consumable") Consumable consumable,
+			@RequestParam CommonsMultipartFile imgfile) {
 		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		String path="D:/STSSOURCE/kokfitness/src/main/webapp/resources/uploadfiles/";
+		String realpath="resources/uploadfiles/";
+		String originalname =imgfile.getOriginalFilename();
+		String strcode = consumable.getCode();
 		try {
+			byte bytes[] = imgfile.getBytes();
+			BufferedOutputStream output=
+					new BufferedOutputStream(new FileOutputStream(path+strcode+originalname));
+			output.write(bytes);
+			output.flush();
+			output.close();
+		} catch (Exception e) {
+			
+		}
+		try {
+			consumable.setPhoto(realpath+strcode+originalname);
 			consumabledao.consumableInsert(consumable);
 		}catch(Exception e){
 			System.out.println("error : "+e.getMessage());
@@ -80,9 +99,29 @@ public class ConsumableController {
 		return "redirect:consumableList";
 	}
 	@RequestMapping(value = "consumableUpdate", method = RequestMethod.POST)
-	public String consumableUpdate(@ModelAttribute("consumable") Consumable consumable) {
+	public String consumableUpdate(@ModelAttribute("consumable") Consumable consumable,
+			@RequestParam CommonsMultipartFile imgfile) {
 		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		String path="D:/STSSOURCE/kokfitness/src/main/webapp/resources/uploadfiles/";
+		String realpath="resources/uploadfiles/";
+		String originalname =imgfile.getOriginalFilename();
+		String strcode = consumable.getCode();
 		try {
+			byte bytes[] = imgfile.getBytes();
+			BufferedOutputStream output=
+					new BufferedOutputStream(new FileOutputStream(path+strcode+originalname));
+			output.write(bytes);
+			output.flush();
+			output.close();
+		} catch (Exception e) {
+			
+		}
+		try {
+			if(originalname.equals("")) {
+				consumable.setPhoto(consumable.getBeforephoto());
+			}else {
+				consumable.setPhoto(realpath+strcode+originalname);
+			}
 			consumabledao.consumableUpdate(consumable);
 		}catch(Exception e){
 			System.out.println("error : "+e.getMessage());

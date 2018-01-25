@@ -25,6 +25,19 @@
 	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
 	crossorigin="anonymous"></script>
 </head>
+<content tag="local_script">
+<script>
+	$('#delbtn').on("click",function(){
+		$('#f_board_ModalMsg').text("삭제 하시겠습니까?")
+		$('#f_board_Modal').modal('show');
+		var delvalue = $('#f_seq').val();
+		$('#f_delbtn').on('click',function(){
+			var url="f_board_delete?f_seq="+delvalue;
+			$(location).attr('href',url);
+			});	
+	});
+</script>
+</content>
 <body>
 <div class="col-sm-12" style="background: black;height:90px;">
    </div>
@@ -43,46 +56,87 @@
 						<td>${f_board.f_content}</td>
 					</tr>
 					<tr>
-						<td colspan="2"><input type="submit" value="수정" class="pull-right">
-						<input type="button" value="reset" class="pull-left"></td>
+						<td colspan="2">
+						<c:choose>
+							<c:when test="${sessionid == f_board.f_name }">
+								<div class="pull-right"><input type="submit" value="수정" class="input-sm"></div>
+								<div class="pull-left"><input  id="delbtn" type="button" value="삭제" class="input-sm"/></div>	
+							</c:when>
+							<c:when test="${sessionemail eq 'admin@admin.com' }">
+								<div class="pull-right"><input type="submit" value="수정" class="input-sm"></div>
+								<div class="pull-left"><input  id="delbtn" type="button" value="삭제" class="input-sm"/></div>
+							</c:when>
+						</c:choose>
+							<div class="pull-right"><input type="button"value="글 목록으로... " class="input-sm" 	onclick="javascript:location.href='f_board'" /></div>	
+						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<div id="f_board_Modal" class="modal fade" role="dialog">
+         <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+               <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+               </div>
+               <div class="modal-body">
+               	<p><span id="f_board_ModalMsg"> Some text in modal</span>
+               </div>
+               <div class="modal-footer" style="text-align:center">
+                  <button type="button" class="btn btn-success" data-dismiss="modal" id="f_delbtn">확인</button>
+                  <button type="button" class="btn btn-success" data-dismiss="modal" id="">취소</button>
+               </div>
+            </div>
+         </div>
+     </div>
 	</form>
 
 	<form class="cf_insert" action="cf_insert" method="post" encType="multiplart/form-data" style="margin-top: 15pt" id="cf_insert">
 	<input type="hidden" id="cf_name" name="cf_name" value="${sessionid}"/>
 	<input type="hidden" id="f_seq" name="f_seq" value="${f_board.f_seq}"/>
 		<div class="container">
-			<table class="table fade in">
+			<table id="" class="" width="100%" cellspacing="0">
 				<thead>
 					<tr>
-						<th>작성자</th>
-						<th>내용</th>
-						<th>작성일자</th>
+						<th style="width: 50pt"></th>
+						<th style="width: 85%"></th>
+						<th></th>
+						<th></th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach var="cf_comments" items="${cf_comments}">
 						<tr>
-							<td>${cf_comments.cf_name}</td>
+							<td>${cf_comments.cf_name} :</td>
 							<td>${cf_comments.cf_content}</td>
 							<td>${cf_comments.cf_date}</td>
+							<c:choose>
+								<c:when test="${sessionid eq cf_comments.cf_name }">
+									<td><a href="cf_comment_delete?cf_seq=${cf_comments.cf_seq}&f_seq=${f_board.f_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
+								</c:when>
+								<c:when test="${sessionemail eq 'admin@admin.com'}">
+									<td><a href="cf_comment_delete?cf_seq=${cf_comments.cf_seq}&f_seq=${f_board.f_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
+								</c:when>
+							</c:choose>
 						</tr>
 					</c:forEach>
 				</tbody>
 			</table>
+			<table class="table fade in">
+				<tbody>
+					<c:choose>
+						<c:when test="${sessionemail == null }"></c:when>
+						<c:otherwise>
+							<tr>
+								<th style="text-align: center">댓글:</th>
+								<td><div class="form-groub"><textarea  rows="1" cols="100" id="cf_content" name="cf_content" class="form-control"></textarea></div></td>
+								<th><button class="input-sm" value="등록" id="cf_btn">등록</button></th>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+				</tbody>
+			</table>
 		</div>
-		<table class="table fade in">
-			<tbody>
-				<tr>
-					<th style="text-align: center">댓글:</th>
-					<td><textarea cols="80" id="cf_content" name="cf_content" class="form-control"></textarea></td>
-					<th><button value="등록" id="cf_btn">등록</button></th>
-				</tr>
-			</tbody>
-		</table>
 	</form>
 </body>
 </html>

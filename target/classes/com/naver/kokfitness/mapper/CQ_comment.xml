@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.CQ_commentDAO">
+	<resultMap type="com.naver.kokfitness.entities.CQ_comment" id="cq_commentMap">
+		<id property="cq_seq" column="cq_seq" />
+		<id property="cq_name" column="cq_name" />
+		<id property="cq_content" column="cq_content" />
+		<id property="cq_date" column="cq_date" />
+		<id property="cq_parseq" column="cq_parseq" />
+		
+	</resultMap>
+	
+	<insert id="cq_insert" parameterType="hashMap">
+		insert into	cq_comment(
+		cq_seq,cq_name,cq_content,cq_date,cq_parseq
+		)values(
+		((select ifnull(MAX(cq_seq)+1,1) from cq_comment alias_seq))
+		,#{cq_name,jdbcType=VARCHAR}
+		,#{cq_content,jdbcType=VARCHAR}
+		,#{cq_date,jdbcType=VARCHAR}
+		,#{cq_parseq,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="cq_selectList" resultMap="cq_commentMap" parameterType="Integer"> 
+		select * from cq_comment
+		where cq_parseq = #{cq_parseq}
+	</select>
+	
+	<delete id="cq_comment_delete" parameterType="Integer">
+		delete from cq_comment where cq_seq=#{cq_seq}
+	</delete>
+	
+	<delete id="cq_comment_delete_All" parameterType="Integer">
+		delete from cq_comment where cq_parseq=#{cq_parseq}
+	</delete>
+	
+</mapper>

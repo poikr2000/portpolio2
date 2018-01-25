@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.StaffDAO">
+	<resultMap type="com.naver.kokfitness.entities.Staff" id="staffMap">
+		<id property="code" column="code"/>
+		<id property="name" column="name"/>
+		<id property="birth_date" column="birth_date"/>
+		<id property="zipcode" column="zipcode"/>
+		<id property="newaddr" column="newaddr"/>
+		<id property="detailaddr" column="detailaddr"/>
+		<id property="phone1" column="phone1"/>
+		<id property="phone2" column="phone2"/>
+		<id property="phone3" column="phone3"/>
+		<id property="photo" column="photo"/>
+		<id property="beforephoto" column="beforephoto"/>
+		<id property="certificate1" column="ceritificate1"/>
+		<id property="certificate2" column="ceritificate2"/>
+		<id property="certificate3" column="ceritificate3"/>
+	</resultMap>
+	
+	<select id="codeConfirm" parameterType="String" resultType="int">
+		select count(*)
+		from staff 
+		where code=#{code}
+	</select>
+	
+	<insert id="staffInsert" parameterType="hashMap">
+		insert into staff(
+		code,name,birth_date,zipcode,newaddr,detailaddr,phone1,phone2,phone3,photo,certificate1,certificate2,certificate3
+		)values(
+		#{code,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{birth_date,jdbcType=VARCHAR},
+		#{zipcode,jdbcType=VARCHAR},#{newaddr,jdbcType=VARCHAR},#{detailaddr,jdbcType=VARCHAR},
+		#{phone1,jdbcType=VARCHAR},#{phone2,jdbcType=VARCHAR},#{phone3,jdbcType=VARCHAR},#{photo,jdbcType=VARCHAR},
+		#{certificate1,jdbcType=VARCHAR},#{certificate2,jdbcType=VARCHAR},#{certificate3,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="staffListAll" parameterType="String" resultMap="staffMap">
+		select *from staff
+	</select>
+	
+	<delete id="staffDelete" parameterType="String">
+		delete from staff where code=#{code}
+	</delete>
+	
+	<select id="staffGetOne" parameterType="String" resultMap="staffMap">
+		select *from staff where code=#{code}
+	</select>
+	
+	<update id="staffUpdate" parameterType="hashMap">
+		update staff set name=#{name},birth_date=#{birth_date},zipcode=#{zipcode},
+		newaddr=#{newaddr},detailaddr=#{detailaddr},
+		phone1=#{phone1},phone2=#{phone2},phone3=#{phone3},photo=#{photo},
+		certificate1=#{certificate1},certificate2=#{certificate2},certificate3=#{certificate3}
+		where code=#{code}
+	</update>
+</mapper>

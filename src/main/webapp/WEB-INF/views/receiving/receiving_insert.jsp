@@ -149,10 +149,15 @@ $(document).ready(function(){
 <body>
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
-	<div class="col-sm-offset-2 col-sm-8">
-		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;text-align:center;">
-			  <h2>매입 관리</h2>
+	<div class="col-sm-12">
+		<div class="col-sm-offset-3" style="margin-top:50px;">
+			<h3>매입 관리</h3>
 		</div>
+		<div>
+			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
+		</div>
+	</div>
+	<div class="col-sm-offset-2 col-sm-8">
 		<form class="receivinginsert_form" name="receivinginsert_form" method="POST"role="form" data-parsley-validate="true">
 			<div class="col-sm-5">
 			  	<div class="row" style="margin-top:50px">
@@ -236,7 +241,7 @@ $(document).ready(function(){
 		<div class="col-sm-1"></div>
 		<form class="receivingsearch_form" name="receivingsearch_form" action="receivingSearch" method="POST"role="form" data-parsley-validate="true">
 			<div class="col-sm-6">
-				<div style="margin-top:50px;height: 470px;">
+				<div style="margin-top:50px;height: 415px;">
 					<table width="100%">
 						<tr>
 							<td>
@@ -302,7 +307,7 @@ $(document).ready(function(){
 					    </table>
 				    </div>
 				</div>
-				<div class="input-group" style="margin-top:10px;margin-bottom: 80px">
+				<div class="input-group" style="margin-top:10px;margin-bottom: 80px;align:center;">
 					<select id="searchpartner" name="searchpartner" class="form-control" style="width: 100px;"> 
 				    	<c:forEach var="partner" items="${partners}">
 							<option value="${partner.code}">${partner.name}</option>

@@ -8,6 +8,8 @@
 		<id property="cf_content" column="cf_content" />
 		<id property="cf_date" column="cf_date" />
 		<id property="cf_parseq" column="cf_parseq" />
+		<id property="cnt" column="cnt" />
+		
 	</resultMap>
 	
 	<insert id="cf_insert" parameterType="hashMap">
@@ -18,12 +20,21 @@
 		,#{cf_name,jdbcType=VARCHAR}
 		,#{cf_content,jdbcType=VARCHAR}
 		,#{cf_date,jdbcType=VARCHAR}
-		,#{cf_parseq,jdbcType=INTEGER})
+		,#{cf_parseq,jdbcType=VARCHAR}
+		)
 	</insert>
 	
-	
-	<select id="cf_selectListAll" resultMap="cf_commentMap">
+	<select id="cf_selectList" resultMap="cf_commentMap" parameterType="Integer"> 
 		select * from cf_comment
+		where cf_parseq = #{cf_parseq}
 	</select>
 	
-	</mapper>
+	<delete id="cf_comment_delete" parameterType="Integer">
+		delete from cf_comment where cf_seq=#{cf_seq}
+	</delete>
+	
+	<delete id="cf_comment_delete_All" parameterType="Integer">
+      delete from cf_comment where cf_parseq=#{cf_parseq}
+   </delete>
+	
+</mapper>

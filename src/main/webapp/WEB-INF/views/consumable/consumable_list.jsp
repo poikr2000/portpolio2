@@ -57,8 +57,11 @@ $(document).ready(function(){
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
 	<div class="container col-sm-12">
-		<div class="col-sm-offset-2 col-sm-8" style="margin-top:50px;text-align:center;">
-			  <h2>수불장</h2>
+		<div class="col-sm-offset-3" style="margin-top:50px;">
+			<h3>수불장</h3>
+		</div>
+		<div>
+			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
 		</div>
 		<div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 70px;">
 			<table id="consumabletable" class="table table-striped table-bordered" cellspacing="0" width="100%">
@@ -98,8 +101,8 @@ $(document).ready(function(){
 									<td class="text-center" style="vertical-align:middle;">${consumable.bp_name}</td>
 									<td class="text-center" style="vertical-align:middle;">${consumable.preyystock}</td>
 									<td class="text-center" style="vertical-align:middle;">
-										<div class="bg-danger text-white">입고</div>
-										<div class="bg-warning text-white">출고</div>
+										<div class="bg-warning text-white">입고</div>
+										<div class="bg-danger text-white">출고</div>
 									</td>
 									<td class="text-center" style="vertical-align:middle;">${consumable.rcv01}<br>${consumable.ship01}</td>
 									<td class="text-center" style="vertical-align:middle;">${consumable.rcv02}<br>${consumable.ship02}</td>

@@ -17,9 +17,9 @@ function phone2_lengthchk(code){
 function goPopup(){
 	// 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrLinkUrl.do)를 호출하게 됩니다.
     var pop = window.open("","pop","width=570,height=420, scrollbars=yes, resizable=yes"); 
-    document.update_form.target = "pop";
-    document.update_form.action = "jusoPopup";
-    document.update_form.submit() ;
+    document.popup_form.target = "pop";
+    document.popup_form.action = "jusoPopup";
+    document.popup_form.submit() ;
 	// 모바일 웹인 경우, 호출된 페이지(jusopopup.jsp)에서 실제 주소검색URL(http://www.juso.go.kr/addrlink/addrMobileLinkUrl.do)를 호출하게 됩니다.
     //var pop = window.open("/popup/jusoPopup.jsp","pop","scrollbars=yes, resizable=yes"); 
 }
@@ -133,20 +133,23 @@ $(document).ready(function(){
 			<div class="col-sm-offset-3" style="margin-top:50px;">
 				<h3>정보 수정</h3>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8" style="margin-top:50px;">
+			<div>
+				<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
+			</div>
+			<div class="form-group col-sm-offset-4 col-sm-6" style="margin-top:20px;">
 				<label class="col-sm-2">이메일</label>
 				<div class="col-sm-4">
 					<input class="form-control input-sm" value="${member.email}"id="email" name="email" readonly="readonly" type="text">
 				</div>
 		  	</div>
-		  	<div class="form-group col-sm-offset-3 col-sm-8">
+		  	<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">닉네임</label>
 				<div class="col-sm-4">
 					<input class="form-control input-sm" maxlength="7" value="${member.id}"id="id" name="id" required="required"<c:if test="${sessionemail!='admin@admin.com'}">readonly="readonly"</c:if> type="text">
 					<c:if test="${sessionemail!='admin@admin.com'}">※닉네임 변경은 관리자에게 문의</c:if>
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">비밀번호</label>
 				<div class="col-sm-3">
 					<input class="form-control input-sm" maxlength="15"id="userpassword" name="password" required="required" type="password" placeholder="password">
@@ -156,13 +159,13 @@ $(document).ready(function(){
 					<input class="form-control input-sm" maxlength="15"id="passwordchk" name="passwordchk" required="required" type="password" placeholder="password">
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">이름</label>
 				<div class="col-sm-4">
 					<input class="form-control input-sm" maxlength="10"value="${member.name}"id="name" name="name"required="required" type="text" placeholder="name">
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">주소</label>
 				<div class="col-sm-2">
 					<input class="form-control input-sm" id="zipcode" value="${member.zipcode}" name="zipcode"required="required" type="text">
@@ -173,7 +176,7 @@ $(document).ready(function(){
 				   	</button>
 			    </div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 		    	<div class="col-sm-offset-2 col-sm-4">
 					<input class="form-control input-sm" id="newaddr" value="${member.newaddr}"name="newaddr"required="required" type="text">
 				</div>
@@ -181,7 +184,7 @@ $(document).ready(function(){
 					<input class="form-control input-sm" id="detailaddr" value="${member.detailaddr}"name="detailaddr"required="required" type="text" placeholder="상세 주소를 입력해 주세요.">
 				</div>
 			</div>
-			<div class="form-group col-sm-offset-3 col-sm-8">
+			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">전화번호</label>
 				<div class="col-sm-2">
 					<select id="phone1" name="phone1" class="form-control"> 
@@ -202,19 +205,19 @@ $(document).ready(function(){
 				</div>
 			</div>
 			<c:if test="${sessionemail=='admin@admin.com'}">
-				<div class="form-group col-sm-offset-3 col-sm-8">
+				<div class="form-group col-sm-offset-4 col-sm-6">
 					<label class="col-sm-2">회원레벨</label>
 					<div class="col-sm-4">
 						<input class="form-control input-sm" value="${member.memlevel}"id="memlevel" name="memlevel" numberonly="true" maxlength="1"type="text" required="required">
 					</div>
 			  	</div>
-			  	<div class="form-group col-sm-offset-3 col-sm-8">
+			  	<div class="form-group col-sm-offset-4 col-sm-6">
 					<label class="col-sm-2">마일리지</label>
 					<div class="col-sm-4">
 						<input class="form-control input-sm" value="${member.mileage}"id="mileage" name="mileage" numberonly="true" maxlength="7"type="text" required="required">
 					</div>
 			  	</div>
-			  	<div class="form-group col-sm-offset-3 col-sm-8">
+			  	<div class="form-group col-sm-offset-4 col-sm-6">
 					<label class="col-sm-2">수강코드</label>
 					<div class="col-sm-4">
 						<select id="searchvender" name="searchvender" class="form-control"> 
@@ -226,17 +229,18 @@ $(document).ready(function(){
 			  	</div>
 			</c:if>
 	</div>
- 	<div class="col-sm-offset-4 col-sm-4" style="text-align:center;margin-top:50px;margin-bottom: 80px">
-		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<button class="btn" type="button" onclick="history.back();">돌아가기</button>&nbsp;&nbsp;&nbsp;
+ 	<div class="col-sm-offset-4 col-sm-4" style="text-align:center;margin-top:20px;margin-bottom: 80px">
+		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 		<c:choose>
 			<c:when test="${sessionemail=='admin@admin.com'}">
-				<button class="btn" type="button" id="memberdeletebtn" name="memberdeletebtn">회원삭제</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button class="btn" type="button" id="admin_memberupdatebtn" name="admin_memberupdatebtn">정보수정</button>
+				<button class="btn" type="button" id="admin_memberupdatebtn" name="admin_memberupdatebtn">수&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp정</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<button class="btn" type="button" id="memberdeletebtn" name="memberdeletebtn">삭&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp제</button>
 			</c:when>
 			<c:otherwise>
-				<button class="btn" type="button" id="memberupdatebtn" name="memberupdatebtn">정보수정</button>
+				<button class="btn" type="button" id="memberupdatebtn" name="memberupdatebtn">수&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp정</button>
 			</c:otherwise>
-		</c:choose>	
+		</c:choose>&nbsp;&nbsp;&nbsp;
+		<button class="btn" type="button" onclick="history.back();">돌아가기</button>
 	</div>
 	
 	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -263,14 +267,15 @@ $(document).ready(function(){
 	      	<span id="confirmModalMsg">...</span>
 		  </div>
 	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	      	<button type="button" id="udateconfirmbtn" style="display: none" class="btn btn-default">수정</button>
 	      	<button type="button" id="admin_updateconfirmbtn" style="display: none" class="btn btn-default">수정</button>
 	      	<button type="button" id="deleteconfirmbtn" style="display: none" class="btn btn-default">삭제</button>
+	      	<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	      </div>
 	    </div>
 	  </div>
 	</div>
 </form>
+<form method="post" class="popup_form" name="popup_form"></form>
 </body>
 </html>

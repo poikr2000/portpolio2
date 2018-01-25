@@ -11,6 +11,7 @@ public interface ConsumableDAO {
 	int codeConfirm(String code);
 	void consumableInsert(Consumable consumable);
 	ArrayList<Consumable> consumableListAll();
+	ArrayList<Consumable> consumableListMileage();
 	void consumableDelete(String code);
 	Consumable consumableGetOne(String code);
 	Consumable selectGetOne(String code);

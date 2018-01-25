@@ -126,19 +126,18 @@ $(document).ready(function(){
 				<div class="header__logo"><a href="index"><img src="resources/assets/img/logo.png" alt=""/></a></div>
 				<div class="header__toogleGroup">
 					<div class="btn">
-					<c:choose>
-						<c:when test="${sessionemail==null}">
-							<a id="login">로그인</a>&nbsp;|&nbsp;<a href="memberTerms">회원가입</a>
-						</c:when>
-						<c:when test="${sessionemail=='admin@admin.com'}">
-							<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp;|&nbsp;<a href="memberTerms">회원가입</a>
-						</c:when>
-						<c:otherwise>
-							<a href="logout"><span>${sessionid}</span>&nbsp;logout</a>&nbsp;|&nbsp;
-							<a href="memberDetail?email=${sessionemail}">내정보</a>
-						</c:otherwise>
-					</c:choose>	
-					
+						<c:choose>
+							<c:when test="${sessionemail==null}">
+								<a id="login">로그인</a>&nbsp;|&nbsp;<a href="memberTerms">회원가입</a>
+							</c:when>
+							<c:when test="${sessionemail=='admin@admin.com'}">
+								<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp;|&nbsp;<a href="memberTerms">회원가입</a>
+							</c:when>
+							<c:otherwise>
+								<a href="logout"><span>${sessionid}</span>&nbsp;logout</a>&nbsp;|&nbsp;
+								<a href="memberDetail?email=${sessionemail}">내정보</a>
+							</c:otherwise>
+						</c:choose>	
 					</div>
 				</div>
 				<!-- consult-nav -->
@@ -158,17 +157,17 @@ $(document).ready(function(){
 						</li>
 						<li><a href="services">services</a>
 						</li>
-						<li><a href="mileage">mileage</a>
+						<li><a href="mileageListForm">mileage</a>
 						</li>
 						<c:choose>
 							<c:when test="${sessionemail=='admin@admin.com'}">
 								<li class="menu-item-has-children"><a href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;option</a>
 									<ul class="sub-menu">
-										<li><a href="memberList">회원 리스트</a></li>
+										<li><a href="memberList">회원 관리</a></li>
+										<li><a href="staffList">직원 관리</a></li>
+										<li><a href="partnerList">거래처 관리</a></li>
 										<li><a href="receivingInsertForm">매입관리</a></li>
 										<li><a href="receivingStatement">매입장</a></li>
-										<li><a href="partnerInsertForm">거래처 등록</a></li>
-										<li><a href="partnerList">거래처 리스트</a></li>
 										<li><a href="consumableInsertForm">상품 등록</a></li>
 										<li><a href="consumableList">수불장</a></li>
 									</ul>
@@ -204,13 +203,14 @@ $(document).ready(function(){
 				  <input type="password" class="form-control" id="password" name="password" required="required" placeholder="Password">
 				</div>
 				<div class="row col-sm-12">
-					<div class="col-sm-offset-10">
-						<input type="checkbox" id="emailSaveChk"><span>이메일 저장</span>
+					<div class="col-sm-offset-9">
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="checkbox" id="emailSaveChk"><span>이메일 저장</span>
 					</div>
 				</div>
 				<div class="row col-sm-12">
-					<div class="col-sm-offset-8">&nbsp&nbsp&nbsp
-						<a href="memberTerms">회원가입</a>&nbsp&nbsp|&nbsp&nbsp
+					<div class="col-sm-offset-8">
+						<a href="memberTerms">회원가입</a>
+						&nbsp&nbsp|&nbsp&nbsp
 						<a id="passwordfindbtn">비밀번호 찾기</a>
 					</div>
 				</div>
@@ -232,7 +232,7 @@ $(document).ready(function(){
 				    <label for="name">이름</label>
 				    <input type="text" class="form-control" id="findname" name="findname" required="required" placeholder="name">
 				  </div>
-				  <div class="col-sm-12">
+				  <div class="col-sm-12" style="margin-top: 10px;">
 			      	<button type="button" id="findbtn" class="btn btn-default" style="width:100%">확인</button>
 			      	<button type="submit" id="findsubmt" class="btn btn-default" style="display: none"></button>
 			      </div>

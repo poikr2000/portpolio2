@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.Q_boardDAO">
+	<resultMap type="com.naver.kokfitness.entities.Q_board" id="q_boardMap">
+		<id property="q_seq" column="q_seq" />
+		<id property="q_name" column="q_name" />
+		<id property="q_title" column="q_title" />
+		<id property="q_content" column="q_content" />
+		<id property="q_hit" column="q_hit" />
+		<id property="q_date" column="q_date" />
+		<id property="q_cnt" column="q_cnt" />
+	</resultMap>
+	<insert id="q_insert" parameterType="hashMap">
+		insert into	q_board(
+		q_seq,q_name,q_title,q_content,q_hit,q_date
+		)values(
+		((select ifnull(MAX(q_seq)+1,1) from q_board alias_seq))
+		,#{q_name,jdbcType=VARCHAR}
+		,#{q_title,jdbcType=VARCHAR}
+		,#{q_content,jdbcType=VARCHAR}
+		,#{q_hit,jdbcType=INTEGER}
+		,#{q_date,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="q_boardselectListAll" resultMap="q_boardMap">
+		select * from q_board order by q_seq desc
+	</select>
+	
+	<select id="selectDetail" parameterType="Integer" resultMap="q_boardMap">
+		select * from q_board where q_seq=#{q_seq}
+	</select>
+	
+	<update id="q_modify" parameterType="hashMap">
+		update q_board set
+		q_content=#{q_content}
+		,q_date=#{q_date}
+		where q_seq=#{q_seq}
+	</update>
+	
+	<update id="q_board_updateHit" parameterType="Integer">
+		update q_board set q_hit=q_hit + 1 where q_seq=#{q_seq}
+	</update>
+	
+	<delete id="q_board_delete" parameterType="Integer">
+		delete from q_board where q_seq=#{q_seq}
+	</delete>
+	
+	<select id="cq_comcount" parameterType="Integer" resultType="int">
+      select count(*) q_cnt from cq_comment where cq_parseq = #{cq_parseq}
+    </select>
+	
+</mapper>
+	

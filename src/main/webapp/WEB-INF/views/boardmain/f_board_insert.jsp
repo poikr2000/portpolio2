@@ -1,21 +1,29 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Write something else you want</title>
-<content tag="local_script">
-<script>
-$(document).ready(function(){
-	if($("#f_name").val() ==""){ 
-		$("#f_name").val("손님");
-	}
-});
-</script>
-</content>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+	integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+	crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+	integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp"
+	crossorigin="anonymous">
+
+<!-- Latest compiled and minified JavaScript -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+	integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+	crossorigin="anonymous"></script>
 </head>
 <body>
 	<div class="col-sm-12" style="background: black; height: 90px;">
@@ -28,11 +36,11 @@ $(document).ready(function(){
 					<tr>
 						<th>제목:</th>
 						<td><input type="text" placeholder="제목을 입력하세요. "
-							name="f_title" class="form-control" /></td>
+							name="f_title" class="form-control" required/></td>
 					</tr>
 					<tr>
 						<th>작성자:</th>
-						<td><input type="text" name="f_name" id="f_name"class="form-control"
+						<td><input type="text" name="f_name" class="form-control"
 							value="${sessionid}" readonly="readonly" /></td>
 					</tr>
 					<tr>
@@ -50,11 +58,11 @@ $(document).ready(function(){
 					</tr>
 
 					<tr>
-						<td colspan="2"><input type="submit" value="등록"
-							class="pull-right"> <input type="button" value="reset"
-							class="pull-left"> <input type="button"
-							value="글 목록으로... " class="pull-right"
-							onclick="javascript:location.href='f_board'" /></td>
+						<td colspan="2">
+						<input type="submit" value="등록" class="pull-right">
+						<input type="button" value="reset"	class="pull-left">
+						<input type="button" value="글 목록으로... " class="pull-right" onclick="javascript:location.href='f_board'" />
+						</td>
 					</tr>
 				</tbody>
 			</table>

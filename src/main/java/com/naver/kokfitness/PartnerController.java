@@ -21,14 +21,9 @@ public class PartnerController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping(value = "partnerInsertForm", method = RequestMethod.GET)
-	public String partnerInsertForm() {
-		
-		return "partner/partner_insert";
-	}
-	@RequestMapping(value = "codeConfirm", method = RequestMethod.POST)
+	@RequestMapping(value = "partnerCodeConfirm", method = RequestMethod.POST)
 	@ResponseBody
-	public int codeConfirm(@RequestParam String code) {
+	public int partnerCodeConfirm(@RequestParam String code) {
 		PartnerDAO dao=sqlSession.getMapper(PartnerDAO.class);
 		int result=0;
 		try {
@@ -57,13 +52,12 @@ public class PartnerController {
 		
 		return mav;
 	}
-	@RequestMapping(value = "partnerDetail", method = RequestMethod.GET)
-	public ModelAndView partnerDetail(@RequestParam String code) {
+	@RequestMapping(value = "partnerDetail", method = RequestMethod.POST)
+	@ResponseBody
+	public Partner partnerDetail(@RequestParam String code) {
 		PartnerDAO dao=sqlSession.getMapper(PartnerDAO.class);
 		Partner partner=dao.partnerGetOne(code);
-		ModelAndView mav = new ModelAndView("partner/partner_update");
-		mav.addObject("partner",partner);
-		return mav;
+		return partner;
 	}
 	@RequestMapping(value = "partnerUpdate", method = RequestMethod.POST)
 	public String partnerUpdate(@ModelAttribute("partner") Partner partner) {
