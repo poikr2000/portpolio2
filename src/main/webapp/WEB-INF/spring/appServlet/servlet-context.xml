@@ -34,7 +34,7 @@
 		<beans:property name="driverClassName" value="com.mysql.jdbc.Driver" />
 		<beans:property name="url" value="jdbc:mysql://localhost:3306/kokdb" />
 		<beans:property name="username" value="ncs3" />
-		<beans:property name="password" value="1q2w3e4r" />
+		<beans:property name="password" value="1q2w3e4r"/>
 	</beans:bean>
 	
 	<beans:bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">

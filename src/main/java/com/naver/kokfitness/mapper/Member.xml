@@ -79,6 +79,14 @@
 		memlevel=#{memlevel},mileage=#{mileage},program_code=#{program_code}
 		where email=#{email}
 	</update>
+		<update id="memberUpdateNotPass" parameterType="hashMap">
+		update member
+		set name=#{name},zipcode=#{zipcode},
+		newaddr=#{newaddr},detailaddr=#{detailaddr},
+		phone1=#{phone1},phone2=#{phone2},phone3=#{phone3},
+		memlevel=#{memlevel},mileage=#{mileage},program_code=#{program_code}
+		where email=#{email}
+	</update>
 	<delete id="memberDelete" parameterType="String">
 		delete from member where email=#{email}
 	</delete>

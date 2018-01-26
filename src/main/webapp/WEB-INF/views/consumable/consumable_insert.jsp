@@ -113,10 +113,10 @@ $(document).ready(function(){
 			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
 		</div>
 		
-		<div class="col-sm-offset-4 col-sm-4" style="margin-top:50px;">
+		<div class="col-sm-offset-4 col-sm-4" style="margin-top:20px;">
 			<div class="row">
 				<a href=#><img title="클릭후 이미지 변경"alt="클릭후 이미지 변경"style="WIDTH: 50%; border:1px solid"
-				id="image"name="image"src="resources/images/noimage.jpg"></a>
+				id="image"name="image"src="resources/images/noimage.jpg" class="img-responsive center-block"></a>
 			</div>
 			<div class="row">
 				<input type="file" id="photo"name="imgfile" style="visibility:hidden;">

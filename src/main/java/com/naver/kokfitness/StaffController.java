@@ -38,7 +38,6 @@ public class StaffController {
 	@ResponseBody
 	public int staffCodeConfirm(@RequestParam String code) {
 		StaffDAO dao=sqlSession.getMapper(StaffDAO.class);
-		System.out.println("---------"+code);
 		int result=0;
 		try {
 			result=dao.codeConfirm(code);

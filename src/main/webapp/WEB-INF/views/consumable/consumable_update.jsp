@@ -80,8 +80,7 @@ $(document).ready(function(){
 		</div>
 		<div class="col-sm-offset-4 col-sm-4" style="margin-top:50px;">
 			<div class="row">
-				<a href=#><img title="클릭후 이미지 변경"alt="클릭후 이미지 변경"style="WIDTH: 50%; border:1px solid"
-				id="image"name="image"src="${consumable.photo}"></a>
+				<a href=#><img title="클릭후 이미지 변경"alt="클릭후 이미지 변경"style="WIDTH: 50%; border:1px solid" id="image"name="image"src="${consumable.photo}" class="img-responsive center-block"></a>
 				<input type="hidden" name="beforephoto" value="${consumable.photo}">
 			</div>
 			<div class="row">

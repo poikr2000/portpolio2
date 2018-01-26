@@ -18,4 +18,5 @@ public interface MemberDAO {
 	ArrayList<Member> memberListAll();
 	void memberDelete(String email);
 	ArrayList<Program> programListAll();
+	void memberUpdateNotPass(Member member);
 }

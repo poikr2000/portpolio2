@@ -103,19 +103,25 @@ $(document).ready(function(){
 	$('#memberupdatebtn').click(function(){
 		var id=$('#id').val();
 		var name=$('#name').val();
-		var password=$('#userpassword').val();
-		var passwordchk=$('#passwordchk').val();
 		var zipcode=$('#zipcode').val();
 		var newaddr=$('#newaddr').val();
 		var detailaddr=$('#detailaddr').val();
 		var phone2=$('#phone2').val();
 		var phone3=$('#phone3').val();
-		if(name==""||id==""||password==""||passwordchk==""||zipcode==""||
-				newaddr==""||detailaddr==""||phone2==""||phone3==""){
+		if(name==""||id==""||zipcode==""||newaddr==""||detailaddr==""||phone2==""||phone3==""){
 			$('#requirechk').click();
 			return;
 		}
 		var msg=""
+		if($('#userpassword').val()==""&&$('#passwordchk').val()==""){
+			$('#memberUpdateModalBtn').text('수정');
+			$('#memberUpdateModalBtn').show();
+			$('#memberUpdateModalClose').text('취소');
+			$('#memberUpdateModalClose').show();
+			msg="- 변경 사항을 저장하시겠습니까? -";
+			$('#memberUpdateModalmsg').text(msg);
+			$('#memberUpdateModal').modal('show');
+		}
 		if($('#userpassword').val()!=$('#passwordchk').val()){
 			msg="- 비밀번호를 다시 확인 해주시기 바랍니다 -";
 			$('#memberUpdateModalmsg').text(msg);
@@ -206,11 +212,11 @@ $(document).ready(function(){
 							<div class="form-group col-sm-12">
 								<label class="col-sm-3">비밀번호</label>
 								<div class="col-sm-3">
-									<input class="form-control input-sm" maxlength="15"id="userpassword" name="password" required="required" type="password" placeholder="password">
+									<input class="form-control input-sm" maxlength="15"id="userpassword" name="password" type="password" placeholder="password">
 								</div>
 								<label class="col-sm-3">비밀번호 확인</label>
 								<div class="col-sm-3">
-									<input class="form-control input-sm" maxlength="15"id="passwordchk" name="passwordchk" required="required" type="password" placeholder="password">
+									<input class="form-control input-sm" maxlength="15"id="passwordchk" name="passwordchk" type="password" placeholder="password">
 								</div>
 							</div>
 							<div class="form-group col-sm-12">

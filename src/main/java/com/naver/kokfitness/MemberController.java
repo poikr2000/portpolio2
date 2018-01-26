@@ -133,12 +133,16 @@ public class MemberController {
 	@RequestMapping(value = "adminMemberUpdate", method = RequestMethod.POST)
 	public String adminMemberUpdate(@ModelAttribute("member") Member member,HttpSession session) {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
-		try {
-			String encodepassword=passwordEncoder.encode(member.getPassword());
-			member.setPassword(encodepassword);
-			dao.adminMemberUpdate(member);
-		}catch(Exception e){
-			System.out.println("error : "+e.getMessage());
+		if(member.getPassword()=="") {
+			dao.memberUpdateNotPass(member);
+		}else {
+			try {
+				String encodepassword=passwordEncoder.encode(member.getPassword());
+				member.setPassword(encodepassword);
+				dao.adminMemberUpdate(member);
+			}catch(Exception e){
+				System.out.println("error : "+e.getMessage());
+			}
 		}
 		return "redirect:memberList";
 	}
@@ -182,6 +186,7 @@ public class MemberController {
     			session.setAttribute("sessionphone1", data.getPhone1());
     			session.setAttribute("sessionphone2", data.getPhone2());
     			session.setAttribute("sessionphone3", data.getPhone3());
+    			session.setAttribute("sessionmileage", data.getMileage());
     			session.setAttribute("sessionprogram", data.getProgram_code());
     			session.setAttribute("sessionlevel", data.getMemlevel());
     			response.setCharacterEncoding("EUC-KR");
