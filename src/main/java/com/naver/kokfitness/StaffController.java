@@ -3,7 +3,6 @@ package com.naver.kokfitness;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Locale;
 
 import org.apache.ibatis.session.SqlSession;
@@ -34,6 +33,15 @@ public class StaffController {
 		return "staff/staff_insert";
 	}
 	
+	@RequestMapping(value = "staffListForm", method = RequestMethod.GET)
+	public ModelAndView staffListForm() {
+		StaffDAO staffdao=sqlSession.getMapper(StaffDAO.class);
+		ArrayList<Staff> staffs = staffdao.staffListAll();
+		ModelAndView mav = new ModelAndView("staff/staff_detail_list");
+		mav.addObject("staffs", staffs);
+		return mav;
+	}
+	
 	@RequestMapping(value = "staffCodeConfirm", method = RequestMethod.POST)
 	@ResponseBody
 	public int staffCodeConfirm(@RequestParam String code) {
@@ -48,7 +56,7 @@ public class StaffController {
 	}
 	
 	@RequestMapping(value = "staffInsert", method = RequestMethod.POST)
-	public String staffInsert(@ModelAttribute("staff") Staff staff,
+	public ModelAndView staffInsert(@ModelAttribute("staff") Staff staff,
 			@RequestParam CommonsMultipartFile imgfile) {
 		String path="D:/STSSOURCE/kokfitness/src/main/webapp/resources/uploadfiles/";
 		String realpath="resources/uploadfiles/";
@@ -70,7 +78,9 @@ public class StaffController {
 		}catch(Exception e){
 			System.out.println("error : "+e.getMessage());
 		}
-		return "redirect:staffList";
+		ModelAndView mav = new ModelAndView("staff/result_page");
+		mav.addObject("staff",staff);
+		return mav;
 	}
 	
 	@RequestMapping(value = "staffList", method = RequestMethod.GET)
@@ -82,26 +92,28 @@ public class StaffController {
 		mav.addObject("staffs",staffs);
 		return mav;
 	}
+	
 	@RequestMapping(value = "staffDelete", method = RequestMethod.POST)
-	public String staffDelete(@RequestParam ("staffunitchk") List<String> staffunitchk) {
+	public ModelAndView memberDelete(@RequestParam String delcode) {
+		ModelAndView mav = new ModelAndView("staff/staff_insert");
 		StaffDAO dao=null;
 		dao=sqlSession.getMapper(StaffDAO.class);
-		for(String unit : staffunitchk) {
-			dao.staffDelete(unit);
-	    }
-		return "redirect:staffList";
+		dao.staffDelete(delcode);
+		ArrayList<Staff> staffs = dao.staffListAll();
+		mav.addObject("staffs",staffs);
+		return mav;
 	}
 	
 	@RequestMapping(value = "staffDetail", method = RequestMethod.POST)
 	@ResponseBody
-	 public Staff buyDetail(@RequestParam String code) {
+	 public Staff staffDetail(@RequestParam String code) {
 		StaffDAO staffdao=sqlSession.getMapper(StaffDAO.class);
 		Staff staff = staffdao.staffGetOne(code);
 		return staff;
 	}
 	
 	@RequestMapping(value = "staffUpdate", method = RequestMethod.POST)
-	public String staffUpdate(@ModelAttribute("staff") Staff staff,
+	public ModelAndView staffUpdate(@ModelAttribute("staff") Staff staff,
 			@RequestParam CommonsMultipartFile imgfile) {
 		String path="D:/STSSOURCE/kokfitness/src/main/webapp/resources/uploadfiles/";
 		String realpath="resources/uploadfiles/";
@@ -118,15 +130,33 @@ public class StaffController {
 		}
 		StaffDAO dao=sqlSession.getMapper(StaffDAO.class);
 		try {
-			if(originalname.equals("")) {
-				staff.setPhoto(staff.getBeforephoto());
-			}else {
-				staff.setPhoto(realpath+staffname+originalname);
-			}
+			staff.setPhoto(realpath+staffname+originalname);
 			dao.staffUpdate(staff);
 		}catch(Exception e){
 			System.out.println("error : "+e.getMessage());
 		}
-		return "redirect:staffList";
+		ModelAndView mav = new ModelAndView("staff/result_page");
+		mav.addObject("staff",staff);
+		return mav;
+	}
+	
+	@RequestMapping(value = "profileUpdate", method = RequestMethod.POST)
+	public String profileInsert(@ModelAttribute("staff") Staff staff) {
+		StaffDAO dao=sqlSession.getMapper(StaffDAO.class);
+		System.out.println("------------------"+staff.getProfile());
+		System.out.println("------------------"+staff.getCode());
+		try {
+			dao.profileUpdate(staff);
+		}catch(Exception e){
+			System.out.println("error : "+e.getMessage());
+		}
+		return "redirect:staffListForm";
+	}
+	@RequestMapping(value = "profileDetail", method = RequestMethod.POST)
+	@ResponseBody
+	 public Staff profileDetail(@RequestParam String code) {
+		StaffDAO staffdao=sqlSession.getMapper(StaffDAO.class);
+		Staff staff = staffdao.staffGetOne(code);
+		return staff;
 	}
 }

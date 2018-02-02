@@ -14,18 +14,16 @@
 		<id property="phone2" column="phone2"/>
 		<id property="phone3" column="phone3"/>
 		<id property="photo" column="photo"/>
-		<id property="beforephoto" column="beforephoto"/>
 		<id property="certificate1" column="ceritificate1"/>
 		<id property="certificate2" column="ceritificate2"/>
 		<id property="certificate3" column="ceritificate3"/>
+		<id property="profile" column="profile"/>
 	</resultMap>
-	
 	<select id="codeConfirm" parameterType="String" resultType="int">
 		select count(*)
 		from staff 
 		where code=#{code}
 	</select>
-	
 	<insert id="staffInsert" parameterType="hashMap">
 		insert into staff(
 		code,name,birth_date,zipcode,newaddr,detailaddr,phone1,phone2,phone3,photo,certificate1,certificate2,certificate3
@@ -36,11 +34,9 @@
 		#{certificate1,jdbcType=VARCHAR},#{certificate2,jdbcType=VARCHAR},#{certificate3,jdbcType=VARCHAR}
 		)
 	</insert>
-	
 	<select id="staffListAll" parameterType="String" resultMap="staffMap">
 		select *from staff
 	</select>
-	
 	<delete id="staffDelete" parameterType="String">
 		delete from staff where code=#{code}
 	</delete>
@@ -48,7 +44,6 @@
 	<select id="staffGetOne" parameterType="String" resultMap="staffMap">
 		select *from staff where code=#{code}
 	</select>
-	
 	<update id="staffUpdate" parameterType="hashMap">
 		update staff set name=#{name},birth_date=#{birth_date},zipcode=#{zipcode},
 		newaddr=#{newaddr},detailaddr=#{detailaddr},
@@ -56,4 +51,10 @@
 		certificate1=#{certificate1},certificate2=#{certificate2},certificate3=#{certificate3}
 		where code=#{code}
 	</update>
+	
+	<update id="profileUpdate" parameterType="hashMap">
+		update staff set profile=#{profile}
+		where code=#{code}
+	</update>
+
 </mapper>

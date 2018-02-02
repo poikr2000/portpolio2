@@ -39,21 +39,20 @@
 </script>
 </content>
 <body>
-<div class="col-sm-12" style="background: black;height:90px;">
-   </div>
+<div class="container col-sm-12" style="background:url('resources/images/staff.jpg');">
 	<form action="f_board_modify" method="post" encType="multiplart/form-data" id="f_board_modify">
-	<h3 style="text-align: center;">게 시 판 수 정</h3>
-		<div class="container">
-			<table class="table fade in">
+	<h3 style="text-align: center; margin-top: 120px;" ><font color="#FFFFFF"; size="50" face="Viner Hand ITC">FREE BOARD</font></h3>
+		<div class="container" style="height: 200px">
+			<table class="table fade in" style="margin-top: 30px; background-color: #424242; border: 1px solid white;">
 				<tbody>
 					<tr>
-						<hi class="pull-left">제목 : ${f_board.f_title}</hi>&nbsp&nbsp&nbsp
-						<hi>작성자 : ${f_board.f_name}</hi>
-						<hi class="pull-right">조회수 : ${f_board.f_hit}</hi>
+						<hi class="pull-left"><strong><font color="#FFFFFF">제목 : ${f_board.f_title}</font></strong></hi>&nbsp&nbsp&nbsp
+						<hi><strong><font color="#FFFFFF">작성자 : ${f_board.f_name}</font></strong></hi>
+						<hi class="pull-right"><strong><font color="#FFFFFF">조회수 : ${f_board.f_hit}</font></strong></hi>
 					</tr>
 					<tr>
-						<td>내용:</td>
-						<td>${f_board.f_content}</td>
+						<td style="vertical-align:middle; width: 60px"><strong><font color="#FFFFFF">내용 :</font></strong></td>
+						<td><strong><font color="#FFFFFF">${f_board.f_content}</font></strong></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -91,10 +90,11 @@
      </div>
 	</form>
 
+
 	<form class="cf_insert" action="cf_insert" method="post" encType="multiplart/form-data" style="margin-top: 15pt" id="cf_insert">
 	<input type="hidden" id="cf_name" name="cf_name" value="${sessionid}"/>
 	<input type="hidden" id="f_seq" name="f_seq" value="${f_board.f_seq}"/>
-		<div class="container">
+		<div class="container" style="height: 500px">
 			<table id="" class="" width="100%" cellspacing="0">
 				<thead>
 					<tr>
@@ -107,9 +107,9 @@
 				<tbody>
 					<c:forEach var="cf_comments" items="${cf_comments}">
 						<tr>
-							<td>${cf_comments.cf_name} :</td>
-							<td>${cf_comments.cf_content}</td>
-							<td>${cf_comments.cf_date}</td>
+							<td><strong><font color="#FFFFFF">${cf_comments.cf_name} :</font></strong></td>
+							<td><strong><font color="#FFFFFF">${cf_comments.cf_content}</font></strong></td>
+							<td><strong><font color="#FFFFFF">${cf_comments.cf_date}</font></strong></td>
 							<c:choose>
 								<c:when test="${sessionid eq cf_comments.cf_name }">
 									<td><a href="cf_comment_delete?cf_seq=${cf_comments.cf_seq}&f_seq=${f_board.f_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
@@ -128,7 +128,7 @@
 						<c:when test="${sessionemail == null }"></c:when>
 						<c:otherwise>
 							<tr>
-								<th style="text-align: center">댓글:</th>
+								<th style="text-align: center"><strong><font color="#FFFFFF">댓글:</font></strong></th>
 								<td><div class="form-groub"><textarea  rows="1" cols="100" id="cf_content" name="cf_content" class="form-control"></textarea></div></td>
 								<th><button class="input-sm" value="등록" id="cf_btn">등록</button></th>
 							</tr>
@@ -138,5 +138,6 @@
 			</table>
 		</div>
 	</form>
+</div>
 </body>
 </html>

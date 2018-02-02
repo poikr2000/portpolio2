@@ -36,66 +36,68 @@
 			$(location).attr('href', url);
 		});
 	});
+	
+	
 </script> 
 </content>
 <body>
-	<div class="col-sm-12" style="background: black; height: 90px;">
-	</div>
-	<form action="n_board_modify" method="post"
-		encType="multiplart/form-data" id="n_board_modify">
-		<input type="hidden" id="n_seq" name="n_seq" value="${n_board.n_seq}"/>
-		<h3 style="text-align: center;">공 지 사 항 수 정</h3>
-		<div class="container">
-			<table class="table fade in">
-				<tbody>
-					<tr>
-						<hi class="pull-left">제목 : ${n_board.n_title}</hi>&nbsp&nbsp&nbsp
-						<hi>작성자 : ${n_board.n_name}</hi>
-						<hi class="pull-right">조회수 : ${n_board.n_hit}</hi>
-					</tr>
-					<tr>
-						<td>내용:</td>
-						<td>${n_board.n_content}</td>
-					</tr>
-					<tr>
-						<td colspan="2"><c:choose>
-								<c:when test="${sessionid == n_board.n_name }">
-									<div class="pull-right">
-										<input type="submit" value="수정" class="input-sm">
-									</div>
-									<div class="pull-left">
-										<input id="delbtn" type="button" value="삭제" class="input-sm" />
-									</div>
-								</c:when>
-							</c:choose>
-							<div class="pull-right">
-								<input type="button" value="글 목록으로... " class="input-sm"
-									onclick="javascript:location.href='n_board'" />
-							</div>
-							</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		<div id="n_board_Modal" class="modal fade" role="dialog">
-			<div class="modal-dialog modal-sm" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-					</div>
-					<div class="modal-body">
-						<p>
-							<span id="n_board_ModalMsg"> Some text in modal</span>
-					</div>
-					<div class="modal-footer" style="text-align: center">
-						<button type="button" class="btn btn-success" data-dismiss="modal"
-							id="n_delbtn">확인</button>
-						<button type="button" class="btn btn-success" data-dismiss="modal"
-							id="">취소</button>
+	<div class="container col-sm-12" style="background:url('resources/images/staff.jpg');">
+		<form action="n_board_modify" method="post"
+			encType="multiplart/form-data" id="n_board_modify">
+			<input type="hidden" id="n_seq" name="n_seq" value="${n_board.n_seq}"/>
+			<h3 style="text-align: center; margin-top: 120px"><font color="#FFFFFF"; size="50" face="Viner Hand ITC">N O T I C E</font></h3>
+			<div class="container" style="height: 700px">
+				<table class="table fade in" style="margin-top: 30px; background-color: #424242; border: 1px solid white;">
+					<tbody>
+						<tr>
+							<hi class="pull-left"><strong><font color="#FFFFFF">제목 :</font> <font color="#FE2E2E">${n_board.n_title}</font></strong></hi>&nbsp&nbsp&nbsp
+							<hi><strong><font color="#FFFFFF">작성자 : ${n_board.n_name}</font></strong></hi>
+							<hi class="pull-right"><strong><font color="#FFFFFF">조회수 : ${n_board.n_hit}</font></strong></hi>
+						</tr>
+						<tr>
+							<td style="vertical-align:middle; width: 60px;"><strong><font color="#FFFFFF">내용 :</font></strong></td>
+							<td><strong><font color="#FFFFFF">${n_board.n_content}</font></strong></td>
+						</tr>
+						<tr>
+							<td colspan="2"><c:choose>
+									<c:when test="${sessionid == n_board.n_name }">
+										<div class="pull-right">
+											<input type="submit" value="수정" class="input-sm">
+										</div>
+										<div class="pull-left">
+											<input id="delbtn" type="button" value="삭제" class="input-sm" />
+										</div>
+									</c:when>
+								</c:choose>
+								<div class="pull-right">
+									<input type="button" value="글 목록으로... " class="input-sm"
+										onclick="javascript:location.href='n_board'" />
+								</div>
+								</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div id="n_board_Modal" class="modal fade" role="dialog">
+				<div class="modal-dialog modal-sm" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">&times;</button>
+						</div>
+						<div class="modal-body">
+							<p>
+								<span id="n_board_ModalMsg"> Some text in modal</span>
+						</div>
+						<div class="modal-footer" style="text-align: center">
+							<button type="button" class="btn btn-success" data-dismiss="modal"
+								id="n_delbtn">확인</button>
+							<button type="button" class="btn btn-success" data-dismiss="modal"
+								id="">취소</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-	</form>
+		</form>
+	</div>
 </body>
 </html>

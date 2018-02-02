@@ -205,7 +205,7 @@ $(document).ready(function(){
 			</div>
 			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">주소</label>
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					<input class="form-control input-sm" id="zipcode" name="zipcode"required="required" type="text">
 				</div>
 				<div class="input-group-btn">

@@ -120,6 +120,22 @@ $(document).ready(function(){
 		$('#update_form').attr('action','memberDelete');
 		$('#update_form').submit();
 	})
+	$(document).ready(function() {
+		// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
+		var floatPosition = parseInt($("#floatMenu").css('top'));
+		// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
+
+		$(window).scroll(function() {
+			// 현재 스크롤 위치를 가져온다.
+			var scrollTop = $(window).scrollTop();
+			var newPosition = scrollTop + floatPosition + "px";
+
+			$("#floatMenu").stop().animate({
+				"top" : newPosition
+			}, 500);
+
+		}).scroll();
+	});
 });
 </script>
 </content>
@@ -130,6 +146,13 @@ $(document).ready(function(){
 	</div>
 	<input type="submit" style="display: none" id="requirechk" name="requirechk">
 	<div class="container col-sm-12" style="text-align:left;">
+			<div id="floatMenu">
+				<ul>
+					<li><a href="memberDetail?email=${sessionemail}">회원정보 수정</a></li>
+					<li><a href="memberOrderList?email=${sessionemail}">주문상품 조회</a></li>
+					<li><a href="">회원탈퇴</a></li>
+				</ul>
+			</div>
 			<div class="col-sm-offset-3" style="margin-top:50px;">
 				<h3>정보 수정</h3>
 			</div>
@@ -167,7 +190,7 @@ $(document).ready(function(){
 			</div>
 			<div class="form-group col-sm-offset-4 col-sm-6">
 				<label class="col-sm-2">주소</label>
-				<div class="col-sm-2">
+				<div class="col-sm-3">
 					<input class="form-control input-sm" id="zipcode" value="${member.zipcode}" name="zipcode"required="required" type="text">
 				</div>
 				<div class="input-group-btn">

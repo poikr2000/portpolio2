@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.ShippingDAO">
+	<resultMap type="com.naver.kokfitness.entities.Shipping" id="shippingMap">
+		<id property="seq" column="seq"/>
+		<id property="consume_code" column="consume_code"/>
+		<id property="beforeconsume_code" column="beforeconsume_code"/>
+		<id property="consume_name" column="consume_name"/>
+		<id property="yyyy" column="yyyy"/>
+		<id property="mm" column="mm"/>
+		<id property="dd" column="dd"/>
+		<id property="no" column="no"/>
+		<id property="hang" column="hang"/>
+		<id property="price" column="price"/>
+		<id property="qty" column="qty"/>
+		<id property="beforeqty" column="beforeqty"/>
+		<id property="shipping_check" column="shipping_check"/>
+		<id property="order_check" column="order_check"/>
+		<id property="total" column="total"/>
+		<id property="columnname" column="columnname"/>
+		<id property="member_mail" column="member_mail"/>
+		<id property="cartcount" column="cartcount"/>
+		<id property="photo" column="photo"/>
+		<id property="mileageprice" column="mileageprice"/>
+		<id property="mileagetotal" column="mileagetotal"/>
+	</resultMap>
+	<select id="selectSequenceNo" resultType="Integer">
+		select ifnull(MAX(no)+1,1) 
+		from shipping alias_seq 
+		where shipping_check=9 and order_check=9 and member_mail=#{member_mail}
+	</select>
+	<select id="selectSequenceHang"  parameterType="hashMap" resultType="Integer">
+		select ifnull(MAX(hang)+1,1) 
+		from shipping alias_seq 
+		where no=#{no} and member_mail=#{email}
+	</select>
+	<select id="cartCount"  parameterType="String" resultType="Integer">
+		select count(hang) 
+		from shipping
+		where shipping_check=0 and order_check=0 and member_mail=#{member_mail}
+	</select>
+	<select id="memberCartList"  parameterType="String" resultMap="shippingMap">
+		select A.*,B.photo,B.mileageprice,B.name as consume_name,sum(A.qty*A.price) as total,sum(A.qty*B.mileageprice) as mileagetotal
+		from shipping A,consumable B
+		where A.consume_code=B.code and shipping_check=0 and order_check=0 and member_mail=#{member_mail}
+		group by hang with rollup;
+	</select>
+	<select id="memberOrderList"  parameterType="String" resultMap="shippingMap">
+		select A.*,B.photo,B.mileageprice,B.name as consume_name,sum(A.qty*A.price) as total,sum(A.qty*B.mileageprice) as mileagetotal
+		from shipping A,consumable B
+		where A.consume_code=B.code and shipping_check=0 and order_check=9 and member_mail=#{member_mail}
+		group by seq with rollup;
+	</select>
+	<select id="selectGetOne"  parameterType="String"  resultMap="shippingMap">
+		select A.*,(A.qty*B.mileageprice) as mileagetotal
+		from shipping A,consumable B
+		where A.consume_code=B.code and seq=#{seq}
+	</select>
+	<insert id="shippingInsert" parameterType="hashMap">
+		insert into shipping(seq,no,hang,consume_code,price,qty,member_mail
+		)values(
+		((select ifnull(MAX(seq)+1,1) from shipping alias_seq)),
+		#{no,jdbcType=INTEGER},#{hang,jdbcType=INTEGER},#{consume_code,jdbcType=VARCHAR},
+		#{price,jdbcType=INTEGER},#{qty,jdbcType=INTEGER},#{member_mail,jdbcType=VARCHAR})
+	</insert>
+	<update id="orderInsert" parameterType="String">
+		update shipping 
+		set order_check=9
+		where seq=#{seq}
+	</update>
+	<delete id="cartDelete" parameterType="String">
+		delete 
+		from shipping 
+		where seq=#{seq}
+	</delete>
+</mapper>

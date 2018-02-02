@@ -270,6 +270,20 @@ $(document).ready(function(){
 		$('#partnerinsert_form').attr('action','partnerDelete');
 		$('#partnerinsert_form').submit();
 	})
+	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
+	var floatPosition = parseInt($("#floatMenu").css('top'));
+	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
+
+	$(window).scroll(function() {
+		// 현재 스크롤 위치를 가져온다.
+		var scrollTop = $(window).scrollTop();
+		var newPosition = scrollTop + floatPosition + "px";
+
+		$("#floatMenu").stop().animate({
+			"top" : newPosition
+		}, 500);
+
+	}).scroll();
 });
 </script>
 </content>
@@ -278,7 +292,7 @@ $(document).ready(function(){
 <form class="partnerlist_form" name="partnerlist_form" method="POST">
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
-	<div class="container col-sm-12">
+	<div class="container col-sm-12" style="height:600px;">
 		<div class="col-sm-offset-3" style="margin-top:50px;">
 			<h3>거래처 리스트</h3>
 		</div>
@@ -315,6 +329,17 @@ $(document).ready(function(){
 				</tbody>
 			</table>
 		</div>
+	</div>
+	<div id="floatMenu">
+		<ul>
+			<li><a href="memberList">회원 관리</a></li>
+			<li><a href="staffList">직원 관리</a></li>
+			<li><a href="partnerList">거래처 관리</a></li>
+			<li><a href="receivingInsertForm">매입관리</a></li>
+			<li><a href="receivingStatement">매입장</a></li>
+			<li><a href="consumableInsertForm">상품 등록</a></li>
+			<li><a href="consumableList">수불장</a></li>
+		</ul>
 	</div>
 </form>
 <div id="partnerDetailModal" class="modal fade" role="dialog">

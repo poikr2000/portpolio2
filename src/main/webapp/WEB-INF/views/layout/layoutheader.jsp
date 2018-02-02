@@ -131,11 +131,12 @@ $(document).ready(function(){
 								<a id="login">로그인</a>&nbsp;|&nbsp;<a href="memberTerms">회원가입</a>
 							</c:when>
 							<c:when test="${sessionemail=='admin@admin.com'}">
-								<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp;|&nbsp;<a href="memberTerms">회원가입</a>
+								<a href="logout"><span>${sessionid}</span>&nbsplogout</a>&nbsp;|&nbsp;
+								<a href="adminMainForm"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;option</a>
 							</c:when>
 							<c:otherwise>
 								<a href="logout"><span>${sessionid}</span>&nbsp;logout</a>&nbsp;|&nbsp;
-								<a href="memberDetail?email=${sessionemail}">내정보</a>
+								<a href="memberMainForm">내정보</a>
 							</c:otherwise>
 						</c:choose>	
 					</div>
@@ -147,7 +148,7 @@ $(document).ready(function(){
 					<ul class="consult-menu">
 						<li><a href="index">Home</a></li>
 						<li><a href="program">program</a></li>
-						<li><a href="staff">staff</a></li>
+						<li><a href="staffListForm">staff</a></li>
 						<li class="menu-item-has-children"><a href="#">community</a>
 							<ul class="sub-menu">
 								<li><a href="n_board">공지사항</a></li>
@@ -159,25 +160,7 @@ $(document).ready(function(){
 						</li>
 						<li><a href="mileageListForm">mileage</a>
 						</li>
-						<c:choose>
-							<c:when test="${sessionemail=='admin@admin.com'}">
-								<li class="menu-item-has-children"><a href="#"><i class="fa fa-cog" aria-hidden="true"></i>&nbsp;option</a>
-									<ul class="sub-menu">
-										<li><a href="memberList">회원 관리</a></li>
-										<li><a href="staffList">직원 관리</a></li>
-										<li><a href="partnerList">거래처 관리</a></li>
-										<li><a href="receivingInsertForm">매입관리</a></li>
-										<li><a href="receivingStatement">매입장</a></li>
-										<li><a href="consumableInsertForm">상품 등록</a></li>
-										<li><a href="consumableList">수불장</a></li>
-									</ul>
-								</li>
-							</c:when>
-							<c:otherwise>
-							</c:otherwise>
-						</c:choose>	
 					</ul><!-- consult-menu -->
-					
 					<div class="navbar-toggle"><span></span><span></span><span></span></div>
 				</nav><!-- End / consult-nav -->
 			</div>

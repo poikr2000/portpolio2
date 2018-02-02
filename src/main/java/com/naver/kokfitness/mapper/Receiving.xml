@@ -31,7 +31,7 @@
 		from receiving A, business_partner B, consumable C 
 		where A.bp_code=B.code and A.consume_code=C.code and 
 		yyyy=#{yyyy} and mm=#{mm} and dd=#{dd}
-		group by no,hang with rollup;
+		group by hang with rollup;
 	</select>
 	<select id="SelectReceivingSearchRollup" parameterType="hashMap" resultMap="receivingMap">
 		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,consume_code,C.name consume_name,A.price,qty,memo,sum(A.price*qty) as total 

@@ -48,4 +48,14 @@ public class HomeController {
 		
 		return "services";
 	}
+	@RequestMapping(value = "adminMainForm", method = RequestMethod.GET)
+	public String adminMainForm() {
+		
+		return "admin_main";
+	}
+	@RequestMapping(value = "memberMainForm", method = RequestMethod.GET)
+	public String memberMainForm() {
+		
+		return "member/member_main";
+	}
 }

@@ -11,4 +11,5 @@ public interface StaffDAO {
 	int staffDelete(String code);
 	Staff staffGetOne(String code);
 	int staffUpdate(Staff staff);
+	void profileUpdate(Staff staff);
 }

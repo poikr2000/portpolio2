@@ -25,50 +25,50 @@
 	crossorigin="anonymous"></script>
 </head>
 <body>
-	<div class="col-sm-12" style="background: black; height: 90px;">
+	<div class="container col-sm-12" style="background:url('resources/images/staff.jpg');">
+		<form action="n_modify" method="post" encType="multiplart/form-data">
+		<input type="hidden" id="n_seq" name="n_seq" value="${n_board.n_seq}">
+			<h3 style="text-align: center; margin-top: 120px"><font color="#FFFFFF"; size="50" face="Viner Hand ITC">NOTICE MODIFY</font></h3>
+			<div class="container" style="height: 750px">
+				<table class="table table-bordered" style="margin-top: 30px; background-color: #424242; border: 1px solid white;">
+					<tbody>
+						<tr>
+							<th><font color="#FFFFFF">제목 :</font></th>
+							<td><input type="text" placeholder="제목을 입력하세요. "
+								name="n_title" class="form-control" value="${n_board.n_title}" readonly="readonly" /></td>
+						</tr>
+	
+						<tr>
+							<th><font color="#FFFFFF">작성자:</font></th>
+							<td><input type="text" placeholder="작성자를 입력하세요. "
+								name="n_name" class="form-control" value="${n_board.n_name}" readonly="readonly" /></td>
+						</tr>
+	
+						<tr>
+							<th><font color="#FFFFFF">내용:</font></th>
+							<td colspan="2" class="write"><script type="text/javascript"
+									src="http://js.nicedit.com/nicEdit-latest.js"></script> <script
+									type="text/javascript">
+										//<![CDATA[
+										bkLib.onDomLoaded(function() {
+											nicEditors.allTextAreas()
+										});
+										//]]>
+									</script> <textarea id="n_content" name="n_content" class="form-controll"
+									cols="120" rows="10"><font color="#FFFFFF">${n_board.n_content}</font></textarea></td>
+						</tr>
+	
+						<tr>
+							<td colspan="2"><input type="submit" value="수정"
+								class="pull-right"> <input type="button" value="reset"
+								class="pull-left"> <input type="button"
+								value="글 목록으로... " class="pull-right"
+								onclick="javascript:location.href='n_board'" /></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</form>
 	</div>
-	<form action="n_modify" method="post" encType="multiplart/form-data">
-	<input type="hidden" id="n_seq" name="n_seq" value="${n_board.n_seq}">
-		<h3 style="text-align: center;">공 지 사 항</h3>
-		<div class="container">
-			<table class="table table-bordered">
-				<tbody>
-					<tr>
-						<th>제목 :</th>
-						<td><input type="text" placeholder="제목을 입력하세요. "
-							name="n_title" class="form-control" value="${n_board.n_title}" readonly="readonly" /></td>
-					</tr>
-
-					<tr>
-						<th>작성자:</th>
-						<td><input type="text" placeholder="작성자를 입력하세요. "
-							name="n_name" class="form-control" value="${n_board.n_name}" readonly="readonly" /></td>
-					</tr>
-
-					<tr>
-						<th>내용:</th>
-						<td colspan="2" class="write"><script type="text/javascript"
-								src="http://js.nicedit.com/nicEdit-latest.js"></script> <script
-								type="text/javascript">
-									//<![CDATA[
-									bkLib.onDomLoaded(function() {
-										nicEditors.allTextAreas()
-									});
-									//]]>
-								</script> <textarea id="n_content" name="n_content" class="form-controll"
-								cols="120" rows="10">${n_board.n_content}</textarea></td>
-					</tr>
-
-					<tr>
-						<td colspan="2"><input type="submit" value="수정"
-							class="pull-right"> <input type="button" value="reset"
-							class="pull-left"> <input type="button"
-							value="글 목록으로... " class="pull-right"
-							onclick="javascript:location.href='n_board'" /></td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-	</form>
 </body>
 </html>

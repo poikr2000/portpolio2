@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import com.naver.kokfitness.entities.Member;
 import com.naver.kokfitness.entities.Program;
+import com.naver.kokfitness.entities.Shipping;
 
 public interface MemberDAO {
 	int emailConfirm(String email);
@@ -19,4 +20,6 @@ public interface MemberDAO {
 	void memberDelete(String email);
 	ArrayList<Program> programListAll();
 	void memberUpdateNotPass(Member member);
+	void mileageSub(Shipping shipping);
+	void mileageAdd(Shipping shipping);
 }

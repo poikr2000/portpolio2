@@ -96,172 +96,184 @@ function updateStaff(code){
 		}
 	});
 }
-	$(document).ready(function() {
-		$(document).on("keyup","input:text[numberOnly]",function(){
-			$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
-		});
-		$('#staffallchk').on("click",function(){
-			if($(this).is(':checked')){
-				$('input[name=staffunitchk]').prop('checked',true);
-			}else{
-				$('input[name=staffunitchk]').prop('checked',false);
-			}
-		});
-		$('#stafftable').DataTable({
-			dom: 'ftBp',
-	        buttons: [
-	        	{
-	                text: 'delete',
-	                action: function ( e, dt, node, config ) {
-	                	var checkboxarr=[];
-	                	$("input[name='staffunitchk']:checked").each(function(){
-	                		checkboxarr.push($(this).val());
-	                	});
-	                	if(checkboxarr.length>0){
-	                		$('#codeModalMsg').text("삭제 하시겠습니까?")
-	            			$('#usebtn').text("삭제");
-	            			$('#closebtn').text("취소");
-	            			$('#usebtn').show();
-	            			$('#closebtn').show();
-	            			$('#codeModal').modal('show');
-	                		$('#usebtn').on('click',function(){
-	                			$('.stafflist_form').submit();
-	                		});
-	                	}else{
-	                		$('#usebtn').hide();
-	                		$('#closebtn').text('확인');
-	                		$('#closebtn').show();
-	            			$('#codeModalMsg').text("선택된 항목이 없습니다.")
-	                		$('#codeModal').modal('show');
-	            			return;
-	            		}
-	                }
-	            },
-	        	{
-	                text: 'insert',
-	                action: function ( e, dt, node, config ) {
-	                	$("#staffsave").show();
-	        			$("#codeconfirm").show();
-	        			$("#staffupdate").hide();
-	        			$('#code').attr("readonly",false);
-	        			$('#code').attr("value","");
-	        			$('#name').attr("value","");
-	        			$('#datepicker1').attr("value","");
-	        			$('#zipcode').attr("value","");
-	        			$('#newaddr').attr("value","");
-	        			$('#detailaddr').attr("value","");
-	        			$("#phone1").val('010').attr('selected', true);
-	        			$('#phone2').attr("value","");
-	        			$('#phone3').attr("value","");
-	        			$('#beforephoto').attr("value","");
-	        			$('#certificate1').attr("value","");
-	        			$('#certificate2').attr("value","");
-	        			$('#certificate3').attr("value","");
-	                	$('#staffInsertModal').modal('show');
-	                }
-	            }
-	        ]
-		});
-	    $('#codeconfirm').on("click",function(){
-			var code = $('#code').val()
-			if($('#code').val()==""){
-				$('#nullMsg').show();
-				$('#confirmMsg').hide();
+$(document).ready(function() {
+	$(document).on("keyup","input:text[numberOnly]",function(){
+		$(this).val( $(this).val().replace(/[^0-9]/gi,"") );
+	});
+	$('#staffallchk').on("click",function(){
+		if($(this).is(':checked')){
+			$('input[name=staffunitchk]').prop('checked',true);
+		}else{
+			$('input[name=staffunitchk]').prop('checked',false);
+		}
+	});
+	$('#stafftable').DataTable({
+		dom: 'ftBp',
+        buttons: [
+        	{
+                text: 'delete',
+                action: function ( e, dt, node, config ) {
+                	var checkboxarr=[];
+                	$("input[name='staffunitchk']:checked").each(function(){
+                		checkboxarr.push($(this).val());
+                	});
+                	if(checkboxarr.length>0){
+                		$('#codeModalMsg').text("삭제 하시겠습니까?")
+            			$('#usebtn').text("삭제");
+            			$('#closebtn').text("취소");
+            			$('#usebtn').show();
+            			$('#closebtn').show();
+            			$('#codeModal').modal('show');
+                		$('#usebtn').on('click',function(){
+                			$('.stafflist_form').submit();
+                		});
+                	}else{
+                		$('#usebtn').hide();
+                		$('#closebtn').text('확인');
+                		$('#closebtn').show();
+            			$('#codeModalMsg').text("선택된 항목이 없습니다.")
+                		$('#codeModal').modal('show');
+            			return;
+            		}
+                }
+            },
+        	{
+                text: 'insert',
+                action: function ( e, dt, node, config ) {
+                	$("#staffsave").show();
+        			$("#codeconfirm").show();
+        			$("#staffupdate").hide();
+        			$('#code').attr("readonly",false);
+        			$('#code').attr("value","");
+        			$('#name').attr("value","");
+        			$('#datepicker1').attr("value","");
+        			$('#zipcode').attr("value","");
+        			$('#newaddr').attr("value","");
+        			$('#detailaddr').attr("value","");
+        			$("#phone1").val('010').attr('selected', true);
+        			$('#phone2').attr("value","");
+        			$('#phone3').attr("value","");
+        			$('#beforephoto').attr("value","");
+        			$('#certificate1').attr("value","");
+        			$('#certificate2').attr("value","");
+        			$('#certificate3').attr("value","");
+                	$('#staffInsertModal').modal('show');
+                }
+            }
+        ]
+	});
+    $('#codeconfirm').on("click",function(){
+		var code = $('#code').val()
+		if($('#code').val()==""){
+			$('#nullMsg').show();
+			$('#confirmMsg').hide();
+			$('#failMsg').hide();
+			$('#trueMsg').hide();
+			return;
+		}else{
+			var boolcode = codecheck(code);
+			if(boolcode==false){
+				$('#nullMsg').hide();
+				$('#confirmMsg').show();
 				$('#failMsg').hide();
 				$('#trueMsg').hide();
 				return;
-			}else{
-				var boolcode = codecheck(code);
-				if(boolcode==false){
-					$('#nullMsg').hide();
-					$('#confirmMsg').show();
-					$('#failMsg').hide();
-					$('#trueMsg').hide();
-					return;
-				}
-				$.ajax({
-					type:'Post',
-					data:"code="+code,
-					datatype:'json',
-					url : 'staffCodeConfirm',
-					success : function(data){
-						if(data>0){
-							$('#nullMsg').hide();
-							$('#confirmMsg').hide();
-							$('#failMsg').show();
-							$('#trueMsg').hide();
-							$('#code').val('');
-							return;
-						}else{
-							$('#nullMsg').hide();
-							$('#confirmMsg').hide();
-							$('#failMsg').hide();
-							$('#trueMsg').show();
-							$('#codeconfirmchk').attr("value","yes");
-						}
-					},
-					error : function(xhr,status,error){
-						alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+			}
+			$.ajax({
+				type:'Post',
+				data:"code="+code,
+				datatype:'json',
+				url : 'staffCodeConfirm',
+				success : function(data){
+					if(data>0){
+						$('#nullMsg').hide();
+						$('#confirmMsg').hide();
+						$('#failMsg').show();
+						$('#trueMsg').hide();
+						$('#code').val('');
+						return;
+					}else{
+						$('#nullMsg').hide();
+						$('#confirmMsg').hide();
+						$('#failMsg').hide();
+						$('#trueMsg').show();
+						$('#codeconfirmchk').attr("value","yes");
 					}
-				});
-			}
-		});
-	    
-		$('#staffsave').click(function(){
-			var msg=""
-			if($('#codeconfirmchk').val()=="no"){
-				msg+="- 중복 검사를 하세요 -";
-				$('#codeModalMsg').text(msg);
-				$('#codeModal').modal('show');
-				$('#closebtn').text("확인");
-				$('#usebtn').hide();
-				$('#closebtn').show();
-				return;
-			}else{
-				msg+="- 등록하시겠습니까? -";
-				$('#codeModalMsg').text(msg);
-				$('#usebtn').text("등록");
-				$('#closebtn').text("취소");
-				$('#usebtn').show();
-				$('#closebtn').show();
-				$('#codeModal').modal('show');
-				$('#usebtn').on('click',function(){
-					$('#staffInsertForm').attr('action','staffInsert');
-					$('#staffInsertForm').submit();
-				});
-			}
-		});
-		
-		$('#staffupdate').click(function(){
-			var msg=""
-			msg+="- 수정하시겠습니까? -";
+				},
+				error : function(xhr,status,error){
+					alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+				}
+			});
+		}
+	});
+    
+	$('#staffsave').click(function(){
+		var msg=""
+		if($('#codeconfirmchk').val()=="no"){
+			msg+="- 중복 검사를 하세요 -";
 			$('#codeModalMsg').text(msg);
-			$('#usebtn').text("수정");
+			$('#codeModal').modal('show');
+			$('#closebtn').text("확인");
+			$('#usebtn').hide();
+			$('#closebtn').show();
+			return;
+		}else{
+			msg+="- 등록하시겠습니까? -";
+			$('#codeModalMsg').text(msg);
+			$('#usebtn').text("등록");
 			$('#closebtn').text("취소");
 			$('#usebtn').show();
 			$('#closebtn').show();
 			$('#codeModal').modal('show');
 			$('#usebtn').on('click',function(){
-				$('#staffInsertForm').attr('action','staffUpdate');
+				$('#staffInsertForm').attr('action','staffInsert');
 				$('#staffInsertForm').submit();
 			});
+		}
+	});
+	
+	$('#staffupdate').click(function(){
+		var msg=""
+		msg+="- 수정하시겠습니까? -";
+		$('#codeModalMsg').text(msg);
+		$('#usebtn').text("수정");
+		$('#closebtn').text("취소");
+		$('#usebtn').show();
+		$('#closebtn').show();
+		$('#codeModal').modal('show');
+		$('#usebtn').on('click',function(){
+			$('#staffInsertForm').attr('action','staffUpdate');
+			$('#staffInsertForm').submit();
 		});
 	});
+	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
+	var floatPosition = parseInt($("#floatMenu").css('top'));
+	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
+
+	$(window).scroll(function() {
+		// 현재 스크롤 위치를 가져온다.
+		var scrollTop = $(window).scrollTop();
+		var newPosition = scrollTop + floatPosition + "px";
+
+		$("#floatMenu").stop().animate({
+			"top" : newPosition
+		}, 500);
+
+	}).scroll();
+});
 </script>
 </content>
 </head>
 <body>
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
-	<div class="container col-sm-12">
-		<div class="col-sm-offset-3" style="text-align:left;margin-top:50px;">
+	<div class="container col-sm-12" style="height:600px;">
+		<div class="col-sm-offset-3" style="margin-top:50px;">
 			<h3>직원 리스트</h3>
 		</div>
 		<div>
 			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
 		</div>
-	</div>
-	<div class="col-sm-12">
 		<form class="stafflist_form" action="staffDelete" method="POST">
 			<div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 70px;">
 				<table class="table table-striped table-bordered" id="stafftable">
@@ -282,7 +294,7 @@ function updateStaff(code){
 								<td style="text-align:center; vertical-align:middle;"><input type="checkbox" id="staffunitchk" name="staffunitchk" value="${staff.code}"></td>
 								<td style="text-align:center; vertical-align:middle;"><img src="${staff.photo}" width="50" height="50"></td>
 								<td style="text-align:center; vertical-align:middle;"><a href="javascript:updateStaff('${staff.code}');">${staff.code}</a></td>
-								<td style="text-align:center; vertical-align:middle;"><a href="javascript:updateStaff('${staff.code}');");">${staff.name}</a></td>
+								<td style="text-align:center; vertical-align:middle;"><a href="javascript:updateStaff('${staff.code}');">${staff.name}</a></td>
 								<td style="text-align:center; vertical-align:middle;">${staff.birth_date}</td>
 								<td style="text-align:center; vertical-align:middle;">${staff.newaddr}&nbsp;${staff.detailaddr}</td>
 								<td style="text-align:center; vertical-align:middle;">${staff.phone1}-${staff.phone2}-${staff.phone3}</td>
@@ -290,6 +302,17 @@ function updateStaff(code){
 						</c:forEach>
 					</tbody>
 				</table>
+			</div>
+			<div id="floatMenu">
+				<ul>
+					<li><a href="memberList">회원 관리</a></li>
+					<li><a href="staffList">직원 관리</a></li>
+					<li><a href="partnerList">거래처 관리</a></li>
+					<li><a href="receivingInsertForm">매입관리</a></li>
+					<li><a href="receivingStatement">매입장</a></li>
+					<li><a href="consumableInsertForm">상품 등록</a></li>
+					<li><a href="consumableList">수불장</a></li>
+				</ul>
 			</div>
 		</form>
 		<div class="modal fade" id="staffInsertModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -404,7 +427,6 @@ function updateStaff(code){
 								<button class="btn" type="button" id="staffupdate" style="display: none" name="staffupdate">수&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp정</button>
 								&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
 								<button class="btn" type="button" data-dismiss="modal" >돌아가기</button>
-								
 							</div>
 						</div>
 					</form>

@@ -14,10 +14,10 @@ public class Staff {
 	private String phone2;
 	private String phone3;
 	private String photo;
-	private String beforephoto;
 	private String certificate1;
 	private String certificate2;
 	private String certificate3;
+	private String profile;
 	
 	public String getCode() {
 		return code;
@@ -97,11 +97,10 @@ public class Staff {
 	public void setCertificate3(String certificate3) {
 		this.certificate3 = certificate3;
 	}
-	public String getBeforephoto() {
-		return beforephoto;
+	public String getProfile() {
+		return profile;
 	}
-	public void setBeforephoto(String beforephoto) {
-		this.beforephoto = beforephoto;
+	public void setProfile(String profile) {
+		this.profile = profile;
 	}
-	
 }

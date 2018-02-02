@@ -46,7 +46,60 @@
 
 /* 1. base
 --------------------------------------------------------------------------------*/
-
+#floatMenu {
+	position: absolute;
+	left: 50px;
+	top: 230px;
+	background-color: #FAFAFA;
+	color: #fff;
+}
+#floatMenu, ul, li, li li {
+    margin: 0;
+    padding: 0;
+}
+#floatMenu {
+    width: 150px;
+    height: 30px;
+}
+#floatMenu ul
+{
+     line-height: 25px;
+}
+#floatMenu li {
+    list-style: none;
+    position: relative;
+    background: #f39c12;
+}
+#floatMenu li li {
+    list-style: none;
+    position: relative;
+    background: #f39c12;
+    left: 148px;
+    top: -27px;
+}
+#floatMenu ul li a {
+    width: 148px;
+    height: 35px;
+    display: block;
+    text-decoration: none;
+    text-align: center;
+    color:#000000;
+    border:1px solid #eee;
+}
+#floatMenu ul ul {
+    position: absolute;
+    visibility: hidden;
+    top: 27px;
+}
+#floatMenu ul li:hover ul {
+    visibility: visible;
+}
+#floatMenu li:hover {
+    background-color: #945c7d;
+}
+#floatMenu ul li:hover ul li a:hover {
+    background-color: #945c7d;
+}
 a[disabled], input[disabled], button[disabled], textarea[disabled] {
     cursor: not-allowed !important;
     opacity: .5 !important;
@@ -4018,7 +4071,7 @@ mark, .mark {
         transition: all 300ms ease;
         font-weight: 700;
         text-transform: uppercase;
-        padding: 0 25px;
+        padding: 0 20px;
         height: 100px;
         line-height: 100px;
     }

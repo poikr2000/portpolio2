@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import com.naver.kokfitness.entities.Category;
 import com.naver.kokfitness.entities.Consumable;
 import com.naver.kokfitness.entities.Receiving;
+import com.naver.kokfitness.entities.Shipping;
 
 public interface ConsumableDAO {
 	ArrayList<Category> categoryListAll();
@@ -20,4 +21,6 @@ public interface ConsumableDAO {
 	void receivingAdd(Receiving receiving);
 	void receivingUpdateSub(Receiving receiving);
 	void receivingDeleteSub(Receiving receiving);
+	void shippingSub(Shipping shipping);
+	void shippingAdd(Shipping shipping);
 }
