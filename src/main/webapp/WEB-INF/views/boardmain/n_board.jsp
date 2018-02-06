@@ -5,9 +5,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-
 <content tag="local_script">
-
 	<c:if test="${sessionemail=='admin@admin.com'}">
 		<script>
 			$(document).ready(function() {
@@ -25,7 +23,6 @@
 			} );
 		</script>
 	</c:if>
-
 </content>
 </head>
 <body>

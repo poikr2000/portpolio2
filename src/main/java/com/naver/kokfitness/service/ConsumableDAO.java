@@ -23,4 +23,5 @@ public interface ConsumableDAO {
 	void receivingDeleteSub(Receiving receiving);
 	void shippingSub(Shipping shipping);
 	void shippingAdd(Shipping shipping);
+	void shippingUpdate(Shipping shipping);
 }

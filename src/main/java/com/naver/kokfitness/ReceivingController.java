@@ -252,6 +252,11 @@ public class ReceivingController {
 			String mm = String.format("%02d", resultmm);
 			receiving.setMm(mm);
 		}
+		int resultdd=Integer.parseInt(receiving.getDd());
+		if(resultdd<10) {
+			String dd = String.format("%02d", resultdd);
+			receiving.setDd(dd);
+		}
 		ArrayList<Receiving>receivings=receivingdao.SelectReceivingStatementDd(receiving);
 		mav.addObject("receivings",receivings);
 		mav.addObject("yyyy",receiving.getYyyy());

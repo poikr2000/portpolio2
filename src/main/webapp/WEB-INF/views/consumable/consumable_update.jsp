@@ -91,11 +91,13 @@ $(document).ready(function(){
 		</div>
 		<div id="floatMenu">
 			<ul>
+				<li><a href="orderListForm">상품주문 조회</a></li>
 				<li><a href="memberList">회원 관리</a></li>
 				<li><a href="staffList">직원 관리</a></li>
 				<li><a href="partnerList">거래처 관리</a></li>
 				<li><a href="receivingInsertForm">매입관리</a></li>
 				<li><a href="receivingStatement">매입장</a></li>
+				<li><a href="shippingStatement">출고장</a></li>
 				<li><a href="consumableInsertForm">상품 등록</a></li>
 				<li><a href="consumableList">수불장</a></li>
 			</ul>
@@ -272,9 +274,9 @@ $(document).ready(function(){
 	      	<span id="consumableconfirmModalMsg">...</span>
 		  </div>
 	      <div class="modal-footer">
-	      	<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	      	<button type="button" id="consumableupdateconfirmbtn" style="display: none" class="btn btn-default">수정</button>
 	      	<button type="button" id="consumabledeleteconfirmbtn" style="display: none" class="btn btn-default">삭제</button>
+	      	<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	      </div>
 	    </div>
 	  </div>

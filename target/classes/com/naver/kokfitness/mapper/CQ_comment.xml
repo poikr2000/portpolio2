@@ -28,6 +28,11 @@
 		where cq_parseq = #{cq_parseq}
 	</select>
 	
+	<select id="cq_selectList_desc" resultMap="cq_commentMap" parameterType="Integer"> 
+		select * from cq_comment
+		where cq_parseq = #{cq_parseq} order by cq_seq desc
+	</select>
+	
 	<delete id="cq_comment_delete" parameterType="Integer">
 		delete from cq_comment where cq_seq=#{cq_seq}
 	</delete>

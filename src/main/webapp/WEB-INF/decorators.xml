@@ -19,6 +19,7 @@
 	<excludes>
 		<!-- <pattern>/memberList</pattern> -->
 		<pattern>/jusoPopup</pattern>
+		<pattern>/*_desc</pattern>
 
 		<!-- <pattern>/gallery</pattern> -->
 

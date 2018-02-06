@@ -120,6 +120,11 @@
 		set stock=stock+#{qty}
 		where code=#{consume_code}
 	</update>
+	<update id="shippingUpdate" parameterType="hashMap">
+		update consumable 
+		set ${columnname} = ${columnname}+#{qty}
+		where code=#{consume_code}
+	</update>
 	<update id="receivingUpdateSub" parameterType="hashMap">
 		update consumable 
 		set stock=stock-#{beforeqty}, ${columnname} = ${columnname}-#{beforeqty}

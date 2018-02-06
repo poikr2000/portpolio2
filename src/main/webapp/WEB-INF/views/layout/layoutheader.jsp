@@ -8,6 +8,14 @@
 <title>Insert title here</title>
 <content tag="local_script">
 <script>
+function loginChker(){
+	if($("#loginchk").val()==""){
+		$('#failpasswordModalMsg').text("로그인을 하셔야 이용하실 수 있습니다.");
+		$('#failpasswordModal').modal('show');
+	}else{
+		location.href="mileageListForm";
+	}
+}
 $(document).ready(function(){
 	 $(function(){
 		  var current_page_URL = location.href;
@@ -158,7 +166,8 @@ $(document).ready(function(){
 						</li>
 						<li><a href="services">services</a>
 						</li>
-						<li><a href="mileageListForm">mileage</a>
+						<li><a href="javascript:loginChker();">mileage</a>
+							<input type="hidden" id="loginchk" value="${sessionemail}">
 						</li>
 					</ul><!-- consult-menu -->
 					<div class="navbar-toggle"><span></span><span></span><span></span></div>

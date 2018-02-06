@@ -22,4 +22,6 @@ public interface MemberDAO {
 	void memberUpdateNotPass(Member member);
 	void mileageSub(Shipping shipping);
 	void mileageAdd(Shipping shipping);
+	void membermileage_board(String email);
+	void membermileage_comment(String email);
 }

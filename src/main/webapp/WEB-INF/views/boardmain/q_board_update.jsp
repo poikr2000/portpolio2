@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -36,13 +36,51 @@
 			$(location).attr('href',url);
 			});	
 	});
+	
+	$(document).ready(function(){
+		cq_desc();
+	});
+	
+	function cq_desc(){
+		var params = $('#cq_insert').serialize();
+		$.ajax({
+			type:'Post',
+			data:params,
+			datatype:'json',
+			url : 'cq_list_desc',
+			success : function(data){
+				$('#desc_list').html(data);
+			},
+			error : function(xhr,status,error){
+				alert(xhr.status);
+			}
+		});
+	}
+	
+	$('#cq_btn').on('click',function(){
+		var params = $('#cq_insert').serialize();
+		
+		$.ajax({
+			type:'Post',
+			data:params,
+			datatype:'json',
+			url : 'cq_insert',
+			success : function(data){
+				$('#desc_list').html(data);
+			},
+			error : function(xhr,status,error){
+				alert(xhr.status);
+			}
+		});
+	})
+	
 </script>
 </content>
 <body>
 <div class="container col-sm-12" style="background:url('resources/images/staff.jpg');">
 	<form action="q_board_modify" method="post" encType="multiplart/form-data" id="q_board_modify">
 	<h3 style="text-align: center; margin-top: 120px;" ><font color="#FFFFFF"; size="50" face="Viner Hand ITC">Q&A BOARD</font></h3>
-		<div class="container" style="height: 200px">
+		<div class="container" style="height: 500px">
 			<table class="table fade in" style="margin-top: 30px; background-color: #424242; border: 1px solid white;">
 				<tbody>
 					<tr>
@@ -52,7 +90,7 @@
 					</tr>
 					<tr>
 						<td style="vertical-align:middle; width: 60px"><strong><font color="#FFFFFF">내용 :</font></strong></td>
-						<td><strong><font color="#FFFFFF">${q_board.q_content}</font></strong></td>
+						<td style="height: 300px"><strong><font color="#FFFFFF">${q_board.q_content}</font></strong></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -86,46 +124,49 @@
      </div>
 	</form>
 
-	<form class="cq_insert" action="cq_insert" method="post" encType="multiplart/form-data" style="margin-top: 15pt" id="cq_insert">
-	<input type="hidden" id="cq_name" name="cq_name" value="${sessionid}"/>
-	<input type="hidden" id="q_seq" name="q_seq" value="${q_board.q_seq}"/>
-		<div class="container" style="height: 500px">
-			<table id="" class="" width="100%" cellspacing="0">
-				<thead>
-					<tr>
-						<th style="width: 50pt"></th>
-						<th style="width: 85%"></th>
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="cq_comments" items="${cq_comments}">
-						<tr>
-							<td><strong><font color="#FFFFFF">${cq_comments.cq_name} :</font></strong></td>
-							<td><strong><font color="#FFFFFF">${cq_comments.cq_content}</font></strong></td>
-							<td><strong><font color="#FFFFFF">${cq_comments.cq_date}</font></strong></td>
-							<c:choose>
-								<c:when test="${sessionid eq cq_comments.cq_name }">
-									<td><a href="cq_comment_delete?cq_seq=${cq_comments.cq_seq}&q_seq=${q_board.q_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
-								</c:when>
-								<c:when test="${sessionemail eq 'admin@admin.com'}">
-									<td><a href="cq_comment_delete?cq_seq=${cq_comments.cq_seq}&q_seq=${q_board.q_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
-								</c:when>
-							</c:choose>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+	<form class="cq_insert" action="cq_insert" method="post" encType="multipart/form-data" style="margin-top: 15pt" id="cq_insert">
+		<input type="hidden" id="cq_name" name="cq_name" value="${sessionid}"/>
+		<input type="hidden" id="q_seq" name="q_seq" value="${q_board.q_seq}"/>
+		<input type="hidden" id="email" name="email" value="${sessionemail }"/>
+		<div class="container">
+		<div id="desc_list">
+<!-- 			<table id="" class="" width="100%" cellspacing="0"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th style="width: 50pt"></th> -->
+<!-- 						<th style="width: 82%"></th> -->
+<!-- 						<th><a href="javascript:void(0);" id="cq_list_desc">최신순</a>-<a href="javascript:void(0);">등록순</a></th> -->
+<!-- 						<th></th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody> -->
+<%-- 					<c:forEach var="cq_comments" items="${cq_comments}"> --%>
+<!-- 						<tr> -->
+<%-- 							<td>${cq_comments.cq_name} :</td> --%>
+<%-- 							<td>${cq_comments.cq_content}</td> --%>
+<%-- 							<td>${cq_comments.cq_date}</td> --%>
+<%-- 							<c:choose> --%>
+<%-- 								<c:when test="${sessionid eq cq_comments.cq_name }"> --%>
+<%-- 									<td><a href="cq_comment_delete?cq_seq=${cq_comments.cq_seq}&q_seq=${q_board.q_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td> --%>
+<%-- 								</c:when> --%>
+<%-- 								<c:when test="${sessionemail eq 'admin@admin.com'}"> --%>
+<%-- 									<td><a href="cq_comment_delete?cq_seq=${cq_comments.cq_seq}&q_seq=${f_board.q_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td> --%>
+<%-- 								</c:when> --%>
+<%-- 							</c:choose> --%>
+<!-- 						</tr> -->
+<%-- 					</c:forEach> --%>
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+		</div>
 			<table class="table fade in">
 				<tbody>
 					<c:choose>
 						<c:when test="${sessionemail == null }"></c:when>
 						<c:otherwise>
 							<tr>
-								<th style="text-align: center"><font color="#FFFFFF">댓글:</font></th>
+								<th style="text-align: center">댓글:</th>
 								<td><div class="form-groub"><textarea  rows="1" cols="100" id="cq_content" name="cq_content" class="form-control"></textarea></div></td>
-								<th><button class="input-sm" value="등록" id="cq_btn">등록</button></th>
+								<th><button type="button" class="input-sm" value="등록" id="cq_btn">등록</button></th>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -133,6 +174,5 @@
 			</table>
 		</div>
 	</form>
-</div>
 </body>
 </html>

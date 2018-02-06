@@ -1,4 +1,5 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
@@ -17,13 +18,13 @@ $(document).ready(function(){
 	$('#yyyy').attr('value',year);
 	$('#mm').val(month).prop("selected",true);
 	$('#dd').val(day).prop("selected",true);
-	$('#receivingstatementmmbtn').click(function(){
-		$('.receivingstatement_form').attr('action','receivingStatementMm');
-		$('.receivingstatement_form').submit();
+	$('#shippingstatementmmbtn').click(function(){
+		$('.shippingstatement_form').attr('action','shippingStatementMm');
+		$('.shippingstatement_form').submit();
 	});
-	$('#receivingstatementddbtn').click(function(){
-		$('.receivingstatement_form').attr('action','receivingStatementDd');
-		$('.receivingstatement_form').submit();
+	$('#shippingstatementddbtn').click(function(){
+		$('.shippingstatement_form').attr('action','shippingStatementDd');
+		$('.shippingstatement_form').submit();
 	});
 	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 	var floatPosition = parseInt($("#floatMenu").css('top'));
@@ -44,12 +45,12 @@ $(document).ready(function(){
 </content>
 </head>
 <body>
-<form class="receivingstatement_form" name="receivingstatement_form" method="post"role="form">
+<form class="shippingstatement_form" name="shippingstatement_form" method="post"role="form">
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
 	<div class="col-sm-12">
 		<div class="col-sm-offset-3" style="margin-top:50px;">
-			<h3>매입장</h3>
+			<h3>출고장</h3>
 		</div>
 		<div>
 			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
@@ -85,75 +86,72 @@ $(document).ready(function(){
 				</select>
 				<span class="input-group-addon">일</span>
 				<div class="input-group-btn">
-					<button type="button" id="receivingstatementmmbtn" class="btn btn-primary"><i class="fa fa-calendar-times-o" aria-hidden="true"></i>&nbsp월매입장</button>
-		  			<button type="button" id="receivingstatementddbtn" class="btn btn-primary"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp일매입장</button>
+					<button type="button" id="shippingstatementmmbtn" class="btn btn-primary"><i class="fa fa-calendar-times-o" aria-hidden="true"></i>&nbsp월출고장</button>
+		  			<button type="button" id="shippingstatementddbtn" class="btn btn-primary"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp일출고장</button>
 				</div>
 		 	 </div>
 		</div>
-		<div class="col-sm-offset-3 col-sm-6" id="receiving_table" style="<c:if test="${number!=1}">margin-bottom:350px;</c:if>">
+		<div class="col-sm-offset-3 col-sm-6" id="shipping_table" style="<c:if test="${number!=1}">margin-bottom:350px;</c:if>">
 			<c:if test="${number==1}">
 				<table class="table table-striped table-bordered" cellspacing="0"  width="100%" style="margin-bottom:80px;">
 			        <thead>
 			            <tr>
 			                <th class="text-center">매입번호</th>
-			                <th class="text-center">거래처</th>
+			                <th class="text-center">수취인</th>
 			                <th class="text-center">품명</th>
 			                <th class="text-center">단가</th>
 							<th class="text-center">수량</th>
 							<th class="text-center">금액</th>
 			            </tr>
 			        </thead>
+			        <c:if test="${fn:length(shippings)==0}">
+						<tfoot>
+							<tr>
+								<td colspan="6" style="text-align:center">출고 내역이 없습니다.</td>
+							</tr>
+						</tfoot>
+					</c:if>
 			        <tbody>
-			        	<c:forEach var="receivings" items="${receivings}">
+			        	<c:forEach var="shippings" items="${shippings}">
 			        		<c:choose>
-			        			<c:when test="${receivings.no!=0 &&receivings.hang==0 && receivings.bp_code !=null}">
+			        			<c:when test="${shippings.no!=0 &&shippings.hang==0}">
 			        				<tr>
 					        			<td class="text-center"></td>
 					        			<td class="text-center"></td>
 					        			<td class="text-center"></td>
 					        			<td class="text-center bg-info text-white">소계</td>
 					        			<td class="text-center"></td>
-					        			<td class="text-center bg-info text-white">${receivings.total}</td>
+					        			<td class="text-center bg-info text-white">${shippings.total}</td>
 									</tr>
 			        			</c:when>
-			        			<c:when test="${receivings.no==0 &&receivings.hang==0 && receivings.bp_code !=null}">
-			        				<tr>
-					        			<td class="text-center"></td>
-					        			<td class="text-center"></td>
-					        			<td class="text-center"></td>
-					        			<td class="text-center bg-danger text-white">거래처소계</td>
-					        			<td class="text-center"></td>
-					        			<td class="text-center bg-danger text-white">${receivings.total}</td>
-									</tr>
-			        			</c:when>
-			        			<c:when test="${receivings.no==0 &&receivings.hang==0 && receivings.bp_code ==null && receivings.dd !=null}">
+			        			<c:when test="${shippings.no==0 &&shippings.hang==0 && shippings.dd !=null}">
 			        				<tr>
 					        			<td class="text-center"></td>
 					        			<td class="text-center"></td>
 					        			<td class="text-center"></td>
 					        			<td class="text-center bg-success text-white">일총계</td>
 					        			<td class="text-center"></td>
-					        			<td class="text-center bg-success text-white">${receivings.total}</td>
+					        			<td class="text-center bg-success text-white">${shippings.total}</td>
 									</tr>
 			        			</c:when>
-			        			<c:when test="${receivings.no==0 &&receivings.hang==0 && receivings.bp_code ==null && receivings.dd ==null}">
+			        			<c:when test="${shippings.no==0 &&shippings.hang==0 && shippings.dd ==null}">
 			        				<tr>
 					        			<td class="text-center"></td>
 					        			<td class="text-center"></td>
 					        			<td class="text-center"></td>
 					        			<td class="text-center bg-primary text-white">월총계</td>
 					        			<td class="text-center"></td>
-					        			<td class="text-center bg-primary text-white">${receivings.total}</td>
+					        			<td class="text-center bg-primary text-white">${shippings.total}</td>
 									</tr>
 			        			</c:when>
 			        			<c:otherwise>
 			        				<tr>
-					        			<td class="text-center">${receivings.yyyy}-${receivings.mm}-${receivings.dd}-${receivings.no}-${receivings.hang}</td>
-					        			<td class="text-center">${receivings.bp_name}</td>
-					        			<td class="text-center">${receivings.consume_name}</td>
-					        			<td class="text-center">${receivings.price}</td>
-					        			<td class="text-center">${receivings.qty}</td>
-					        			<td class="text-center">${receivings.total}</td>
+					        			<td class="text-center">${shippings.yyyy}-${shippings.mm}-${shippings.dd}-${shippings.no}-${shippings.hang}</td>
+					        			<td class="text-center">${shippings.member_name}</td>
+					        			<td class="text-center">${shippings.consume_name}</td>
+					        			<td class="text-center">${shippings.price}</td>
+					        			<td class="text-center">${shippings.qty}</td>
+					        			<td class="text-center">${shippings.total}</td>
 									</tr>
 			        			</c:otherwise>
 			        		</c:choose>

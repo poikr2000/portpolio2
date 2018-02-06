@@ -30,6 +30,7 @@
 	</div>
 	<form action="q_insert" method="post" encType="multiplart/form-data">
 	<h3 style="text-align: center;">게 시 판 작 성</h3>
+	<input type="hidden" id="email" name="email" value="${sessionemail }"/>
 		<div class="container">
 			<table class="table table-bordered">
 				<tbody>

@@ -8,7 +8,7 @@ public interface F_boardDAO {
 
 	int f_insert(F_board f_board);
 
-	void f_board_updateHit(Object f_seq);
+	void f_board_updateHit(int f_seq);
 
 	F_board selectDetail(int f_seq);
 	
@@ -21,4 +21,5 @@ public interface F_boardDAO {
 	int f_board_delete(int f_seq);
 	
 	int cf_comcount(int cf_parseq);
+	
 }

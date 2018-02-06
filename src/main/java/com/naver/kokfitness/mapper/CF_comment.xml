@@ -29,6 +29,11 @@
 		where cf_parseq = #{cf_parseq}
 	</select>
 	
+	<select id="cf_selectList_desc" resultMap="cf_commentMap" parameterType="Integer"> 
+		select * from cf_comment
+		where cf_parseq = #{cf_parseq} order by cf_seq desc
+	</select>
+
 	<delete id="cf_comment_delete" parameterType="Integer">
 		delete from cf_comment where cf_seq=#{cf_seq}
 	</delete>
@@ -37,4 +42,7 @@
       delete from cf_comment where cf_parseq=#{cf_parseq}
    </delete>
 	
+	<select id="select_cf_date" resultType="String" parameterType="Integer">
+		select cf_date from cf_comment where cf_parseq = #{cf_parseq} and cf_seq = #{cf_seq}
+	</select>
 </mapper>

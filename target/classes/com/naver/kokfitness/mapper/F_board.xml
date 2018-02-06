@@ -13,6 +13,7 @@
 		<id property="f_ip" column="f_ip" />
 		<id property="f_cnt" column="f_cnt" />
 	</resultMap>
+	
 	<insert id="f_insert" parameterType="hashMap">
 		insert into	f_board(
 		f_seq,f_name,f_title,f_content,f_hit,f_date,f_attach,f_ip
@@ -24,7 +25,8 @@
 		,#{f_hit,jdbcType=INTEGER}
 		,#{f_date,jdbcType=VARCHAR}
 		,#{f_attach,jdbcType=VARCHAR}
-		,#{f_ip,jdbcType=VARCHAR})
+		,#{f_ip,jdbcType=VARCHAR}
+		)
 	</insert>
 	
 	<select id="f_boardselectListAll" resultMap="f_boardMap">

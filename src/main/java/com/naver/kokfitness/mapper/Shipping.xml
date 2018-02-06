@@ -21,8 +21,10 @@
 		<id property="total" column="total"/>
 		<id property="columnname" column="columnname"/>
 		<id property="member_mail" column="member_mail"/>
+		<id property="member_name" column="member_name"/>
 		<id property="cartcount" column="cartcount"/>
 		<id property="photo" column="photo"/>
+		<id property="columnname" column="columnname"/>
 		<id property="mileageprice" column="mileageprice"/>
 		<id property="mileagetotal" column="mileagetotal"/>
 	</resultMap>
@@ -51,6 +53,12 @@
 		select A.*,B.photo,B.mileageprice,B.name as consume_name,sum(A.qty*A.price) as total,sum(A.qty*B.mileageprice) as mileagetotal
 		from shipping A,consumable B
 		where A.consume_code=B.code and shipping_check=0 and order_check=9 and member_mail=#{member_mail}
+		group by hang with rollup;
+	</select>
+	<select id="orderListAll" resultMap="shippingMap">
+		select A.*,B.photo,B.mileageprice,B.name as consume_name,sum(A.qty*A.price) as total,sum(A.qty*B.mileageprice) as mileagetotal,C.name as member_name
+		from shipping A,consumable B,member C
+		where A.consume_code=B.code and A.member_mail=C.email and shipping_check=0 and order_check=9
 		group by seq with rollup;
 	</select>
 	<select id="selectGetOne"  parameterType="String"  resultMap="shippingMap">
@@ -58,16 +66,40 @@
 		from shipping A,consumable B
 		where A.consume_code=B.code and seq=#{seq}
 	</select>
+	<select id="SelectShippingStatementMm" parameterType="hashMap" resultMap="shippingMap">
+		select A.*,B.name consume_name,sum(A.price*qty) as total,C.name as member_name
+		from shipping A, consumable B,member C 
+		where A.consume_code=B.code and A.member_mail=C.email and yyyy=#{yyyy} and mm=#{mm} and shipping_check=9 and order_check=9
+		group by dd,no,hang with rollup;
+	</select>
+	<select id="SelectShippingStatementDd" parameterType="hashMap" resultMap="shippingMap">
+		select A.*,B.name consume_name,sum(A.price*qty) as total,C.name as member_name
+		from shipping A, consumable B,member C 
+		where A.consume_code=B.code and A.member_mail=C.email and yyyy=#{yyyy} and mm=#{mm} and dd=#{dd} and shipping_check=9 and order_check=9
+		group by no,hang with rollup;
+	</select>
 	<insert id="shippingInsert" parameterType="hashMap">
-		insert into shipping(seq,no,hang,consume_code,price,qty,member_mail
+		insert into shipping(seq,no,hang,consume_code,price,mileageprice,qty,member_mail
 		)values(
 		((select ifnull(MAX(seq)+1,1) from shipping alias_seq)),
 		#{no,jdbcType=INTEGER},#{hang,jdbcType=INTEGER},#{consume_code,jdbcType=VARCHAR},
-		#{price,jdbcType=INTEGER},#{qty,jdbcType=INTEGER},#{member_mail,jdbcType=VARCHAR})
+		#{price,jdbcType=INTEGER},#{mileageprice,jdbcType=INTEGER},#{qty,jdbcType=INTEGER},#{member_mail,jdbcType=VARCHAR})
+	</insert>
+	<insert id="directOrderInsert" parameterType="hashMap">
+		insert into shipping(seq,no,hang,consume_code,price,mileageprice,qty,member_mail,order_check
+		)values(
+		((select ifnull(MAX(seq)+1,1) from shipping alias_seq)),
+		#{no,jdbcType=INTEGER},#{hang,jdbcType=INTEGER},#{consume_code,jdbcType=VARCHAR},
+		#{price,jdbcType=INTEGER},#{mileageprice,jdbcType=INTEGER},#{qty,jdbcType=INTEGER},#{member_mail,jdbcType=VARCHAR},9)
 	</insert>
 	<update id="orderInsert" parameterType="String">
 		update shipping 
 		set order_check=9
+		where seq=#{seq}
+	</update>
+	<update id="shippingCheckOut" parameterType="hashMap">
+		update shipping 
+		set shipping_check=9,yyyy=#{yyyy},mm=#{mm},dd=#{dd}
 		where seq=#{seq}
 	</update>
 	<delete id="cartDelete" parameterType="String">

@@ -14,5 +14,10 @@ public interface ShippingDAO {
 	void cartDelete(String seq);
 	Shipping selectGetOne(String seq);
 	void orderInsert(String seq);
+	void directOrderInsert(Shipping shipping);
 	ArrayList<Shipping> memberOrderList(String member_mail);
+	ArrayList<Shipping> orderListAll();
+	void shippingCheckOut(Shipping shipping);
+	ArrayList<Shipping> SelectShippingStatementMm(HashMap yyyymm);
+	ArrayList<Shipping> SelectShippingStatementDd(Shipping shipping);
 }

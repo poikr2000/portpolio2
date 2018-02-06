@@ -11,7 +11,7 @@
 		<script>
 		$(document).ready(function() {
 		    $('#f_board').DataTable( {
-		        dom: 'frtip',
+		    	dom: 'Bfrtip',
 		        buttons: [
 		            {
 		                text: '글쓰기',
@@ -28,7 +28,7 @@
 		<script>
 			$(document).ready(function() {
 			    $('#f_board').DataTable( {
-			        dom: 'Bfrtip',
+		    	    dom: 'Bfrtip',
 			        buttons: [
 			            {
 			                text: '글쓰기',

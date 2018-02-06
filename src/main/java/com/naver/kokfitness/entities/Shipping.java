@@ -21,10 +21,12 @@ public class Shipping {
 	private int total;
 	private int stock;
 	private String member_mail;
+	private String member_name;
 	private int cartcount;
 	private String photo;
 	private int mileageprice;
 	private int mileagetotal;
+	private String columnname;
 	public int getSeq() {
 		return seq;
 	}
@@ -151,4 +153,17 @@ public class Shipping {
 	public void setMileagetotal(int mileagetotal) {
 		this.mileagetotal = mileagetotal;
 	}
+	public String getMember_name() {
+		return member_name;
+	}
+	public void setMember_name(String member_name) {
+		this.member_name = member_name;
+	}
+	public String getColumnname() {
+		return columnname;
+	}
+	public void setColumnname(String columnname) {
+		this.columnname = columnname;
+	}
+	
 }

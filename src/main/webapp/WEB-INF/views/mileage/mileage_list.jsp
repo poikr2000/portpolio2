@@ -59,6 +59,7 @@ function mileageDetail(code){
 		success : function(data){
 			$('#consume_code').attr("value",data.code);
 			$('#mileageprice').attr("value",data.mileageprice);
+			$('#price').attr("value",data.price);
 			$('#goodsimg').attr("src",data.photo);
 			$('#goodsqty').attr("max",data.stock);
 			$('#goodsname').text(data.name);
@@ -139,6 +140,29 @@ $(document).ready(function(){
 	$('#mileageNoticeModalConfirm').click(function(){
 		$('.cartForm').submit();
 	});
+	$('#goodsApplyBtn').click(function(){
+		var usermileage = $('#usermileage').val();
+		var total=$('#goodstotal').text();
+		if(usermileage-total<0){
+			$('#mileageNoticeModalConfirm').hide();
+			$('#mileageNoticeModalClose').show();
+			$('#mileageNoticeModalClose').text("확인");
+			$('#mileageNoticeModalMsg').text("마일리지가 부족합니다.");
+			$('#mileageNoticeModal').modal('show');
+		}else if($("#goodsqty").val()==0){
+			$('#mileageNoticeModalConfirm').hide();
+			$('#mileageNoticeModalClose').show();
+			$('#mileageNoticeModalClose').text("확인");
+			$('#mileageNoticeModalMsg').text("수량을 선택해 주세요");
+			$('#mileageNoticeModal').modal('show');
+		}else{
+			$('#orderNoticeModalMsg').text("상품을 주문하시겠습니까?");
+			$('#orderNoticeModal').modal('show');
+		}
+	});
+	$('#orderNoticeModalConfirm').click(function(){
+		$('.mileageCartForm').submit();
+	});
 	var floatPosition = parseInt($("#floatCart").css('top'));
 	$(window).scroll(function() {
 		var scrollTop = $(window).scrollTop();
@@ -176,18 +200,24 @@ $(document).ready(function(){
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
 	<div class="col-sm-12">
-		<div class="col-sm-offset-3 col-sm-8" style="margin-top:50px;">
+		<div class="col-sm-offset-3 col-sm-4" style="margin-top:50px;">
 			  <h3>마일리지 샵</h3>
 		</div>
+		<c:if test="${sessionemail=='admin@admin.com'}">
+			<div class="col-sm-3" align="right" style="margin-top:50px;">
+				<button type="button" class="btn btn-default" onclick ="location.href='orderListForm'" id="orderSearch">상품주문 조회</button>
+			</div>
+		</c:if>
 		<div>
 			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
 		</div>
 	</div>
-	<div class="container col-sm-10" id="floatCart"align="right">
+	<div class="container" id="floatCart"align="right">
       <a href="javascript:cartDetail('${sessionemail}');" style="font-size:60px;">
         <span class="glyphicon glyphicon-shopping-cart my-cart-icon"></span>
       </a>
       <span class="badge badge-notify">${cartcount}</span>
+      <div><h6>내 마일리지 : ${sessionmileage}</h6></div>
     </div>
 	<div class="container" id="goodslistdiv">
 		<div id="goodslist">
@@ -214,7 +244,7 @@ $(document).ready(function(){
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-	      <form class="mileageCartForm">
+	      <form class="mileageCartForm" method="post" action="directOrderInsert">
 	      	<input type="hidden" value="${sessionemail}" id="member_mail" name="member_mail">
 	      	<div class="col-sm-12">
 	      		<div class="col-sm-offset-1 col-sm-4 textbox__image">
@@ -229,6 +259,7 @@ $(document).ready(function(){
 			     	<div class="col-sm-12" align="right"style="margin-top: 10px;">
 			     		<h5>가격 : <span id="goodsprice"></span> 마일리지</h5>
 			     		<input type="hidden" name="mileageprice"id="mileageprice">
+			     		<input type="hidden" name="price"id="price">
 			     	</div>
 			     	<div class="col-sm-12" style="margin-top: 140px;" align="right">
 				     	<div class="col-sm-4">
@@ -292,6 +323,22 @@ $(document).ready(function(){
       <div class="modal-footer">
       	<button type="button" class="btn btn-default" id="mileageNoticeModalConfirm" style="display: none" data-dismiss="modal">확인</button>
       	<button type="button" class="btn btn-default" id="mileageNoticeModalClose" style="display: none" data-dismiss="modal">취소</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade" id="orderNoticeModal" name="mileageDetailModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-sm">
+    <div class="modal-content">
+      <div class="modal-header">
+      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+      	 <span id="orderNoticeModalMsg">...</span>
+      </div>
+      <div class="modal-footer">
+      	<button type="button" class="btn btn-default" id="orderNoticeModalConfirm" data-dismiss="modal">확인</button>
+      	<button type="button" class="btn btn-default" id="orderNoticeModalClose" data-dismiss="modal">취소</button>
       </div>
     </div>
   </div>

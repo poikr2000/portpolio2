@@ -28,8 +28,9 @@
 <body>
 	<div class="col-sm-12" style="background: black; height: 90px;">
 	</div>
-	<form action="f_insert" method="post" encType="multiplart/form-data">
+	<form action="f_insert" method="post" encType="multipart/form-data">
 	<h3 style="text-align: center;">게 시 판 작 성</h3>
+	<input type="hidden" id="email" name="email" value="${sessionemail}">
 		<div class="container">
 			<table class="table table-bordered">
 				<tbody>
@@ -45,16 +46,17 @@
 					</tr>
 					<tr>
 						<th>내용:</th>
-						<td colspan="2" class="write"><script type="text/javascript"
-								src="http://js.nicedit.com/nicEdit-latest.js"></script> <script
-								type="text/javascript">
-									//<![CDATA[
-									bkLib.onDomLoaded(function() {
-										nicEditors.allTextAreas()
-									});
-									//]]>
-								</script> <textarea id="f_content" name="f_content" class="form-controll"
-								cols="120" rows="10"></textarea></td>
+						<td colspan="2" class="write">
+							<script type="text/javascript" src="http://js.nicedit.com/nicEdit-latest.js"></script>
+							<script	type="text/javascript">
+								//<![CDATA[
+								bkLib.onDomLoaded(function() {
+									nicEditors.allTextAreas()
+								});
+								//]]>
+							</script>
+							<textarea id="f_content" name="f_content" class="form-controll"	cols="120" rows="10"></textarea>
+						</td>
 					</tr>
 
 					<tr>

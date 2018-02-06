@@ -36,8 +36,6 @@
 			$(location).attr('href', url);
 		});
 	});
-	
-	
 </script> 
 </content>
 <body>
@@ -46,7 +44,7 @@
 			encType="multiplart/form-data" id="n_board_modify">
 			<input type="hidden" id="n_seq" name="n_seq" value="${n_board.n_seq}"/>
 			<h3 style="text-align: center; margin-top: 120px"><font color="#FFFFFF"; size="50" face="Viner Hand ITC">N O T I C E</font></h3>
-			<div class="container" style="height: 700px">
+			<div class="container" style="height: 500px">
 				<table class="table fade in" style="margin-top: 30px; background-color: #424242; border: 1px solid white;">
 					<tbody>
 						<tr>
@@ -56,7 +54,7 @@
 						</tr>
 						<tr>
 							<td style="vertical-align:middle; width: 60px;"><strong><font color="#FFFFFF">내용 :</font></strong></td>
-							<td><strong><font color="#FFFFFF">${n_board.n_content}</font></strong></td>
+							<td style="height: 300px"><strong><font color="#FFFFFF">${n_board.n_content}</font></strong></td>
 						</tr>
 						<tr>
 							<td colspan="2"><c:choose>

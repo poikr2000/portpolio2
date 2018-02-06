@@ -97,6 +97,12 @@
 		set mileage=mileage+#{mileagetotal}
 		where email=#{member_mail}
 	</update>
+	<update id="membermileage_board" parameterType="String">
+		update member set mileage = mileage +100 where email= #{email}
+	</update>
+	<update id="membermileage_comment" parameterType="String">
+		update member set mileage = mileage +30 where email= #{email}
+	</update>
 	<delete id="memberDelete" parameterType="String">
 		delete from member where email=#{email}
 	</delete>

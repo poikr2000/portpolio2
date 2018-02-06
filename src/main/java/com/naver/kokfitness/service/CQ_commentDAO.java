@@ -10,6 +10,8 @@ public interface CQ_commentDAO {
 	
 	ArrayList<CQ_comment> cq_selectList(int cq_parseq);
 
+	ArrayList<CQ_comment> cq_selectList_desc(int cq_parseq);
+	
 	int cq_comment_delete(int cq_seq);
 	
 	void cq_comment_delete_All(int parseq);

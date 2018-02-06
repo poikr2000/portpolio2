@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -27,6 +27,25 @@
 </head>
 <content tag="local_script">
 <script>
+	$(document).ready(function(){
+		fc_desc();
+	});
+	
+	function fc_desc(){
+		var params = $('#cf_insert').serialize();
+		$.ajax({
+			type:'Post',
+			data:params,
+			datatype:'json',
+			url : 'cf_list_desc',
+			success : function(data){
+				$('#desc_list').html(data);
+			},
+			error : function(xhr,status,error){
+				alert(xhr.status);
+			}
+		});
+	}
 	$('#delbtn').on("click",function(){
 		$('#f_board_ModalMsg').text("삭제 하시겠습니까?")
 		$('#f_board_Modal').modal('show');
@@ -36,13 +55,29 @@
 			$(location).attr('href',url);
 			});	
 	});
+	$('#cf_btn').on('click',function(){
+		var params = $('#cf_insert').serialize();
+		
+		$.ajax({
+			type:'Post',
+			data:params,
+			datatype:'json',
+			url : 'cf_insert',
+			success : function(data){
+				$('#desc_list').html(data);
+			},
+			error : function(xhr,status,error){
+				alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
+			}
+		});
+	})
 </script>
 </content>
 <body>
 <div class="container col-sm-12" style="background:url('resources/images/staff.jpg');">
-	<form action="f_board_modify" method="post" encType="multiplart/form-data" id="f_board_modify">
+	<form action="f_board_modify" method="post" encType="multipart/form-data" id="f_board_modify">
 	<h3 style="text-align: center; margin-top: 120px;" ><font color="#FFFFFF"; size="50" face="Viner Hand ITC">FREE BOARD</font></h3>
-		<div class="container" style="height: 200px">
+		<div class="container" style="height: 700px">
 			<table class="table fade in" style="margin-top: 30px; background-color: #424242; border: 1px solid white;">
 				<tbody>
 					<tr>
@@ -51,8 +86,7 @@
 						<hi class="pull-right"><strong><font color="#FFFFFF">조회수 : ${f_board.f_hit}</font></strong></hi>
 					</tr>
 					<tr>
-						<td style="vertical-align:middle; width: 60px"><strong><font color="#FFFFFF">내용 :</font></strong></td>
-						<td><strong><font color="#FFFFFF">${f_board.f_content}</font></strong></td>
+						<td style="height: 300pt;"><strong><font color="#FFFFFF">내용 :</font></strong>&nbsp;&nbsp;&nbsp;<strong><font color="#FFFFFF">${f_board.f_content}</font></strong></td>
 					</tr>
 					<tr>
 						<td colspan="2">
@@ -90,47 +124,49 @@
      </div>
 	</form>
 
-
-	<form class="cf_insert" action="cf_insert" method="post" encType="multiplart/form-data" style="margin-top: 15pt" id="cf_insert">
-	<input type="hidden" id="cf_name" name="cf_name" value="${sessionid}"/>
-	<input type="hidden" id="f_seq" name="f_seq" value="${f_board.f_seq}"/>
-		<div class="container" style="height: 500px">
-			<table id="" class="" width="100%" cellspacing="0">
-				<thead>
-					<tr>
-						<th style="width: 50pt"></th>
-						<th style="width: 85%"></th>
-						<th></th>
-						<th></th>
-					</tr>
-				</thead>
-				<tbody>
-					<c:forEach var="cf_comments" items="${cf_comments}">
-						<tr>
-							<td><strong><font color="#FFFFFF">${cf_comments.cf_name} :</font></strong></td>
-							<td><strong><font color="#FFFFFF">${cf_comments.cf_content}</font></strong></td>
-							<td><strong><font color="#FFFFFF">${cf_comments.cf_date}</font></strong></td>
-							<c:choose>
-								<c:when test="${sessionid eq cf_comments.cf_name }">
-									<td><a href="cf_comment_delete?cf_seq=${cf_comments.cf_seq}&f_seq=${f_board.f_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
-								</c:when>
-								<c:when test="${sessionemail eq 'admin@admin.com'}">
-									<td><a href="cf_comment_delete?cf_seq=${cf_comments.cf_seq}&f_seq=${f_board.f_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
-								</c:when>
-							</c:choose>
-						</tr>
-					</c:forEach>
-				</tbody>
-			</table>
+	<form class="cf_insert" action="cf_insert" method="post" encType="multipart/form-data" style="margin-top: 15pt" id="cf_insert">
+		<input type="hidden" id="cf_name" name="cf_name" value="${sessionid}"/>
+		<input type="hidden" id="f_seq" name="f_seq" value="${f_board.f_seq}"/>
+		<input type="hidden" id="email" name="email" value="${sessionemail}"/>
+		<div class="container">
+		<div id="desc_list">
+<!-- 			<table id="" class="" width="100%" cellspacing="0"> -->
+<!-- 				<thead> -->
+<!-- 					<tr> -->
+<!-- 						<th style="width: 50pt"></th> -->
+<!-- 						<th style="width: 82%"></th> -->
+<!-- 						<th><a href="javascript:void(0);" id="cf_list_desc">최신순</a>-<a href="javascript:void(0);">등록순</a></th> -->
+<!-- 						<th></th> -->
+<!-- 					</tr> -->
+<!-- 				</thead> -->
+<!-- 				<tbody> -->
+<%-- 					<c:forEach var="cf_comments" items="${cf_comments}"> --%>
+<!-- 						<tr> -->
+<%-- 							<td>${cf_comments.cf_name} :</td> --%>
+<%-- 							<td>${cf_comments.cf_content}</td> --%>
+<%-- 							<td>${cf_comments.cf_date}</td> --%>
+<%-- 							<c:choose> --%>
+<%-- 								<c:when test="${sessionid eq cf_comments.cf_name }"> --%>
+<%-- 									<td><a href="cf_comment_delete?cf_seq=${cf_comments.cf_seq}&f_seq=${f_board.f_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td> --%>
+<%-- 								</c:when> --%>
+<%-- 								<c:when test="${sessionemail eq 'admin@admin.com'}"> --%>
+<%-- 									<td><a href="cf_comment_delete?cf_seq=${cf_comments.cf_seq}&f_seq=${f_board.f_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td> --%>
+<%-- 								</c:when> --%>
+<%-- 							</c:choose> --%>
+<!-- 						</tr> -->
+<%-- 					</c:forEach> --%>
+<!-- 				</tbody> -->
+<!-- 			</table> -->
+		</div>
 			<table class="table fade in">
 				<tbody>
 					<c:choose>
-						<c:when test="${sessionemail == null }"></c:when>
+						<c:when test="${sessionemail == null}"></c:when>
 						<c:otherwise>
 							<tr>
-								<th style="text-align: center"><strong><font color="#FFFFFF">댓글:</font></strong></th>
+								<th style="text-align: center">댓글:</th>
 								<td><div class="form-groub"><textarea  rows="1" cols="100" id="cf_content" name="cf_content" class="form-control"></textarea></div></td>
-								<th><button class="input-sm" value="등록" id="cf_btn">등록</button></th>
+								<th><button type="button" class="input-sm" value="등록" id="cf_btn">등록</button></th>
 							</tr>
 						</c:otherwise>
 					</c:choose>
@@ -138,6 +174,5 @@
 			</table>
 		</div>
 	</form>
-</div>
 </body>
 </html>

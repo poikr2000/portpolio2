@@ -15,7 +15,6 @@ public class F_board {
 	private String f_ip;
 	private int f_cnt;
 	
-	
 	public int getF_cnt() {
 		return f_cnt;
 	}

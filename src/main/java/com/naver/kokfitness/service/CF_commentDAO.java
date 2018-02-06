@@ -10,7 +10,11 @@ public interface CF_commentDAO {
 	
 	ArrayList<CF_comment> cf_selectList(int cf_parseq);
 
+	ArrayList<CF_comment> cf_selectList_desc(int cf_parseq);
+	
 	int cf_comment_delete(int cf_seq);
 	
 	void cf_comment_delete_All(int cf_parseq);
+	
+	String select_cf_date(int f_seq);
 }
