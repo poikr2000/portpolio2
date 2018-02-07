@@ -164,7 +164,7 @@ $(document).ready(function(){
 								<li><a href="q_board">질문게시판</a></li>
 							</ul>
 						</li>
-						<li><a href="services">services</a>
+						<li><a href="serviceListForm">services</a>
 						</li>
 						<li><a href="javascript:loginChker();">mileage</a>
 							<input type="hidden" id="loginchk" value="${sessionemail}">

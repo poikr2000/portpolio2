@@ -143,8 +143,6 @@ public class StaffController {
 	@RequestMapping(value = "profileUpdate", method = RequestMethod.POST)
 	public String profileInsert(@ModelAttribute("staff") Staff staff) {
 		StaffDAO dao=sqlSession.getMapper(StaffDAO.class);
-		System.out.println("------------------"+staff.getProfile());
-		System.out.println("------------------"+staff.getCode());
 		try {
 			dao.profileUpdate(staff);
 		}catch(Exception e){
