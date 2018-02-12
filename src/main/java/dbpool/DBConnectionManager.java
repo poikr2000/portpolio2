@@ -16,7 +16,7 @@ public class DBConnectionManager {
 //	private String _driver = "oracle.jdbc.driver.OracleDriver";
 //  private String _url = "jdbc:oracle:thin:@localhost:1521:xe";
 	private String _driver = "com.mysql.jdbc.Driver";
-	private String _url = "jdbc:mysql://localhost:3306/ncs3db";
+	private String _url = "jdbc:mysql://localhost:3306/kokdb";
 	private String _user = "ncs3";
     private String _password = "1q2w3e4r";
     

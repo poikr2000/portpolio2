@@ -46,6 +46,20 @@
 
 /* 1. base
 --------------------------------------------------------------------------------*/
+.effect:after {
+    position: absolute;
+    display: block;
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 
+      inset 0 0 20px #fff /* 배경과 같은 색 */,
+      inset 0 0 20px #fff,
+      inset 0 0 20px #fff,
+      inset 0 0 20px #fff;
+}
 #floatMenu {
 	position: absolute;
 	left: 50px;

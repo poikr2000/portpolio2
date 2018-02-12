@@ -21,6 +21,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/nomalize.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/demo.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/set1.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/css/set2.css">
 <!-- DataTables -->
 	<script src="https://cdn.datatables.net/1.10.16/js/dataTables.jqueryui.min.js"></script>
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
@@ -36,7 +40,7 @@
 <!-- <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/vendors/bootstrap4/bootstrap-grid.min.css"> -->
 <!-- App & fonts-->
 	<link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i&amp;amp;subset=latin-ext">
-	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/main.css?ver=12"><!--[if lt IE 9]>
+	<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/resources/assets/css/main.css?ver=13"><!--[if lt IE 9]>
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 <![endif]-->
 <head>

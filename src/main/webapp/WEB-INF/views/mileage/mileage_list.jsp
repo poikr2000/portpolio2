@@ -188,8 +188,8 @@ $(document).ready(function(){
      }
 #floatCart {
 	position: absolute;
-	z-index:100;
-	right: 130px;
+	z-index:50;
+	right: 100px;
 	top: 230px;
 	background-color: rgba( 255, 255, 255, 0 );
 	color: #fff;

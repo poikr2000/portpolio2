@@ -52,12 +52,12 @@
 			<div class="container" style="height: 700px">
 				<table id="q_board" class="table fade in" style="margin-top: 60px; background-color: #424242; border-radius: 1em; border: 1px solid white;" >
 					<thead>
-						<tr style="text-algin: center">
-							<th style="width: 10pt;text-align: center">#</th>
-							<th style="width: 100pt;text-align: center">작성자</th>
-							<th style="width: 60%">제목</th>
-							<th style="width: 10%; text-align: center">작성일</th>
-							<th style="text-align: center">조회수</th>
+						<tr style="text-algin: center; color: white;">
+							<th style="width: 10pt;text-align: center; color: white;">#</th>
+							<th style="width: 100pt;text-align: center; color: white;">작성자</th>
+							<th style="width: 60%; color: white;">제목</th>
+							<th style="width: 10%; text-align: center; color: white;">작성일</th>
+							<th style="text-align: center; color: white;">조회수</th>
 						</tr>
 					</thead>
 					<tbody>

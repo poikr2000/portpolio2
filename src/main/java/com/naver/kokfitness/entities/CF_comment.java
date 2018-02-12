@@ -11,6 +11,9 @@ public class CF_comment {
 	private String cf_date;
 	private int cf_parseq;
 	
+	private String sort;
+	private int f_seq;
+	
 	public int getCf_seq() {
 		return cf_seq;
 	}
@@ -40,5 +43,17 @@ public class CF_comment {
 	}
 	public void setCf_parseq(int cf_parseq) {
 		this.cf_parseq = cf_parseq;
+	}
+	public String getSort() {
+		return sort;
+	}
+	public void setSort(String sort) {
+		this.sort = sort;
+	}
+	public int getF_seq() {
+		return f_seq;
+	}
+	public void setF_seq(int f_seq) {
+		this.f_seq = f_seq;
 	}
 }

@@ -28,10 +28,11 @@
 <content tag="local_script">
 <script>
 	$(document).ready(function(){
-		fc_desc();
+		cf_desc();
 	});
 	
-	function fc_desc(){
+	function cf_desc(){
+		$("#sort").val("all");
 		var params = $('#cf_insert').serialize();
 		$.ajax({
 			type:'Post',
@@ -57,20 +58,20 @@
 	});
 	$('#cf_btn').on('click',function(){
 		var params = $('#cf_insert').serialize();
-		
-		$.ajax({
+		 $.ajax({
 			type:'Post',
 			data:params,
 			datatype:'json',
 			url : 'cf_insert',
 			success : function(data){
-				$('#desc_list').html(data);
+				cf_desc();
+				$("#cf_content").val("");
 			},
 			error : function(xhr,status,error){
 				alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
 			}
 		});
-	})
+	});
 </script>
 </content>
 <body>
@@ -125,6 +126,7 @@
 	</form>
 
 	<form class="cf_insert" action="cf_insert" method="post" encType="multipart/form-data" style="margin-top: 15pt" id="cf_insert">
+		<input type="hidden" id="sort" name="sort">
 		<input type="hidden" id="cf_name" name="cf_name" value="${sessionid}"/>
 		<input type="hidden" id="f_seq" name="f_seq" value="${f_board.f_seq}"/>
 		<input type="hidden" id="email" name="email" value="${sessionemail}"/>
@@ -164,7 +166,7 @@
 						<c:when test="${sessionemail == null}"></c:when>
 						<c:otherwise>
 							<tr>
-								<th style="text-align: center">댓글:</th>
+								<th style="text-align: center; color: white;">댓글:</th>
 								<td><div class="form-groub"><textarea  rows="1" cols="100" id="cf_content" name="cf_content" class="form-control"></textarea></div></td>
 								<th><button type="button" class="input-sm" value="등록" id="cf_btn">등록</button></th>
 							</tr>

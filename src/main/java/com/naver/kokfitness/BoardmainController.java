@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -111,6 +112,7 @@ public class BoardmainController {
 	public ModelAndView f_board_detail(@RequestParam int f_seq) {
 		ModelAndView mav = new ModelAndView("boardmain/f_board_update");
 		F_boardDAO dao = sqlSession.getMapper(F_boardDAO.class);
+		ArrayList<F_board> f_boards = dao.f_boardselectListAll();
 		CF_commentDAO dao1 = sqlSession.getMapper(CF_commentDAO.class);
 		// 상세
 		dao.f_board_updateHit(f_seq);
@@ -120,37 +122,27 @@ public class BoardmainController {
 		ArrayList<CF_comment> cf_comments = dao1.cf_selectList(f_seq);
 		String cf_data= dao1.select_cf_date(f_seq);
 		cf_comment.setCf_date(cf_data);
-		System.out.println("cf_comment:"+cf_comment.getCf_date());
+		
 			// 날자차 구하기
-			Date startDate = new Date();
-			Date endDate = new Date();
-			
-			SimpleDateFormat df1 = new SimpleDateFormat("yy.MM.dd");
-			try {
-				String today = df1.format(endDate);
-				endDate = df1.parse(today);
-			} catch (ParseException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
-			
-			SimpleDateFormat df2 = new SimpleDateFormat("yy.MM.dd");
-			try {
-				startDate = df2.parse("18.01.01");
-			} catch (ParseException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			Calendar startCal = Calendar.getInstance();
-			Calendar endCal = Calendar.getInstance();
-			
-			startCal.setTime(startDate);
-			endCal.setTime(endDate);
-			
-			long diffMillis = endCal.getTimeInMillis() - startCal.getTimeInMillis();
-			int diff = (int) (diffMillis / (24 * 60 * 60 * 1000));
-			System.out.println("diff: " + diff + "일전");
+		Date start = new Date();
+	    try {
+	        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+	        
+	        String today = formatter.format(start);
+	        Date beginDate = formatter.parse(today);
+	        
+        	String befor = f_board.getF_date();
+        	Date endDate = formatter.parse(befor);
+        	
+        	// 시간차이를 시간,분,초를 곱한 값으로 나누면 하루 단위가 나옴
+        	long diff = endDate.getTime() - beginDate.getTime();
+        	long diffDays = diff / (24 * 60 * 60 * 1000);
+        	
+        	System.out.println(diffDays+"일전 댓글");
+	         
+	    } catch (ParseException e) {
+	        e.printStackTrace();
+	    }
 			
 		mav.addObject("cf_comments", cf_comments);
 		return mav;
@@ -215,38 +207,23 @@ public class BoardmainController {
 	}
 
 	@RequestMapping(value = "cf_list_desc", method = RequestMethod.POST)
-	public ModelAndView cf_list_desc(@RequestParam int f_seq) {
-		ModelAndView mav = new ModelAndView("boardmain/f_list_desc");
-		//글번호
-		F_boardDAO dao = sqlSession.getMapper(F_boardDAO.class);
-		F_board f_board = dao.selectDetail(f_seq);
-		mav.addObject("f_board", f_board);
-		//댓글 내용
-		CF_commentDAO dao1 = sqlSession.getMapper(CF_commentDAO.class);
-		ArrayList<CF_comment> cf_comments = dao1.cf_selectList(f_seq); 
-		mav.addObject("cf_comments", cf_comments);
-		return mav;
-	}
-	
-	@RequestMapping(value = "cf_list_desced", method = RequestMethod.POST)
-	public ModelAndView cf_list_desced(@RequestParam int f_seq) {
-		ModelAndView mav = new ModelAndView("boardmain/f_list_desc");
-		//글번호
-		F_boardDAO dao = sqlSession.getMapper(F_boardDAO.class);
-		F_board f_board = dao.selectDetail(f_seq);
-		mav.addObject("f_board", f_board);
-		//댓글 내용
-		CF_commentDAO dao1 = sqlSession.getMapper(CF_commentDAO.class);
-		ArrayList<CF_comment> cf_comments = dao1.cf_selectList_desc(f_seq); 
-		mav.addObject("cf_comments", cf_comments);
-		return mav;
-	}
-	
-	@RequestMapping(value = "f_list_asc", method = RequestMethod.GET)
 	@ResponseBody
-	public F_board f_list_asc() {
-		
-		return f_board;
+	public ModelAndView cf_list_desc(@ModelAttribute CF_comment cf_comment) {
+		ModelAndView mav = new ModelAndView("boardmain/f_list_desc");
+		//글번호
+		F_boardDAO dao = sqlSession.getMapper(F_boardDAO.class);
+		F_board f_board = dao.selectDetail(cf_comment.getF_seq());
+		mav.addObject("f_board", f_board);
+		//댓글 내용
+		CF_commentDAO dao1 = sqlSession.getMapper(CF_commentDAO.class);
+		if(cf_comment.getSort().equals("all")) {
+			ArrayList<CF_comment> cf_comments = dao1.cf_selectList(cf_comment.getF_seq()); 
+			mav.addObject("cf_comments", cf_comments);
+		} else {
+			ArrayList<CF_comment> cf_comments = dao1.cf_selectList_sort(cf_comment);
+			mav.addObject("cf_comments", cf_comments);
+		}
+		return mav;
 	}
 
 	// -질문 게시판-
@@ -374,36 +351,14 @@ public class BoardmainController {
 	}
 	
 	@RequestMapping(value = "cq_list_desc", method = RequestMethod.POST)
-	public ModelAndView cq_list_desc(@RequestParam int q_seq) {
+	public @ResponseBody 
+	ModelAndView cq_list_desc(@RequestParam int q_seq){
 		ModelAndView mav = new ModelAndView("boardmain/q_list_desc");
 		//글번호
 		Q_boardDAO dao = sqlSession.getMapper(Q_boardDAO.class);
 		Q_board q_board = dao.selectDetail(q_seq);
 		mav.addObject("q_board", q_board);
 		//댓글 내용
-		CQ_commentDAO dao1 = sqlSession.getMapper(CQ_commentDAO.class);
-		ArrayList<CQ_comment> cq_comments = dao1.cq_selectList(q_seq); 
-		mav.addObject("cq_comments", cq_comments);
-		return mav;
-	}
-	
-	@RequestMapping(value = "cq_list_desced", method = RequestMethod.POST)
-	public ModelAndView cq_list_desced(@RequestParam int q_seq) {
-		ModelAndView mav = new ModelAndView("boardmain/q_list_desc");
-		//글번호
-		Q_boardDAO dao = sqlSession.getMapper(Q_boardDAO.class);
-		Q_board q_board = dao.selectDetail(q_seq);
-		mav.addObject("q_board", q_board);
-		//댓글 내용
-		CQ_commentDAO dao1 = sqlSession.getMapper(CQ_commentDAO.class);
-		ArrayList<CQ_comment> cq_comments = dao1.cq_selectList_desc(q_seq); 
-		mav.addObject("cq_comments", cq_comments);
-		return mav;
-	}
-	
-	@RequestMapping(value = "cq_list_asced", method = RequestMethod.POST)
-	public ModelAndView cq_list_asced(@RequestParam int q_seq) {
-		ModelAndView mav = new ModelAndView("boardmain/q_list_desc");
 		CQ_commentDAO dao1 = sqlSession.getMapper(CQ_commentDAO.class);
 		ArrayList<CQ_comment> cq_comments = dao1.cq_selectList(q_seq); 
 		mav.addObject("cq_comments", cq_comments);

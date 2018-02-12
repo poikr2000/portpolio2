@@ -8,7 +8,6 @@
 		<id property="cf_content" column="cf_content" />
 		<id property="cf_date" column="cf_date" />
 		<id property="cf_parseq" column="cf_parseq" />
-		<id property="cnt" column="cnt" />
 		
 	</resultMap>
 	
@@ -24,7 +23,7 @@
 		)
 	</insert>
 	
-	<select id="cf_selectList" resultMap="cf_commentMap" parameterType="Integer"> 
+	<select id="cf_selectList" resultMap="cf_commentMap" parameterType="Integer">
 		select * from cf_comment
 		where cf_parseq = #{cf_parseq}
 	</select>
@@ -33,6 +32,17 @@
 		select * from cf_comment
 		where cf_parseq = #{cf_parseq} order by cf_seq desc
 	</select>
+<!-- 	동적쿼리 -->
+	<select id="cf_selectList_sort" resultMap="cf_commentMap" parameterType="hashMap"> 
+		select * from cf_comment
+		where cf_parseq = #{f_seq}
+		<if test="sort == 'desc' ">
+			order by cf_seq desc
+		</if>
+		<if test="sort == 'asc' ">
+			order by cf_seq asc
+		</if>
+	</select>
 
 	<delete id="cf_comment_delete" parameterType="Integer">
 		delete from cf_comment where cf_seq=#{cf_seq}
@@ -40,7 +50,7 @@
 	
 	<delete id="cf_comment_delete_All" parameterType="Integer">
       delete from cf_comment where cf_parseq=#{cf_parseq}
-   </delete>
+    </delete>
 	
 	<select id="select_cf_date" resultType="String" parameterType="Integer">
 		select cf_date from cf_comment where cf_parseq = #{cf_parseq} and cf_seq = #{cf_seq}

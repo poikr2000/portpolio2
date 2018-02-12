@@ -53,11 +53,11 @@
 				<table id="f_board" class="table fade in" style="margin-top: 60px; background-color: #424242; border-radius: 1em; border: 1px solid white;">
 					<thead>
 						<tr style="text-algin: center">
-							<th style="width: 10pt;text-align: center">#</th>
-							<th style="width: 100pt;text-align: center">작성자</th>
-							<th style="width: 60%">제목</th>
-							<th style="width: 10%; text-align: center">작성일</th>
-							<th style="text-align: center">조회수</th>
+							<th style="width: 10pt;text-align: center; color: white;">#</th>
+							<th style="width: 100pt;text-align: center; color: white;">작성자</th>
+							<th style="width: 60%; color: white;">제목</th>
+							<th style="width: 10%; text-align: center; color: white;">작성일</th>
+							<th style="text-align: center; color: white;">조회수</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -76,7 +76,7 @@
 							<tr style="text-algin: center; vertical-algin: middle;">
 								<td style="text-align: center"><font color="#FFFFFF">${f_boards.f_seq}</font> </td>
 								<td style="text-align: center"><font color="#FFFFFF">${f_boards.f_name}</font></td>
-								<td><a href="f_board_detail?f_seq=${f_boards.f_seq}" style="color: white;">${f_boards.f_title} &nbsp
+								<td><a href="f_board_detail?f_seq=${f_boards.f_seq}&?cf_seq=${cf_comment.cf_seq}" style="color: white;">${f_boards.f_title} &nbsp
 								<c:if test="${f_boards.f_cnt ne 0 }"><font color="#FFFFFF">[${f_boards.f_cnt}]</font></c:if>
 								<c:if test="${f_boards.f_date eq today }"><img src="resources/images/new.gif" style="width:6%; height:80%"></c:if>
 								</a></td>

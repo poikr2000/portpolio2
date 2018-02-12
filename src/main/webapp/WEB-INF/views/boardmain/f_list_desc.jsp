@@ -9,33 +9,32 @@
 </head>
 <script>
 
-	$('#cf_list_desc').on('click',function(){
-	var f_seq = $('#f_seq').val();
+	function fc_desc(sort){
+		$('#sort').val(sort);
+		var params = $('#cf_insert').serialize();
 		$.ajax({
 			type:'Post',
-			data:"f_seq: "+f_seq,
+			data:params,
 			datatype:'json',
-			url : 'cf_list_desced',
+			url : 'cf_list_desc',
 			success : function(data){
-				alert("");
+				$('#desc_list').html(data);
 			},
 			error : function(xhr,status,error){
-				alert(xhr.status);
+				alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
 			}
 		});
-	});
+	}
 	
-	function fc_del(){
-// 		var f_seq = $('#f_seq').val();
-// 		var cf_seq = $('#cf_seq').val();
-		var deleted = $('#deleted').serialize();
+	function cf_del(cf_seq){
 		$.ajax({
 			type:'Post',
-			data:deleted,
-			datatype:'json',
+			data:{
+				"cf_seq" : cf_seq
+			},
 			url:'cf_comment_delete',
 			success : function(data){
-				alert("");
+				cf_desc();
 			},
 			error : function(xhr,status,error){
 				alert(xhr.status);
@@ -50,28 +49,29 @@
 			<tr>
 				<th style="width: 50pt"></th>
 				<th style="width: 82%"></th>
-				<th><a href="javascript:void(0);" id="cf_list_desc">최신순</a>-<a href="javascript:void(0);">등록순</a></th>
+				<th><a href="javascript:void(0);" onclick="fc_desc('desc')" style="color: white;">최신순</a>-<a href="javascript:void(0);" onclick="fc_desc('asc')" style="color: white;">등록순</a></th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			<c:forEach var="cf_comments" items="${cf_comments}">
-			<input type="text" id="f_seq" name="f_seq" value="${f_board.f_seq }">
-			<input type="text" id="cf_seq" name="cf_seq" value="${cf_comments.cf_seq }">
+			<input type="hidden" id="f_seq" name="f_seq" value="${f_board.f_seq }">
+			<input type="hidden" id="cf_seq" name="cf_seq" value="${cf_comments.cf_seq }">
 				<tr>
-					<td>${cf_comments.cf_name} :</td>
-					<td>${cf_comments.cf_content}</td>
-					<td>${cf_comments.cf_date}</td>
+					<td style="color: white;">${cf_comments.cf_name} :</td>
+					<td style="color: white;">${cf_comments.cf_content}</td>
+					<td style="color: white;">${cf_comments.cf_date}</td>
 					<c:choose>
 						<c:when test="${sessionid eq cf_comments.cf_name }">
-							<td><a href="javascript:void(0)?cf_seq=${cf_comments.cf_seq}&f_seq=${f_board.f_seq}" onclick="fc_del()"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
+							<td><a href="javascript:void(0)" onclick="cf_del('${cf_comments.cf_seq }')"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
 						</c:when>
 						<c:when test="${sessionemail eq 'admin@admin.com'}">
-							<td><a href="javascript:void(0)?cf_seq=${cf_comments.cf_seq}&f_seq=${f_board.f_seq}"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
+							<td><a href="javascript:void(0)" onclick="cf_del('${cf_comments.cf_seq }')"><img src="resources/images/ximage.jpg" style="width: 10pt;height: 10pt"></a></td>
 						</c:when>
 					</c:choose>
 				</tr>
-			</c:forEach>
+			</c:forEach>   
+			
 		</tbody>
 	</table>
 </body>

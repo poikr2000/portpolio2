@@ -10,7 +10,9 @@ public interface CF_commentDAO {
 	
 	ArrayList<CF_comment> cf_selectList(int cf_parseq);
 
-	ArrayList<CF_comment> cf_selectList_desc(int cf_parseq);
+	ArrayList<CF_comment> cf_selectList_desc(CF_comment cf_comment);
+	
+	ArrayList<CF_comment> cf_selectList_sort(CF_comment cf_comment);
 	
 	int cf_comment_delete(int cf_seq);
 	
