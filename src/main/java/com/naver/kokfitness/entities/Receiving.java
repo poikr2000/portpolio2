@@ -8,8 +8,11 @@ public class Receiving {
 	private String bp_code;
 	private String bp_name;
 	private String consume_code;
+	private String equipment_code;
 	private String beforeconsume_code;
+	private String beforeequipment_code;
 	private String consume_name;
+	private String equipment_name;
 	private String yyyy;
 	private String mm;
 	private String dd;
@@ -46,11 +49,23 @@ public class Receiving {
 	public void setConsume_code(String consume_code) {
 		this.consume_code = consume_code;
 	}
+	public String getEquipment_code() {
+		return equipment_code;
+	}
+	public void setEquipment_code(String equipment_code) {
+		this.equipment_code = equipment_code;
+	}
 	public String getConsume_name() {
 		return consume_name;
 	}
 	public void setConsume_name(String consume_name) {
 		this.consume_name = consume_name;
+	}
+	public String getEquipment_name() {
+		return equipment_name;
+	}
+	public void setEquipment_name(String equipment_name) {
+		this.equipment_name = equipment_name;
 	}
 	public String getYyyy() {
 		return yyyy;
@@ -123,6 +138,12 @@ public class Receiving {
 	}
 	public void setBeforeconsume_code(String beforeconsume_code) {
 		this.beforeconsume_code = beforeconsume_code;
+	}
+	public String getBeforeequipment_code() {
+		return beforeequipment_code;
+	}
+	public void setBeforeequipment_code(String beforeequipment_code) {
+		this.beforeequipment_code = beforeequipment_code;
 	}
 	public int getBeforeqty() {
 		return beforeqty;

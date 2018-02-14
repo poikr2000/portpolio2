@@ -187,7 +187,6 @@ public class MemberController {
     			session.setAttribute("sessionphone2", data.getPhone2());
     			session.setAttribute("sessionphone3", data.getPhone3());
     			session.setAttribute("sessionmileage", data.getMileage());
-    			session.setAttribute("sessionprogram", data.getProgram_code());
     			session.setAttribute("sessionlevel", data.getMemlevel());
     			response.setCharacterEncoding("EUC-KR");
     		    PrintWriter writer = response.getWriter();

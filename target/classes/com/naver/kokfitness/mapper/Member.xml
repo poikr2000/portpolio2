@@ -16,14 +16,11 @@
 		<id property="phone3" column="phone3"/>
 		<id property="memlevel" column="memlevel"/>
 		<id property="mileage" column="mileage"/>
-		<id property="program_code" column="program_code"/>
-		<id property="staff_code" column="staff_code"/>
 	</resultMap>
 	<resultMap type="com.naver.kokfitness.entities.Program" id="programMap">
 		<id property="code" column="code"/>
 		<id property="name" column="name"/>
 	</resultMap>
-
 	<select id="emailConfirm" parameterType="String" resultType="int">
 		select count(*) 
 		from member 

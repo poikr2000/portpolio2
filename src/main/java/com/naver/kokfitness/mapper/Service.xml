@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.ServiceDAO">
+	<resultMap type="com.naver.kokfitness.entities.Service" id="serviceMap">
+		<id property="seq" column="seq"/>
+		<id property="member_mail" column="member_mail"/>
+		<id property="member_name" column="member_name"/>
+		<id property="program_code" column="program_code"/>
+		<id property="program_name" column="program_name"/>
+		<id property="service_check" column="service_check"/>
+		<id property="yyyy" column="yyyy"/>
+		<id property="mm" column="mm"/>
+		<id property="dd" column="dd"/>
+		<id property="memo" column="memo"/>
+	</resultMap>
+	<resultMap type="com.naver.kokfitness.entities.Program" id="programMap">
+		<id property="code" column="code"/>
+		<id property="name" column="name"/>
+	</resultMap>
+	
+	<select id="serviceSelected" parameterType="String" resultMap="programMap">
+		select *
+		from program
+		where code=#{radio}
+	</select>
+	<select id="serviceCheck" parameterType="String" resultType="Integer">
+		select count(*)
+		from service
+		where member_mail=#{member_mail} and (service_check=3 or service_check=5);
+	</select>
+	<select id="serviceListGetOne" parameterType="String" resultMap="serviceMap">
+		select A.*, B.name as member_name,C.name as program_name
+		from service A,member B,program C
+		where A.member_mail=B.email and A.program_code=C.code and member_mail=#{member_mail}
+	</select>
+	<select id="serviceListAll" resultMap="serviceMap">
+		select A.*, B.name as member_name,C.name as program_name
+		from service A,member B,program C
+		where A.member_mail=B.email and A.program_code=C.code
+	</select>
+	<insert id="serviceInsert" parameterType="hashMap">
+		insert into service(
+		seq,member_mail,program_code,yyyy,mm,dd,service_check
+		)values(
+		((select ifnull(MAX(seq)+1,1) from service alias_seq)),#{member_mail,jdbcType=VARCHAR},
+		#{program_code,jdbcType=VARCHAR},#{yyyy,jdbcType=VARCHAR},#{mm,jdbcType=VARCHAR},#{dd,jdbcType=VARCHAR},3
+		)
+	</insert>
+	<delete id="serviceDelete" parameterType="String">
+		delete from service where seq=#{seq}
+	</delete>
+</mapper>

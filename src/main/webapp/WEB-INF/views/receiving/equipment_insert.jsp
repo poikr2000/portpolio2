@@ -9,8 +9,8 @@
 <content tag="local_script">
 <script>
 function myFunction() {
-	var qty = document.receivinginsert_form.qty.value;
-	var price = document.receivinginsert_form.price.value;
+	var qty = document.receivingEquipment_form.qty.value;
+	var price = document.receivingEquipment_form.price.value;
 	$('#total').attr("value",qty*price);
 }
 function selectedSeq(seq){
@@ -18,11 +18,11 @@ function selectedSeq(seq){
 		type:'Post',
 		data:"seq="+seq,
 		datatype:'json',
-		url : 'receivingDetail',
+		url : 'equipmentDetail',
 		success : function(data){
-			$("#receivinginsertbtn").hide();
+			$("#equipmentinsertbtn").hide();
 			$("#receivingreset").hide();
-			$("#receivingupdate").show();
+			$("#equipmentupdate").show();
 			
 			$('#yyyy').attr("value",data.yyyy);
 			$('#mm').attr("value",data.mm);
@@ -30,10 +30,10 @@ function selectedSeq(seq){
 			$('#no').attr("value",data.no);
 			$('#hang').attr("value",data.hang);
 			$('#bp_name').attr("value",data.bp_name);
-			$("#select_consumable").val(data.consume_code).prop("selected", true);
+			$("#select_equipment").val(data.equipment_code).prop("selected", true);
 			$('#bp_code').attr("value",data.bp_code);
-			$('#consume_code').attr("value",data.consume_code);
-			$('#beforeconsume_code').attr("value",data.consume_code);
+			$('#equipment_code').attr("value",data.equipment_code);
+			$('#beforeequipment_code').attr("value",data.equipment_code);
 			$('#price').attr("value",data.price);
 			$('#qty').attr("value",data.qty);
 			$('#stock').attr("value",data.stock);
@@ -60,47 +60,31 @@ $(document).ready(function(){
 	$('#searchmm').val(mm).prop("selected", true);
 	$('#searchdd').val(dd).prop("selected", true);
 	
-	$("#select_consumable").change(function() {
+	$("#select_equipment").change(function() {
 		var code = $(this).val();
 		$.ajax({
 			type:'Post',
 			data:"code="+code,
 			datatype:'json',
-			url : 'consumableSelected',
+			url : 'equipmentSelected',
 			success : function(data){
-				$('#consume_code').attr("value",data.consume_code);
+				$('#equipment_code').attr("value",data.equipment_code);
 				$('#bp_name').attr("value",data.bp_name);
 				$('#bp_code').attr("value",data.bp_code);
-				$('#price').attr("value",data.price);
 				$('#stock').attr("value",data.stock);
-				$('#qty').focus();
 			},
 			error : function(xhr,status,error){
 				alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
 			}
 		});
 	});
-	$('#receivinginsertbtn').click(function(){
-		var selectconsumable = $('#select_consumable').val();
-		if(selectconsumable == '00000000'){
-			$('#modalmsgconsume').text('- 매입 상품을 선택하세요! -');
-		}else{
-			$('#modalmsgconsume').text('');
-		}
-		if($('#qty').val()==0){
-			$('#qtyConfirmModalMsg').text('- 수량을 입력하세요! -');
-		}else{
-			$('#qtyConfirmModalMsg').text('');
-		}
-		if(selectconsumable == '0000000000000'||$('#qty').val()==""){
-			$('#qtyConfirmModal').modal('show');
-			return;
-		}else{
-			$('.receivinginsert_form').attr('action','receivingInsert');
-			$('.receivinginsert_form').submit();
-		}
+	
+	$('#equipmentinsertbtn').click(function(){
+			$('.receivingEquipment_form').attr('action','rcvEquipmentInsert');
+			$('.receivingEquipment_form').submit();
 	});
-	$('#receivingsearch_btn').click(function(){
+	
+	$('#rcvequipmentsearch_btn').click(function(){
 		var vendercode = $('#searchpartner').val();
 		var searchyyyy = $('#searchyyyy').val();
 		var searchmm = $('#searchmm').val();
@@ -115,32 +99,17 @@ $(document).ready(function(){
 			$('#qtyConfirmModal').modal('show');
 			return;
 		}else if(vendercode != '00000'&&searchyyyy != ""){
-			$('.receivingsearch_form').attr('action','receivingSearch');
-			$('.receivingsearch_form').submit();
+			$('.rcvequipmentsearch_form').attr('action','rcvEquipmentSearch');
+			$('.rcvequipmentsearch_form').submit();
 		}else{
 			$('.receivingsearch_form').attr('action','receivingSearchNotingPartner');
 			$('.receivingsearch_form').submit();
 		}
 	});
-	$('#receivingupdate').click(function(){
-		var selectconsumable = $('#select_consumable').val();
-		if(selectconsumable == '00000000'){
-			$('#modalmsgconsume').text('- 매입 상품을 선택하세요! -');
-		}else{
-			$('#modalmsgconsume').text('');
-		}
-		if($('#qty').val()==0){
-			$('#qtyConfirmModalMsg').text('- 수량을 입력하세요! -');
-		}else{
-			$('#qtyConfirmModalMsg').text('');
-		}
-		if(selectconsumable == '0000000000000'||$('#qty').val()==""){
-			$('#qtyConfirmModal').modal('show');
-			return;
-		}else{
-			$('.receivinginsert_form').attr('action','receivingUpdate');
-			$('.receivinginsert_form').submit();
-		}	
+	$('#equipmentupdate').click(function(){
+		alert(1111);
+			$('.receivingEquipment_form').attr('action','equipmentUpdate');
+			$('.receivingEquipment_form').submit();
 	});
 	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 	var floatPosition = parseInt($("#floatMenu").css('top'));
@@ -165,7 +134,7 @@ $(document).ready(function(){
 	</div>
 	<div class="col-sm-12">
 		<div class="col-sm-offset-3" style="margin-top:50px;">
-			<h3>매입 관리</h3>
+			<h3>매입 관리(기자재)</h3>
 		</div>
 		<div>
 			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
@@ -187,18 +156,18 @@ $(document).ready(function(){
 		</ul>
 	</div>
 	<div class="col-sm-offset-2 col-sm-8">
-		<form class="receivinginsert_form" name="receivinginsert_form" method="POST"role="form" data-parsley-validate="true">
+		<form class="receivingEquipment_form" name="receivingEquipment_form" method="POST"role="form" data-parsley-validate="true">
 			<div class="col-sm-5">
 			  	<div class="row" style="margin-top:50px">
 			  	  	<div class="input-group">
 					    <span class="input-group-addon">품&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp명</span>
-					    <select id="select_consumable" name="consume_name" class="form-control"> 
-					    	<c:forEach var="consumable" items="${consumables}">
-								<option value="${consumable.code}">${consumable.name}</option>
+					    <select id="select_equipment" name="equipment_name" class="form-control"> 
+							<c:forEach var="equipment" items="${equipments}">
+								<option value="${equipment.code}">${equipment.name}</option>
 							</c:forEach>
 					    </select>
 					    <input type="hidden" id="seq" name="seq" value="0">
-					    <input type="hidden" id="beforeconsume_code" name="beforeconsume_code">
+					    <input type="hidden" id="beforeequipment_code" name="beforeequipment_code">
 					    <input type="hidden" id="beforeqty" name="beforeqty" value="0">
 				 	</div>
 				</div>
@@ -228,7 +197,7 @@ $(document).ready(function(){
 				<div class="row" style="margin-top:10px">
 			  	  	<div class="input-group">
 					    <span class="input-group-addon">상품코드</span>
-					    <input id="consume_code" name="consume_code" readonly="readonly" type="text" class="form-control">
+					    <input id="equipment_code" name="equipment_code" readonly="readonly" type="text" class="form-control">
 					    <span class="input-group-addon">현&nbsp&nbsp재&nbsp&nbsp고</span>
 					    <input id="stock" name="stock" type="text" readonly="readonly" class="form-control">
 				 	</div>
@@ -236,7 +205,7 @@ $(document).ready(function(){
 				<div class="row" style="margin-top:10px">
 			  	  	<div class="input-group">
 					    <span class="input-group-addon">단&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp가</span>
-					    <input id="price" name="price" type="text" readonly="readonly" class="form-control">
+					    <input id="price" name="price" type="text" class="form-control">
 				 	</div>
 				</div>
 				<div class="row" style="margin-top:10px">
@@ -258,20 +227,20 @@ $(document).ready(function(){
 				 	</div>
 				</div>
 				<div class="row" style="margin-top:10px">
-				  	<button type="button" id="receivinginsertbtn" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp저&nbsp&nbsp&nbsp&nbsp&nbsp장</button>
+				  	<button type="button" id="equipmentinsertbtn" class="btn btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i>&nbsp저&nbsp&nbsp&nbsp&nbsp&nbsp장</button>
 				  	&nbsp
-				  	<button type="button" id="receivingupdate" class="btn btn-primary" style="display: none"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp수&nbsp&nbsp&nbsp&nbsp&nbsp정</button>
+				  	<button type="button" id="equipmentupdate" class="btn btn-primary" style="display: none"><i class="fa fa-pencil" aria-hidden="true"></i>&nbsp수&nbsp&nbsp&nbsp&nbsp&nbsp정</button>
 				  	&nbsp
 				  	<button type="button" onclick="javascript:location.href='index';" class="btn btn-primary"><i class="fa fa-reply" aria-hidden="true"></i>&nbsp돌아가기</button>
 				  	&nbsp&nbsp&nbsp&nbsp
-				  	<button type="button" onclick="javascript:location.href='receivingInsertForm';"id="" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i>&nbspNew</button>
+				  	<button type="button" onclick="javascript:location.href='equipmentListForm';"id="" class="btn btn-primary"><i class="fa fa-plus" aria-hidden="true"></i>&nbspNew</button>
 				  	&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-				  	<button type="button" onclick="javascript:location.href='equipmentListForm';"id="" class="btn btn-primary">기자재</button>
+				  	<button type="button" onclick="javascript:location.href='receivingInsertForm';"id="" class="btn btn-primary">상품</button>
 				</div>
 			</div>
 		</form>
 		<div class="col-sm-1"></div>
-		<form class="receivingsearch_form" name="receivingsearch_form" action="receivingSearch" method="POST"role="form" data-parsley-validate="true">
+		<form class="rcvequipmentsearch_form" name="rcvequipmentsearch_form" action="rcvEquipmentSearch" method="POST"role="form" data-parsley-validate="true">
 			<div class="col-sm-6">
 				<div style="margin-top:50px;height: 415px;">
 					<table width="100%">
@@ -326,11 +295,11 @@ $(document).ready(function(){
 					        				<tr>
 							        			<td class="text-center">${receivings.no}</td>
 							        			<td class="text-center">${receivings.hang}</td>
-							        			<td class="text-center"><a href="#" onclick="selectedSeq(${receivings.seq});">${receivings.consume_name}</a></td>
+							        			<td class="text-center"><a href="#" onclick="selectedSeq(${receivings.seq});">${receivings.equipment_name}</a></td>
 							        			<td class="text-center">${receivings.price}</td>
 							        			<td class="text-center">${receivings.qty}</td>
 							        			<td class="text-center">${receivings.total}</td>
-							        			<td class="text-center"><a href="receivingListDelete?seq=${receivings.seq}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
+							        			<td class="text-center"><a href="equipmentListDelete?seq=${receivings.seq}"><i class="fa fa-trash-o" aria-hidden="true"></i></a></td>
 											</tr>
 				        				</c:otherwise>
 				        			</c:choose>
@@ -360,7 +329,7 @@ $(document).ready(function(){
 						</c:forEach>
 					</select>
 					<div class="input-group-btn">
-						<button type="button" id="receivingsearch_btn" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp검&nbsp&nbsp&nbsp&nbsp&nbsp색</button>
+						<button type="button" id="rcvequipmentsearch_btn" class="btn btn-primary"><i class="fa fa-search" aria-hidden="true"></i>&nbsp검&nbsp&nbsp&nbsp&nbsp&nbsp색</button>
 					</div>
 				</div>
 			</div>
@@ -373,7 +342,7 @@ $(document).ready(function(){
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                </div>
                <div class="modal-body">
-               	<p><span id="modalmsgconsume"></span>
+               	<p><span id="modalmsgequimnent"></span>
                	<p><span id="qtyConfirmModalMsg"></span>
                </div>
                <div class="modal-footer" style="text-align:center">

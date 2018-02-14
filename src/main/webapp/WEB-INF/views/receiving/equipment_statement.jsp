@@ -17,14 +17,11 @@ $(document).ready(function(){
 	$('#yyyy').attr('value',year);
 	$('#mm').val(month).prop("selected",true);
 	$('#dd').val(day).prop("selected",true);
-	$('#receivingstatementmmbtn').click(function(){
-		$('.receivingstatement_form').attr('action','receivingStatementMm');
-		$('.receivingstatement_form').submit();
+	$('#equipmentstatementbtn').click(function(){
+		$('.equipmentstatement_form').attr('action','equipmentStatementAll');
+		$('.equipmentstatement_form').submit();
 	});
-	$('#receivingstatementddbtn').click(function(){
-		$('.receivingstatement_form').attr('action','receivingStatementDd');
-		$('.receivingstatement_form').submit();
-	});
+
 	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 	var floatPosition = parseInt($("#floatMenu").css('top'));
 	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
@@ -44,12 +41,12 @@ $(document).ready(function(){
 </content>
 </head>
 <body>
-<form class="receivingstatement_form" name="receivingstatement_form" method="post"role="form">
+<form class="equipmentstatement_form" name="equipmentstatement_form" method="post"role="form">
 	<div class="col-sm-12" style="background: black;height:90px;">
 	</div>
 	<div class="col-sm-12">
 		<div class="col-sm-offset-3" style="margin-top:50px;">
-			<h3>매입장</h3>
+			<h3>기자재 매입장</h3>
 		</div>
 		<div>
 			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
@@ -79,16 +76,8 @@ $(document).ready(function(){
 					</c:forEach>
 			    </select>
 			    <span class="input-group-addon">월</span>
-			    
-			    <select id="dd" name="dd" class="form-control" style="width: 100%"> 
-					<c:forEach var="i" begin="1" end="31" step="1">
-						<option value="${i}">${i}</option>
-					</c:forEach>
-				</select>
-				<span class="input-group-addon">일</span>
 				<div class="input-group-btn">
-					<button type="button" id="receivingstatementmmbtn" class="btn btn-primary"><i class="fa fa-calendar-times-o" aria-hidden="true"></i>&nbsp월매입장</button>
-		  			<button type="button" id="receivingstatementddbtn" class="btn btn-primary"><i class="fa fa-calendar-check-o" aria-hidden="true"></i>&nbsp일매입장</button>
+					<button type="button" id="equipmentstatementbtn" class="btn btn-primary"><i class="fa fa-calendar-times-o" aria-hidden="true"></i>&nbsp월매입장</button>
 				</div>
 		 	 </div>
 		</div>
@@ -97,7 +86,7 @@ $(document).ready(function(){
 				<table class="table table-striped table-bordered" cellspacing="0"  width="100%" style="margin-bottom:80px;">
 			        <thead>
 			            <tr>
-			                <th class="text-center">매입번호</th>
+			                <th class="text-center">매입날짜</th>
 			                <th class="text-center">거래처</th>
 			                <th class="text-center">품명</th>
 			                <th class="text-center">단가</th>
@@ -152,7 +141,7 @@ $(document).ready(function(){
 			        				<tr>
 					        			<td class="text-center">${receivings.yyyy}-${receivings.mm}-${receivings.dd}-${receivings.no}-${receivings.hang}</td>
 					        			<td class="text-center">${receivings.bp_name}</td>
-					        			<td class="text-center">${receivings.consume_name}</td>
+					        			<td class="text-center">${receivings.equipment_name}</td>
 					        			<td class="text-center">${receivings.price}</td>
 					        			<td class="text-center">${receivings.qty}</td>
 					        			<td class="text-center">${receivings.total}</td>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.naver.kokfitness.service.EquipmentDAO">
+	<resultMap type="com.naver.kokfitness.entities.Category" id="categoryMap">
+		<id property="code" column="code"/>
+		<id property="name" column="name"/>
+	</resultMap>
+	
+	<resultMap type="com.naver.kokfitness.entities.Equipment" id="equipmentMap">
+		<id property="code" column="code"/>
+		<id property="name" column="name"/>
+		<id property="capacity" column="capacity"/>
+		<id property="stock" column="stock"/>
+		<id property="rcv_date" column="rcv_date"/>
+		<id property="bp_code" column="bp_code"/>
+		<id property="category_code" column="category_code"/>
+		<id property="explanation" column="explanation"/>
+	</resultMap>
+	
+	<select id="categoryListAll" resultMap="categoryMap">
+		select *from category
+	</select>
+	
+	<select id="equipmentListAll" resultMap="equipmentMap">
+		select A.*, B.name bp_name
+		from equipment A,business_partner B
+		where A.bp_code=B.code
+	</select>
+	
+	<select id="codeConfirm" parameterType="String" resultType="int">
+		select count(*) 
+		from equipment 
+		where code=#{code}
+	</select>
+	
+	<insert id="equipmentInsert" parameterType="hashMap">
+		insert into equipment(
+		code,name,capacity,price,rcv_date,bp_code,category_code,explanation
+		)values(
+		#{code,jdbcType=VARCHAR},#{name,jdbcType=VARCHAR},#{capacity,jdbcType=VARCHAR},#{price,jdbcType=INTEGER},
+		#{rcv_date,jdbcType=VARCHAR},#{bp_code,jdbcType=VARCHAR},#{category_code,jdbcType=VARCHAR},#{explanation,jdbcType=VARCHAR}
+		)
+	</insert>
+	
+	<select id="selectGetOne" parameterType="String" resultMap="equipmentMap">
+		select A.code,A.name,B.code bp_code,B.name bp_name,stock
+		from equipment A,business_partner B
+		where A.bp_code=B.code and A.code=#{code}
+	</select>
+	
+	<update id="receivingAdd" parameterType="hashMap">
+		update equipment 
+		set stock=stock+#{qty}
+		where code=#{equipment_code}
+	</update>
+	
+	<update id="receivingUpdateSub" parameterType="hashMap">
+		update equipment 
+		set stock=stock-#{beforeqty}
+		where code=#{beforeequipment_code}
+	</update>
+	
+	<update id="receivingDeleteSub" parameterType="hashMap">
+		update equipment 
+		set stock=stock-#{qty}
+		where code=#{equipment_code}
+	</update>
+	
+</mapper>
+

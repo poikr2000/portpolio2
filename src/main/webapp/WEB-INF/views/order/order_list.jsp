@@ -11,6 +11,7 @@
 <content tag="local_script">
 <script>
 $(document).ready(function() {
+	$('#orderlisttable').DataTable();
 	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 	var floatPosition = parseInt($("#floatMenu").css('top'));
 	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
@@ -71,7 +72,9 @@ $(document).ready(function() {
 				<li><a href="receivingStatement">매입장</a></li>
 				<li><a href="shippingStatement">출고장</a></li>
 				<li><a href="consumableInsertForm">상품 등록</a></li>
-				<li><a href="consumableList">수불장</a></li>
+				<li><a href="consumableList">상품수불장</a></li>
+				<li><a href="equipmentInsertForm">기자재등록</a></li>
+				<li><a href="equipmentStatement">기자재매입장</a></li>
 			</ul>
 		</div>
 		<div class="col-sm-offset-3" style="margin-top:50px;">
@@ -81,10 +84,9 @@ $(document).ready(function() {
 			<hr class="col-sm-offset-2 col-sm-8" style="border: solid 1px black">
 		</div>
 		<div class="col-sm-offset-2 col-sm-8" style="margin-bottom: 70px;">
-			<table class="table table-striped table-bordered" id="ordertable">
+			<table class="table table-striped table-bordered" id="orderlisttable">
 				<thead>
 					<tr style="text-align:center;">
-						<th style="text-align:center;vertical-align:middle;">순번</th>
 						<th style="width: 50pt;text-align:center;vertical-align:middle;">이미지</th>
 						<th style="text-align:center;vertical-align:middle;">상품명</th>
 						<th style="text-align:center;vertical-align:middle;">신청인</th>
@@ -94,19 +96,11 @@ $(document).ready(function() {
 						<th></th>
 					</tr>
 				</thead>
-				<c:if test="${fn:length(shippings)==0}">
-					<tfoot>
-						<tr>
-							<td colspan="8" style="text-align:center">주문받은 상품이 없습니다.</td>
-						</tr>
-					</tfoot>
-				</c:if>
 				<tbody>
 					<c:forEach var="shippings" items="${shippings}" varStatus="status">
 						<c:choose>
 			        			<c:when test="${shippings.seq==0}">
 			        				<tr>
-					        			<td class="text-center"></td>
 					        			<td class="text-center bg-primary text-white">총계</td>
 					        			<td class="text-center"></td>
 					        			<td class="text-center"></td>
@@ -118,7 +112,6 @@ $(document).ready(function() {
 			        			</c:when>
 			        			<c:otherwise>
 					        			<tr>
-											<td style="text-align:center;vertical-align:middle;">${shippings.seq}</td>
 											<td style="width: 50pt;text-align:center;vertical-align:middle;"><img src="${shippings.photo}" style="width:100%;"/></td>
 											<td style="text-align:center;vertical-align:middle;">${shippings.consume_name}</td>
 											<td style="text-align:center;vertical-align:middle;">${shippings.member_name}</td>

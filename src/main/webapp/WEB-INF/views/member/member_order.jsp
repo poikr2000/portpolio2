@@ -11,6 +11,7 @@
 <content tag="local_script">
 <script>
 $(document).ready(function() {
+	$('#ordertable').DataTable();
 	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 	var floatPosition = parseInt($("#floatMenu").css('top'));
 	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
@@ -48,6 +49,7 @@ $(document).ready(function() {
 		<div id="floatMenu">
 			<ul>
 				<li><a href="memberDetail?email=${sessionemail}">회원정보 수정</a></li>
+				<li><a href="serviceMember">서비스신청 조회</a></li>
 				<li><a href="memberOrderList?email=${sessionemail}">상품주문 조회</a></li>
 				<li><a href="">회원탈퇴</a></li>
 			</ul>
@@ -71,13 +73,6 @@ $(document).ready(function() {
 						<th></th>
 					</tr>
 				</thead>
-				<c:if test="${fn:length(shippings)==0}">
-					<tfoot>
-						<tr>
-							<td colspan="7" style="text-align:center">주문하신 상품이 없습니다.</td>
-						</tr>
-					</tfoot>
-				</c:if>
 				<tbody>
 					<c:forEach var="shippings" items="${shippings}" varStatus="status">
 						<c:choose>

@@ -81,7 +81,9 @@ $(document).ready(function(){
 				<li><a href="receivingStatement">매입장</a></li>
 				<li><a href="shippingStatement">출고장</a></li>
 				<li><a href="consumableInsertForm">상품 등록</a></li>
-				<li><a href="consumableList">수불장</a></li>
+				<li><a href="consumableList">상품수불장</a></li>
+				<li><a href="equipmentInsertForm">기자재등록</a></li>
+				<li><a href="equipmentStatement">기자재매입장</a></li>
 			</ul>
 		</div>
 		<div class="col-sm-offset-3" style="margin-top:50px;">

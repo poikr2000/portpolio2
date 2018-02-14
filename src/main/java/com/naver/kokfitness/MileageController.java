@@ -134,7 +134,6 @@ public class MileageController {
 			shippingdao.orderInsert(data);
 		}
 		Shipping shipping=shippingdao.selectGetOne(seq.get(0));
-		System.out.println(shipping.getMember_mail());
 		if(shipping.getMember_mail().equals("admin@admin.com")) {
 			ArrayList<Shipping>shippings = shippingdao.orderListAll();
 			ModelAndView mav = new ModelAndView("order/order_list");

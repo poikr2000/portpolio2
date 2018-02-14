@@ -149,7 +149,8 @@ $(document).ready(function(){
 			<div id="floatMenu">
 				<ul>
 					<li><a href="memberDetail?email=${sessionemail}">회원정보 수정</a></li>
-					<li><a href="memberOrderList?email=${sessionemail}">주문상품 조회</a></li>
+					<li><a href="serviceMember">서비스신청 조회</a></li>
+					<li><a href="memberOrderList?email=${sessionemail}">상품주문 조회</a></li>
 					<li><a href="">회원탈퇴</a></li>
 				</ul>
 			</div>

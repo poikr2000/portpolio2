@@ -8,8 +8,10 @@
 		<id property="bp_code" column="bp_code"/>
 		<id property="bp_name" column="bp_name"/>
 		<id property="consume_code" column="consume_code"/>
+		<id property="equipment_code" column="equipment_code"/>
 		<id property="beforeconsume_code" column="beforeconsume_code"/>
 		<id property="consume_name" column="consume_name"/>
+		<id property="equipment_name" column="equipment_name"/>
 		<id property="yyyy" column="yyyy"/>
 		<id property="mm" column="mm"/>
 		<id property="dd" column="dd"/>
@@ -33,6 +35,15 @@
 		yyyy=#{yyyy} and mm=#{mm} and dd=#{dd}
 		group by hang with rollup;
 	</select>
+	
+	<select id="rcvRquipmentSelectListAll" parameterType="hashMap" resultMap="receivingMap">
+		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,equipment_code,C.name equipment_name,A.price,qty,memo,sum(A.price*qty) as total 
+		from receiving A, business_partner B, equipment C 
+		where A.bp_code=B.code and A.equipment_code=C.code and 
+		yyyy=#{yyyy} and mm=#{mm} and dd=#{dd}
+		group by hang with rollup;
+	</select>
+	
 	<select id="SelectReceivingSearchRollup" parameterType="hashMap" resultMap="receivingMap">
 		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,consume_code,C.name consume_name,A.price,qty,memo,sum(A.price*qty) as total 
 		from receiving A, business_partner B, consumable C 
@@ -40,6 +51,15 @@
 		A.bp_code=#{searchpartner} and yyyy=#{searchyyyy} and mm=#{searchmm} and dd=#{searchdd}
 		group by no,hang with rollup;
 	</select>
+	
+	<select id="SelectEquipmentSearchRollup" parameterType="hashMap" resultMap="receivingMap">
+		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,equipment_code,C.name equipment_name,A.price,qty,memo,sum(A.price*qty) as total 
+		from receiving A, business_partner B, equipment C 
+		where A.bp_code=B.code and A.equipment_code=C.code and 
+		A.bp_code=#{searchpartner} and yyyy=#{searchyyyy} and mm=#{searchmm} and dd=#{searchdd}
+		group by no,hang with rollup;
+	</select>
+	
 	<select id="SelectReceivingSearchRollupNotingPartner" parameterType="hashMap" resultMap="receivingMap">
 		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,consume_code,C.name consume_name,A.price,qty,memo,sum(A.price*qty) as total 
 		from receiving A, business_partner B, consumable C 
@@ -53,28 +73,48 @@
 		where A.bp_code=B.code and A.consume_code=C.code 
 		and seq=#{seq}
 	</select>
+	<select id="equipmentSelectOne" parameterType="String" resultMap="receivingMap">
+		select A.*, B.name bp_name,C.stock
+		from receiving A, business_partner B,equipment C
+		where A.bp_code=B.code and A.equipment_code=C.code 
+		and seq=#{seq}
+	</select>
 	<select id="SelectReceivingStatementMm" parameterType="hashMap" resultMap="receivingMap">
 		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,consume_code,C.name consume_name,A.price,qty,memo,sum(A.price*qty) as total 
 		from receiving A, business_partner B, consumable C 
 		where A.bp_code=B.code and A.consume_code=C.code and yyyy=#{yyyy} and mm=#{mm}
 		group by dd,A.bp_code,no,hang with rollup;
 	</select>
+	
+	<select id="SelectEquipmentStatement" parameterType="hashMap" resultMap="receivingMap">
+		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,equipment_code,C.name equipment_name,A.price,qty,memo,sum(A.price*qty) as total 
+		from receiving A, business_partner B, equipment C 
+		where A.bp_code=B.code and A.equipment_code=C.code and yyyy=#{yyyy} and mm=#{mm}
+		group by dd,A.bp_code,no,hang with rollup;
+	</select>
+	
 	<select id="SelectReceivingStatementDd" parameterType="hashMap" resultMap="receivingMap">
 		select seq,A.bp_code,B.name bp_name,yyyy,mm,dd,no,hang,consume_code,C.name consume_name,A.price,qty,memo,sum(A.price*qty) as total 
-		from receiving A, business_partner B, consumable C 
+		from receiving A, business_partner B, consumable C
 		where A.bp_code=B.code and A.consume_code=C.code and yyyy=#{yyyy} and mm=#{mm} and dd=#{dd}
 		group by A.bp_code,no,hang with rollup;
 	</select>
+	
 	<insert id="receivingInsert" parameterType="hashMap">
-		insert into receiving(seq,bp_code,yyyy,mm,dd,no,hang,consume_code,price,qty,memo
+		insert into receiving(seq,bp_code,yyyy,mm,dd,no,hang,consume_code,equipment_code,price,qty,memo
 		)values(
 		((select ifnull(MAX(seq)+1,1) from receiving alias_seq)),#{bp_code,jdbcType=VARCHAR},#{yyyy,jdbcType=VARCHAR},#{mm,jdbcType=VARCHAR},#{dd,jdbcType=VARCHAR},
-		#{no,jdbcType=INTEGER},#{hang,jdbcType=INTEGER},#{consume_code,jdbcType=VARCHAR},
+		#{no,jdbcType=INTEGER},#{hang,jdbcType=INTEGER},#{consume_code,jdbcType=VARCHAR},#{equipment_code,jdbcType=VARCHAR},
 		#{price,jdbcType=INTEGER},#{qty,jdbcType=INTEGER},#{memo,jdbcType=VARCHAR})
 	</insert>
 	<update id="updateRow" parameterType="hashMap">
 		update receiving 
 		set bp_code=#{bp_code},consume_code=#{consume_code},price=#{price},qty=#{qty},memo=#{memo}
+		where seq=#{seq}
+	</update>
+	<update id="equipmetUpdate" parameterType="hashMap">
+		update receiving 
+		set bp_code=#{bp_code},equipment_code=#{equipment_code},price=#{price},qty=#{qty},memo=#{memo}
 		where seq=#{seq}
 	</update>
 	<delete id="deleteRow" parameterType="String">

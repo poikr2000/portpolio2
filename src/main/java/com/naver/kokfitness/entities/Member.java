@@ -16,7 +16,6 @@ public class Member {
 	private String phone3;
 	private int memlevel;
 	private int mileage;
-	private String program_code;
 	private String staff_code;
 	
 	public String getEmail() {
@@ -90,12 +89,6 @@ public class Member {
 	}
 	public void setMileage(int mileage) {
 		this.mileage = mileage;
-	}
-	public String getProgram_code() {
-		return program_code;
-	}
-	public void setProgram_code(String program_code) {
-		this.program_code = program_code;
 	}
 	public String getStaff_code() {
 		return staff_code;
