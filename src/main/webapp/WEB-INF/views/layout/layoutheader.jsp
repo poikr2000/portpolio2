@@ -155,7 +155,7 @@ $(document).ready(function(){
 					<!-- consult-menu -->
 					<ul class="consult-menu">
 						<li><a href="index">Home</a></li>
-						<li><a href="program">program</a></li>
+						<li><a href="programMainForm">program</a></li>
 						<li><a href="staffListForm">staff</a></li>
 						<li class="menu-item-has-children"><a href="#">community</a>
 							<ul class="sub-menu">

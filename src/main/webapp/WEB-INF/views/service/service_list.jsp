@@ -21,8 +21,11 @@ function serviceGx(){
 function servicePilates(){
 	$('#servicePilatesModal').modal('show');
 };
-$(document).ready(function(){
-	$('#healthConfirmBtn').on("click",function(){
+function healthloginChker(){
+	if($("#loginchk").val()==""){
+		$('#noticeModalMsg').text("로그인을 하셔야 이용하실 수 있습니다.");
+		$('#noticeModal').modal('show');
+	}else{
 		$.ajax({
 			type:'Post',
 			datatype:'json',
@@ -69,8 +72,13 @@ $(document).ready(function(){
 				}
 			});
 		});
-	});
-	$('#ptConfirmBtn').on("click",function(){
+	}
+}
+function ptloginChker(){
+	if($("#loginchk").val()==""){
+		$('#noticeModalMsg').text("로그인을 하셔야 이용하실 수 있습니다.");
+		$('#noticeModal').modal('show');
+	}else{
 		$.ajax({
 			type:'Post',
 			datatype:'json',
@@ -117,8 +125,13 @@ $(document).ready(function(){
 				}
 			});
 		});
-	});
-	$('#gxConfirmBtn').on("click",function(){
+	}
+}
+function gxloginChker(){
+	if($("#loginchk").val()==""){
+		$('#noticeModalMsg').text("로그인을 하셔야 이용하실 수 있습니다.");
+		$('#noticeModal').modal('show');
+	}else{
 		$.ajax({
 			type:'Post',
 			datatype:'json',
@@ -165,8 +178,13 @@ $(document).ready(function(){
 				}
 			});
 		});
-	});
-	$('#pilatesConfirmBtn').on("click",function(){
+	}
+}
+function pilatesloginChker(){
+	if($("#loginchk").val()==""){
+		$('#noticeModalMsg').text("로그인을 하셔야 이용하실 수 있습니다.");
+		$('#noticeModal').modal('show');
+	}else{
 		$.ajax({
 			type:'Post',
 			datatype:'json',
@@ -213,7 +231,9 @@ $(document).ready(function(){
 				}
 			});
 		});
-	});
+	}
+}
+$(document).ready(function(){
 	$('#confirmModal').on('hidden.bs.modal', function(e){
 		location.href="serviceMember";
     });
@@ -222,6 +242,7 @@ $(document).ready(function(){
 </content>
 <body>
 <form style="background:url('resources/images/bgimage.jpg')">
+	<input type="hidden" id="loginchk" value="${sessionemail}">
 	<div style="height:1500px">
 		<div class="row">
 			<div class="col-sm-offset-3 col-sm-6" align="center">
@@ -299,7 +320,7 @@ $(document).ready(function(){
 	        </div>
 	      </div>
 	      <div class="modal-footer" >
-	        <button type="button" id="healthConfirmBtn" class="btn btn-primary">신청</button>
+	        <button type="button" id="healthConfirmBtn" onclick = "location.href = 'javascript:healthloginChker();' "class="btn btn-primary">신청</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	      </div>
 	    </div><!-- /.modal-content -->
@@ -331,7 +352,7 @@ $(document).ready(function(){
 	        </div>
 	      </div>
 	      <div class="modal-footer" >
-	        <button type="button" id="ptConfirmBtn"class="btn btn-primary">신청</button>
+	        <button type="button" id="ptConfirmBtn" onclick = "location.href = 'javascript:ptloginChker();' "class="btn btn-primary">신청</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	      </div>
 	    </div><!-- /.modal-content -->
@@ -363,7 +384,7 @@ $(document).ready(function(){
 	        </div>
 	      </div>
 	      <div class="modal-footer" >
-	        <button type="button" id="gxConfirmBtn"class="btn btn-primary">신청</button>
+	        <button type="button" id="gxConfirmBtn"onclick = "location.href = 'javascript:gxloginChker();' "class="btn btn-primary">신청</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	      </div>
 	    </div><!-- /.modal-content -->
@@ -395,7 +416,7 @@ $(document).ready(function(){
 	        </div>
 	      </div>
 	      <div class="modal-footer" >
-	        <button type="button" id="pilatesConfirmBtn"class="btn btn-primary">신청</button>
+	        <button type="button" id="pilatesConfirmBtn"onclick = "location.href = 'javascript:pilatesloginChker();' "class="btn btn-primary">신청</button>
 	        <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 	      </div>
 	    </div><!-- /.modal-content -->

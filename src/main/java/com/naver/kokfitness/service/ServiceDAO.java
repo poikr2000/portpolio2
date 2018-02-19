@@ -12,4 +12,7 @@ public interface ServiceDAO {
 	ArrayList<Service> serviceListAll();
 	int serviceCheck(String member_mail);
 	void serviceDelete(String seq);
+	void serviceExpired(String seq);
+	void serviceRegister(Service service);
+	
 }

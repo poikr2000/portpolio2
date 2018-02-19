@@ -76,24 +76,24 @@ $(document).ready(function() {
 				<tbody>
 					<c:forEach var="services" items="${services}" varStatus="status">
 						<c:choose>
-			        			<c:when test="${shippings.service_check==9}">
+			        			<c:when test="${services.service_check==9}">
 			        				<tr>
 					        			<td class="text-center">${services.seq}</td>
 					        			<td class="text-center">${services.member_name}</td>
 					        			<td class="text-center">${services.program_name}</td>
-					        			<td class="text-center">${services.yyyy}.${services.mm}.${services.dd}</td>
-					        			<td class="text-center"></td>
+					        			<td class="text-center">${services.apply_date}</td>
+					        			<td class="text-center">${services.register_date}</td>
 					        			<td class="text-center">기간만료</td>
 					        			<td class="text-center"></td>
 									</tr>
 			        			</c:when>
-			        			<c:when test="${shippings.service_check==5}">
+			        			<c:when test="${services.service_check==5}">
 			        				<tr>
 					        			<td class="text-center">${services.seq}</td>
 					        			<td class="text-center">${services.member_name}</td>
 					        			<td class="text-center">${services.program_name}</td>
-					        			<td class="text-center">${services.yyyy}.${services.mm}.${services.dd}</td>
-					        			<td class="text-center"></td>
+					        			<td class="text-center">${services.apply_date}</td>
+					        			<td class="text-center">${services.register_date}</td>
 					        			<td class="text-center">진행중</td>
 					        			<td class="text-center">
 					        			</td>
@@ -104,8 +104,8 @@ $(document).ready(function() {
 					        			<td class="text-center">${services.seq}</td>
 					        			<td class="text-center">${services.member_name}</td>
 					        			<td class="text-center">${services.program_name}</td>
-					        			<td class="text-center">${services.yyyy}.${services.mm}.${services.dd}</td>
-					        			<td class="text-center"></td>
+					        			<td class="text-center">${services.apply_date}</td>
+					        			<td class="text-center">${services.register_date}</td>
 					        			<td class="text-center">신청대기</td>
 					        			<td class="text-center">
 					        				<button id="servicecancel" value="${services.seq}" type="button" class="btn btn-default">취소</button>

@@ -46,16 +46,11 @@ public class ServiceController {
 	public String serviceInsert(@RequestParam String radio,HttpSession session) {
 		ServiceDAO servicedao=sqlSession.getMapper(ServiceDAO.class);
 		String email = session.getAttribute("sessionemail").toString();
-		SimpleDateFormat sm = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy.MM.dd");
 		String date = sm.format(new Date());
-		String yyyy= date.substring(0,4);
-		String mm = date.substring(5,7);
-		String dd = date.substring(8,10);
 		service.setMember_mail(email);
 		service.setProgram_code(radio);
-		service.setYyyy(yyyy);
-		service.setMm(mm);
-		service.setDd(dd);
+		service.setApply_date(date);
 		servicedao.serviceInsert(service);
 		return email;
 	}
@@ -87,6 +82,22 @@ public class ServiceController {
 	public String serviceCansel(@RequestParam String seq) {
 		ServiceDAO servicedao=sqlSession.getMapper(ServiceDAO.class);
 		servicedao.serviceDelete(seq);
+		return "redirect:serviceMember";
+	}
+	@RequestMapping(value = "serviceExpired", method = RequestMethod.POST)
+	public String serviceExpired(@RequestParam String seq) {
+		ServiceDAO servicedao=sqlSession.getMapper(ServiceDAO.class);
+		servicedao.serviceExpired(seq);
+		return "redirect:serviceMember";
+	}
+	@RequestMapping(value = "serviceRegister", method = RequestMethod.POST)
+	public String serviceRegister(@RequestParam String seq) {
+		ServiceDAO servicedao=sqlSession.getMapper(ServiceDAO.class);
+		SimpleDateFormat sm = new SimpleDateFormat("yyyy.MM.dd");
+		String date = sm.format(new Date());
+		service.setRegister_date(date);
+		service.setSeq(Integer.parseInt(seq));
+		servicedao.serviceRegister(service);
 		return "redirect:serviceMember";
 	}
 	@RequestMapping(value = "serviceAdminForm", method = RequestMethod.GET)

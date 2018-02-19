@@ -10,9 +10,8 @@ public class Service {
 	private String program_code;
 	private String program_name;
 	private int service_check;
-	private String yyyy;
-	private String mm;
-	private String dd;
+	private String apply_date;
+	private String register_date;
 	private String memo;
 	public int getSeq() {
 		return seq;
@@ -38,24 +37,6 @@ public class Service {
 	public void setService_check(int service_check) {
 		this.service_check = service_check;
 	}
-	public String getYyyy() {
-		return yyyy;
-	}
-	public void setYyyy(String yyyy) {
-		this.yyyy = yyyy;
-	}
-	public String getMm() {
-		return mm;
-	}
-	public void setMm(String mm) {
-		this.mm = mm;
-	}
-	public String getDd() {
-		return dd;
-	}
-	public void setDd(String dd) {
-		this.dd = dd;
-	}
 	public String getMemo() {
 		return memo;
 	}
@@ -74,5 +55,16 @@ public class Service {
 	public void setProgram_name(String program_name) {
 		this.program_name = program_name;
 	}
-	
+	public String getApply_date() {
+		return apply_date;
+	}
+	public void setApply_date(String apply_date) {
+		this.apply_date = apply_date;
+	}
+	public String getRegister_date() {
+		return register_date;
+	}
+	public void setRegister_date(String register_date) {
+		this.register_date = register_date;
+	}
 }

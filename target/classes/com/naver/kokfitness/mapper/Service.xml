@@ -42,12 +42,22 @@
 	</select>
 	<insert id="serviceInsert" parameterType="hashMap">
 		insert into service(
-		seq,member_mail,program_code,yyyy,mm,dd,service_check
+		seq,member_mail,program_code,apply_date,service_check
 		)values(
 		((select ifnull(MAX(seq)+1,1) from service alias_seq)),#{member_mail,jdbcType=VARCHAR},
-		#{program_code,jdbcType=VARCHAR},#{yyyy,jdbcType=VARCHAR},#{mm,jdbcType=VARCHAR},#{dd,jdbcType=VARCHAR},3
+		#{program_code,jdbcType=VARCHAR},#{apply_date,jdbcType=VARCHAR},3
 		)
 	</insert>
+	<update id="serviceRegister" parameterType="hashMap">
+		update service
+		set service_check=5,register_date=#{register_date}
+		where seq=#{seq}
+	</update>
+	<update id="serviceExpired" parameterType="String">
+		update service
+		set service_check=9
+		where seq=#{seq}
+	</update>
 	<delete id="serviceDelete" parameterType="String">
 		delete from service where seq=#{seq}
 	</delete>

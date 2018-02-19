@@ -64,6 +64,7 @@ $(document).ready(function() {
 	<div class="container col-sm-12" style="height:800px;">
 		<div id="floatMenu">
 			<ul>
+				<li><a href="serviceAdminForm">서비스신청 조회</a></li>
 				<li><a href="orderListForm">상품주문 조회</a></li>
 				<li><a href="memberList">회원 관리</a></li>
 				<li><a href="staffList">직원 관리</a></li>

@@ -33,20 +33,10 @@ public class HomeController {
 		
 		return "jusoPopup";
 	}
-	@RequestMapping(value = "program", method = RequestMethod.GET)
+	@RequestMapping(value = "programMainForm", method = RequestMethod.GET)
 	public String program() {
 		
-		return "program";
-	}
-	@RequestMapping(value = "staff", method = RequestMethod.GET)
-	public String staff() {
-		
-		return "staff";
-	}
-	@RequestMapping(value = "services", method = RequestMethod.GET)
-	public String services() {
-		
-		return "services";
+		return "program/program_main";
 	}
 	@RequestMapping(value = "adminMainForm", method = RequestMethod.GET)
 	public String adminMainForm() {

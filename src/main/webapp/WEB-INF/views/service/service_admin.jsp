@@ -28,6 +28,7 @@ $(document).ready(function() {
 	}).scroll();
 	$(document).on('click',"#servicecancel",function(){
 		var val = $(this).val();
+		$('#serviceCancelModalMsg').text('등록이 취소됩니다. 계속하시겠습니까?');
 		$('#serviceCancelModal').modal('show');
 		$('#serviceCancelConfirm').on('click',function(){
 			var input=$("<input>")
@@ -35,6 +36,35 @@ $(document).ready(function() {
 			.attr("type","hidden")
 			.attr("value",val);
 			$('.serviceadmin_form').append($(input));
+			$('.serviceadmin_form').attr('action','serviceCansel');
+			$('.serviceadmin_form').submit();
+		});
+	});
+	$(document).on('click',"#serviceregister",function(){
+		var val = $(this).val();
+		$('#serviceCancelModalMsg').text('등록 하시겠습니까?');
+		$('#serviceCancelModal').modal('show');
+		$('#serviceCancelConfirm').on('click',function(){
+			var input=$("<input>")
+			.attr("name","seq")
+			.attr("type","hidden")
+			.attr("value",val);
+			$('.serviceadmin_form').append($(input));
+			$('.serviceadmin_form').attr('action','serviceRegister');
+			$('.serviceadmin_form').submit();
+		});
+	});
+	$(document).on('click',"#serviceexpired",function(){
+		var val = $(this).val();
+		$('#serviceCancelModalMsg').text('서비스를 끝내시겠습니까?');
+		$('#serviceCancelModal').modal('show');
+		$('#serviceCancelConfirm').on('click',function(){
+			var input=$("<input>")
+			.attr("name","seq")
+			.attr("type","hidden")
+			.attr("value",val);
+			$('.serviceadmin_form').append($(input));
+			$('.serviceadmin_form').attr('action','serviceExpired');
 			$('.serviceadmin_form').submit();
 		});
 	});
@@ -42,7 +72,7 @@ $(document).ready(function() {
 </script>
 </content>
 <body>
-<form class="serviceadmin_form" name="serviceadmin_form" id="serviceadmin_form" action="serviceCansel" method="POST" enctype="multipart/form-data">
+<form class="serviceadmin_form" name="serviceadmin_form" id="serviceadmin_form" method="POST" enctype="multipart/form-data">
 	<div class="col-sm-12" style="background:black;height:90px;">
 	</div>
 	<div class="container col-sm-12" style="height:800px;">
@@ -84,24 +114,24 @@ $(document).ready(function() {
 				<tbody>
 					<c:forEach var="services" items="${services}" varStatus="status">
 						<c:choose>
-			        			<c:when test="${shippings.service_check==9}">
+			        			<c:when test="${services.service_check==9}">
 			        				<tr>
 					        			<td class="text-center">${services.seq}</td>
 					        			<td class="text-center">${services.member_name}</td>
 					        			<td class="text-center">${services.program_name}</td>
-					        			<td class="text-center">${services.yyyy}.${services.mm}.${services.dd}</td>
-					        			<td class="text-center"></td>
+					        			<td class="text-center">${services.apply_date}</td>
+					        			<td class="text-center">${services.register_date}</td>
 					        			<td class="text-center">기간만료</td>
 					        			<td class="text-center"></td>
 									</tr>
 			        			</c:when>
-			        			<c:when test="${shippings.service_check==5}">
+			        			<c:when test="${services.service_check==5}">
 			        				<tr>
 					        			<td class="text-center">${services.seq}</td>
 					        			<td class="text-center">${services.member_name}</td>
 					        			<td class="text-center">${services.program_name}</td>
-					        			<td class="text-center">${services.yyyy}.${services.mm}.${services.dd}</td>
-					        			<td class="text-center"></td>
+					        			<td class="text-center">${services.apply_date}</td>
+					        			<td class="text-center">${services.register_date}</td>
 					        			<td class="text-center">진행중</td>
 					        			<td class="text-center">
 					        				<button id="serviceexpired" value="${services.seq}" type="button" class="btn btn-default">기간만료</button>
@@ -113,8 +143,8 @@ $(document).ready(function() {
 					        			<td class="text-center">${services.seq}</td>
 					        			<td class="text-center">${services.member_name}</td>
 					        			<td class="text-center">${services.program_name}</td>
-					        			<td class="text-center">${services.yyyy}.${services.mm}.${services.dd}</td>
-					        			<td class="text-center"></td>
+					        			<td class="text-center">${services.apply_date}</td>
+					        			<td class="text-center">${services.register_date}</td>
 					        			<td class="text-center">신청대기</td>
 					        			<td class="text-center">
 					        				<button id="serviceregister" value="${services.seq}" type="button" class="btn btn-default">등록</button>
@@ -135,7 +165,7 @@ $(document).ready(function() {
 	      	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 	      </div>
 	      <div class="modal-body">
-	      	 <span id="serviceCancelModalMsg">등록이 취소됩니다. 계속하시겠습니까?</span>
+	      	 <span id="serviceCancelModalMsg">...</span>
 	      </div>
 	      <div class="modal-footer">
 	      	<button type="button" class="btn btn-default" id="serviceCancelConfirm" data-dismiss="modal">확인</button>
