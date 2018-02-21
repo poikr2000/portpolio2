@@ -248,7 +248,7 @@ $(document).ready(function(){
 			<div class="col-sm-offset-3 col-sm-6" align="center">
 				<!-- title-01 -->
 				<div>
-					<h2 class="title-01__title" style="margin-top: 120px;">
+					<h2 class="title-01__title" style="margin-top: 150px;margin-bottom: 90px;">
 						<font color="#FFFFFF"; face="Impact">Fitness Service</font>
 					</h2>
 				</div><!-- End / title-01 -->

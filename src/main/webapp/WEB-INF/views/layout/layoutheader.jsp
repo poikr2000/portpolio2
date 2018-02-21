@@ -156,6 +156,7 @@ $(document).ready(function(){
 					<ul class="consult-menu">
 						<li><a href="index">Home</a></li>
 						<li><a href="programMainForm">program</a></li>
+						<li><a href="serviceListForm">services</a></li>
 						<li><a href="staffListForm">staff</a></li>
 						<li class="menu-item-has-children"><a href="#">community</a>
 							<ul class="sub-menu">
@@ -163,8 +164,6 @@ $(document).ready(function(){
 								<li><a href="f_board">자유게시판</a></li>
 								<li><a href="q_board">질문게시판</a></li>
 							</ul>
-						</li>
-						<li><a href="serviceListForm">services</a>
 						</li>
 						<li><a href="javascript:loginChker();">mileage</a>
 							<input type="hidden" id="loginchk" value="${sessionemail}">
@@ -196,7 +195,7 @@ $(document).ready(function(){
 				</div>
 				<div class="row col-sm-12">
 					<div class="col-sm-offset-9">
-						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="checkbox" id="emailSaveChk"><span>이메일 저장</span>
+						&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<input type="checkbox" id="emailSaveChk"><span style="color: #626262">이메일 저장</span>
 					</div>
 				</div>
 				<div class="row col-sm-12">
@@ -242,7 +241,7 @@ $(document).ready(function(){
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                </div>
                <div class="modal-body">
-	               <div id="failpasswordModalMsg" style="color:ff0000">some msg</div>
+	               <div id="failpasswordModalMsg" style="color:#626262">some msg</div>
                </div>
                <div class="modal-footer" style="text-align:center">
                   <button type="button"class="btn btn-success" data-dismiss="modal">확인</button>
