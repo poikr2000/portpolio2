@@ -91,15 +91,15 @@
 						<td colspan="2">
 						<c:choose>
 							<c:when test="${sessionid == q_board.q_name }">
-								<div class="pull-right"><input type="submit" value="수정" class="input-sm"></div>
-								<div class="pull-left"><input  id="delbtn" type="button" value="삭제" class="input-sm"/></div>	
+								<div class="pull-right"><input type="submit" value="수정" class="btn btn-primary"></div>
+								<div class="pull-left"><input  id="delbtn" type="button" value="삭제" class="btn btn-primary"/></div>	
 							</c:when>
 							<c:when test="${sessionemail eq 'admin@admin.com' }">
-								<div class="pull-right"><input type="submit" value="수정" class="input-sm"></div>
-								<div class="pull-left"><input  id="delbtn" type="button" value="삭제" class="input-sm"/></div>
+								<div class="pull-right"><input type="submit" value="수정" class="btn btn-primary"></div>
+								<div class="pull-left"><input  id="delbtn" type="button" value="삭제" class="btn btn-primary"/></div>
 							</c:when>
 						</c:choose>
-							<div class="pull-right"><input type="button"value="글 목록으로... " class="input-sm" 	onclick="javascript:location.href='q_board'" /></div>	
+							<div class="pull-right"><input type="button"value="글 목록으로... " class="btn btn-primary" 	onclick="javascript:location.href='q_board'" /></div>	
 						</td>
 					</tr>
 				</tbody>
@@ -165,7 +165,7 @@
 							<tr>
 								<th style="text-align: center; color: white;">댓글:</th>
 								<td><div class="form-groub"><textarea  rows="1" cols="100" id="cq_content" name="cq_content" class="form-control"></textarea></div></td>
-								<th><button type="button" class="input-sm" value="등록" id="cq_btn">등록</button></th>
+								<th><button type="button" class="btn btn-primary" value="등록" id="cq_btn">등록</button></th>
 							</tr>
 						</c:otherwise>
 					</c:choose>

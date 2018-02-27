@@ -25,6 +25,8 @@ public class Receiving {
 	private int stock;
 	private String columnname;
 	private String memo;
+	private String dealname;
+	private String balancename;
 	public int getSeq() {
 		return seq;
 	}
@@ -150,5 +152,17 @@ public class Receiving {
 	}
 	public void setBeforeqty(int beforeqty) {
 		this.beforeqty = beforeqty;
+	}
+	public String getDealname() {
+		return dealname;
+	}
+	public void setDealname(String dealname) {
+		this.dealname = dealname;
+	}
+	public String getBalancename() {
+		return balancename;
+	}
+	public void setBalancename(String balancename) {
+		this.balancename = balancename;
 	}
 }

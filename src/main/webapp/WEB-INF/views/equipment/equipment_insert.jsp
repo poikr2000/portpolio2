@@ -117,17 +117,28 @@ $(document).ready(function(){
 		</div>
 		<div id="floatMenu">
 			<ul>
+				<li><a href="#">인적관리</a>
+					<ul>
+						<li><a href="memberList">회원 관리</a></li>
+						<li><a href="staffList">직원 관리</a></li>
+					</ul>
+				</li>
+				<li><a href="#">물적관리</a>
+					<ul>
+						<li><a href="partnerList">거래처 관리</a></li>
+						<li><a href="receivingInsertForm">매입관리</a></li>
+						<li><a href="receivingStatement">매입장</a></li>
+						<li><a href="shippingStatement">출고장</a></li>
+						<li><a href="consumableInsertForm">상품 등록</a></li>
+						<li><a href="consumableList">상품수불장</a></li>
+						<li><a href="equipmentInsertForm">기자재등록</a></li>
+						<li><a href="equipmentStatement">기자재매입장</a></li>
+						<li><a href="taskCloseForm">월말마감</a></li>
+						<li><a href="balanceForm">거래현황</a></li>
+					</ul>
+				</li>
+				<li><a href="serviceAdminForm">서비스신청 조회</a></li>
 				<li><a href="orderListForm">상품주문 조회</a></li>
-				<li><a href="memberList">회원 관리</a></li>
-				<li><a href="staffList">직원 관리</a></li>
-				<li><a href="partnerList">거래처 관리</a></li>
-				<li><a href="receivingInsertForm">매입관리</a></li>
-				<li><a href="receivingStatement">매입장</a></li>
-				<li><a href="shippingStatement">출고장</a></li>
-				<li><a href="consumableInsertForm">상품 등록</a></li>
-				<li><a href="consumableList">상품수불장</a></li>
-				<li><a href="equipmentInsertForm">기자재등록</a></li>
-				<li><a href="equipmentStatement">기자재매입장</a></li>
 			</ul>
 		</div>
 		<div class="form-group col-sm-offset-4 col-sm-4">
@@ -142,7 +153,7 @@ $(document).ready(function(){
 	  	</div>
 	  	<div class="form-group col-sm-offset-4 col-sm-4">
 			<div class="input-group">
-			    <span class="input-group-addon"><i class="fa fa-folder-o" aria-hidden="true"></i>&nbsp; 카테고리</span>
+			    <span class="input-group-addon"><i class="fa fa-folder-o" aria-hidden="true"></i>&nbsp; 카&nbsp;테&nbsp;고&nbsp;리&nbsp;</span>
 			    <select id="category_code" name="category_code" class="form-control">
 			    	<c:forEach var="category" items="${categorys}">
 						<option value="${category.code}">${category.name}</option>
@@ -152,26 +163,26 @@ $(document).ready(function(){
 		</div>
 	  	<div class="form-group col-sm-offset-4 col-sm-4">
 			<div class="input-group">
-			    <span class="input-group-addon"><i class="fa fa-archive" aria-hidden="true"></i>&nbsp; 기자재&nbsp;명</span>
+			    <span class="input-group-addon"><i class="fa fa-archive" aria-hidden="true"></i>&nbsp; 기&nbsp;자&nbsp;재&nbsp;명&nbsp;</span>
 			    <input id="name" name="name" type="text" required="true"class="form-control" placeholder="name">
 			</div>
 		</div>
 		<div class="form-group col-sm-offset-4 col-sm-4">
 			<div class="input-group">
-			    <span class="input-group-addon"><i class="fa fa-gift" aria-hidden="true"></i>&nbsp; 규&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격</span>
+			    <span class="input-group-addon"><i class="fa fa-gift" aria-hidden="true"></i>&nbsp; 규&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;격&nbsp;</span>
 			    <input id="capacity"  name="capacity" type="text" required="true" class="form-control"placeholder="capacity">
 			</div>
 		</div>
 		<div class="form-group col-sm-offset-4 col-sm-4">
 			<div class="input-group">
-			    <span class="input-group-addon"><i class="fa fa-krw" aria-hidden="true"></i>&nbsp; 단&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가</span>
-			    <input id="price" name="price" type="text" numberonly="true" required="true" class="form-control" placeholder="stock">
+			    <span class="input-group-addon"><i class="fa fa-krw" aria-hidden="true"></i>&nbsp; 단&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;가&nbsp;</span>
+			    <input id="price" name="price" type="text" numberonly="true" required="true" class="form-control" placeholder="price">
 			</div>
 		</div>
 
 		<div class="form-group col-sm-offset-4 col-sm-4">
 			<div class="input-group">
-			    <span class="input-group-addon"><i class="fa fa-users" aria-hidden="true"></i>&nbsp; 취&nbsp;&nbsp;급&nbsp;&nbsp;처</span>
+			    <span class="input-group-addon"><i class="fa fa-users" aria-hidden="true"></i>&nbsp; 취&nbsp;&nbsp;&nbsp;&nbsp;급&nbsp;&nbsp;&nbsp;&nbsp;처</span>
 			    <select id="bp_code" name="bp_code" class="form-control">
 			     	<c:forEach var="partner" items="${partners}">
 						<option value="${partner.code}">${partner.name}</option>
@@ -181,7 +192,7 @@ $(document).ready(function(){
 		</div>
 		<div class="form-group col-sm-offset-4 col-sm-4">
 			<div class="input-group">
-			    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 상세설명</span>
+			    <span class="input-group-addon"><i class="fa fa-pencil-square-o" aria-hidden="true"></i>&nbsp; 상&nbsp;세&nbsp;설&nbsp;명&nbsp;</span>
 			    <textarea class="form-control"id="explanation" name="explanation"></textarea>
 			</div>
 		</div>

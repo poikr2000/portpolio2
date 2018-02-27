@@ -3,9 +3,7 @@ package com.naver.kokfitness;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -138,7 +136,6 @@ public class BoardmainController {
         	long diff = endDate.getTime() - beginDate.getTime();
         	long diffDays = diff / (24 * 60 * 60 * 1000);
         	
-        	System.out.println(diffDays+"일전 댓글");
 	         
 	    } catch (ParseException e) {
 	        e.printStackTrace();

@@ -60,16 +60,15 @@
 							<td colspan="2"><c:choose>
 									<c:when test="${sessionid == n_board.n_name }">
 										<div class="pull-right">
-											<input type="submit" value="수정" class="input-sm">
+											<input type="submit" value="수정" class="btn btn-primary">
 										</div>
 										<div class="pull-left">
-											<input id="delbtn" type="button" value="삭제" class="input-sm" />
+											<input id="delbtn" type="button" value="삭제" class="btn btn-primary" />
 										</div>
 									</c:when>
 								</c:choose>
 								<div class="pull-right">
-									<input type="button" value="글 목록으로... " class="input-sm"
-										onclick="javascript:location.href='n_board'" />
+									<input type="button" value="글 목록으로... " class="btn btn-primary"onclick="javascript:location.href='n_board'" />
 								</div>
 								</td>
 						</tr>

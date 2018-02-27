@@ -48,6 +48,7 @@ $(document).ready(function(){
             }
         ]
 	});
+	$('.dt-button').addClass('btn btn-primary').removeClass('dt-button');
 	// 기존 css에서 플로팅 배너 위치(top)값을 가져와 저장한다.
 	var floatPosition = parseInt($("#floatMenu").css('top'));
 	// 250px 이런식으로 가져오므로 여기서 숫자만 가져온다. parseInt( 값 );
@@ -73,18 +74,28 @@ $(document).ready(function(){
 	<div class="container col-sm-12">
 		<div id="floatMenu">
 			<ul>
+				<li><a href="#">인적관리</a>
+					<ul>
+						<li><a href="memberList">회원 관리</a></li>
+						<li><a href="staffList">직원 관리</a></li>
+					</ul>
+				</li>
+				<li><a href="#">물적관리</a>
+					<ul>
+						<li><a href="partnerList">거래처 관리</a></li>
+						<li><a href="receivingInsertForm">매입관리</a></li>
+						<li><a href="receivingStatement">매입장</a></li>
+						<li><a href="shippingStatement">출고장</a></li>
+						<li><a href="consumableInsertForm">상품 등록</a></li>
+						<li><a href="consumableList">상품수불장</a></li>
+						<li><a href="equipmentInsertForm">기자재등록</a></li>
+						<li><a href="equipmentStatement">기자재매입장</a></li>
+						<li><a href="taskCloseForm">월말마감</a></li>
+						<li><a href="balanceForm">거래현황</a></li>
+					</ul>
+				</li>
 				<li><a href="serviceAdminForm">서비스신청 조회</a></li>
 				<li><a href="orderListForm">상품주문 조회</a></li>
-				<li><a href="memberList">회원 관리</a></li>
-				<li><a href="staffList">직원 관리</a></li>
-				<li><a href="partnerList">거래처 관리</a></li>
-				<li><a href="receivingInsertForm">매입관리</a></li>
-				<li><a href="receivingStatement">매입장</a></li>
-				<li><a href="shippingStatement">출고장</a></li>
-				<li><a href="consumableInsertForm">상품 등록</a></li>
-				<li><a href="consumableList">상품수불장</a></li>
-				<li><a href="equipmentInsertForm">기자재등록</a></li>
-				<li><a href="equipmentStatement">기자재매입장</a></li>
 			</ul>
 		</div>
 		<div class="col-sm-offset-3" style="margin-top:50px;">

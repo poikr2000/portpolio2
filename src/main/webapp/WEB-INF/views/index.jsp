@@ -8,6 +8,39 @@
 
 </title>
 </head>
+<content tag="local_script">
+
+<!-- 예제 시작 -->
+
+<!-- http://localhost 에서 테스트 하시려면 cpw9RMOfkmb0qIa7Vz23 키를 사용해 보세요 -->
+
+<!-- 맵 v3 스크립트 -->
+<script src="https://openapi.map.naver.com/openapi/v3/maps.js?clientId=cpw9RMOfkmb0qIa7Vz23"></script>
+<script type="text/javascript">
+
+   // v3 버전 지도 생성
+   
+   var position = new naver.maps.LatLng(36.33853, 127.39245);
+//    var position = new naver.maps.LatLng(36.40936, 127.19897);
+   var map = new naver.maps.Map('mapArea', {
+      center : position,
+      zoom:12,
+      mapTypeControl : true
+   });
+   
+   var markerOptions = {
+         position: position,
+         map:map,
+         icon:{
+            url:'resources/images/itschool.swf',
+            size: new naver.maps.Size(33,44),
+            origin: new naver.maps.Point(0,0),
+            anchor: new naver.maps.Point(11,35)
+         }
+   };
+   var marker = new naver.maps.Marker(markerOptions);
+</script>
+</content>
 <body>
 <form>
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
@@ -54,7 +87,7 @@
 	<h3><font color="#FFFFFF">가상의 피트니트 센터 관리를 목적으로 하는</font></h3><p>
 	<h3><font color="#f39c12">포트폴리오</font> <font color="#FFFFFF">사이트 입니다.</font></h3>
 </div>
-<div class="col-md-12" style="background:url('resources/images/bgimage.jpg');height:2000px;">
+<div class="col-md-12" style="background:url('resources/images/bgimage.jpg');height:2500px;">
 	<!-- post-03 -->
 	<div class="post-03" style="margin-top: 100px;">
 		<div class="post-03__media"><a href="#"><img src="resources/images/mainimg1.jpg" alt=""/></a></div>
@@ -90,6 +123,24 @@
 			<div class="post-03__description"><h4><font color="#FFFFFF";>보여드리겠습니다. 감사합니다.</font></h4></div>
 		</div>
 	</div><!-- End / post-03 -->
+	<div class="col-md-12">
+		<style type="text/css">
+		    #mapArea{
+		       border:1px solid #ddd;display:block;
+		       width:60%;
+		       height:300px;
+		       clear:both;
+		    }
+		</style>
+		
+		<div class="map_wrap" align="center">
+		   <div id="mapArea" class="map_div"></div>
+		   <div class="map_tit"><h4><font color="#FFFFFF";>찾아오는 길</font></h4></div>
+		</div>
+		<div style="text-align:center; margin:0 0 100px 0; background:#555; line-height:80px;">
+	      <a style="color:#fff; font-weight:bold; font-family:tahoma; font-size:20pt;" href="http://ktsmemo.cafe24.com/s/naver_map_v3/128" target="_blank"></a>
+	   </div>
+	</div>
 </div>
 </form>
 </body>

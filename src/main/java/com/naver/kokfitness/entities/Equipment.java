@@ -8,6 +8,7 @@ public class Equipment {
 	private String name;
 	private String capacity;
 	private int stock;
+	private int price;
 	private String rcv_date;
 	private String bp_code;
 	private String bp_name;
@@ -68,6 +69,10 @@ public class Equipment {
 	public void setExplanation(String explanation) {
 		this.explanation = explanation;
 	}
-	
-	
+	public int getPrice() {
+		return price;
+	}
+	public void setPrice(int price) {
+		this.price = price;
+	}
 }

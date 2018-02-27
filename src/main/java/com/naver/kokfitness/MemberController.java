@@ -51,6 +51,14 @@ public class MemberController {
 		
 		return "member/member_insert";
 	}
+	@RequestMapping(value = "memberWithdraw", method = RequestMethod.GET)
+	public String memberWithdraw() {
+		return "member/member_withdraw";
+	}
+	@RequestMapping(value = "withdrawPage", method = RequestMethod.GET)
+	public String withdrawPage() {
+		return "member/withdraw";
+	}
 	@RequestMapping(value = "memberList", method = RequestMethod.GET)
 	public ModelAndView memberList() {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
@@ -162,6 +170,8 @@ public class MemberController {
 		dao.memberDelete(email);
 		return "redirect:memberList";
 	}
+	
+
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public void login(@ModelAttribute("member") Member member,HttpSession session,HttpServletResponse response) throws IOException {
 		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
@@ -187,6 +197,7 @@ public class MemberController {
     			session.setAttribute("sessionphone2", data.getPhone2());
     			session.setAttribute("sessionphone3", data.getPhone3());
     			session.setAttribute("sessionmileage", data.getMileage());
+    			session.setAttribute("sessionprogram", data.getProgram_code());
     			session.setAttribute("sessionlevel", data.getMemlevel());
     			response.setCharacterEncoding("EUC-KR");
     		    PrintWriter writer = response.getWriter();
@@ -205,10 +216,51 @@ public class MemberController {
 	        }
 		}
 	}
+	@RequestMapping(value = "memberWithdraw", method = RequestMethod.POST)
+	public void memberWithdraw(@ModelAttribute("member") Member member,HttpSession session,HttpServletResponse response) throws IOException {
+		MemberDAO dao=sqlSession.getMapper(MemberDAO.class);
+		Member data=dao.memberGetOne(member.getEmail());
+		if(data==null) {
+			response.setCharacterEncoding("EUC-KR");
+		    PrintWriter writer = response.getWriter();
+		    writer.println("<script type='text/javascript'>");
+		    writer.println("</script>");
+		    writer.flush();
+		}else {
+			if(BCrypt.checkpw(member.getPassword(), data.getPassword())) {
+				try {
+					dao.withdrawDelete(data);
+				}catch(Exception e){
+					System.out.println("error : "+e.getMessage());
+				}
+                session.setAttribute("sessionemail", data.getEmail());
+    			session.setAttribute("sessionpassword", data.getPassword());
+    			response.setCharacterEncoding("EUC-KR");
+    		    PrintWriter writer = response.getWriter();
+    		    writer.println("<script type='text/javascript'>");
+    		    writer.println("document.location.href='withlogout';");
+    		    writer.println("</script>");
+    		    writer.flush();
+	        }else {
+	        	response.setCharacterEncoding("EUC-KR");
+			    PrintWriter writer = response.getWriter();
+			    writer.println("<script type='text/javascript'>");
+			    writer.println("alert('비밀번호가 일치하지 않습니다.');");
+			    writer.println("history.back();");
+			    writer.println("</script>");
+			    writer.flush();
+	        }
+		}
+	}
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
 		session.invalidate();
 		return "redirect:index";
+	}
+	@RequestMapping(value = "withlogout", method = RequestMethod.GET)
+	public String withlogout(HttpSession session) {
+		session.invalidate();
+		return "redirect:withdrawPage";
 	}
 	@RequestMapping(value = "passwordFind", method = RequestMethod.POST)
 	@ResponseBody

@@ -131,7 +131,7 @@ $(document).ready(function(){
 	<div class="page-wrap">
 		<header class="header header__style-02">
 			<div class="container">
-				<div class="header__logo"><a href="index"><img src="resources/assets/img/logo.png" alt=""/></a></div>
+				<div class="header__logo"><a href="index"><img class="logoimg"src="resources/images/logo5.png" alt=""/></a></div>
 				<div class="header__toogleGroup">
 					<div class="btn">
 						<c:choose>
@@ -158,7 +158,7 @@ $(document).ready(function(){
 						<li><a href="programMainForm">program</a></li>
 						<li><a href="serviceListForm">services</a></li>
 						<li><a href="staffListForm">staff</a></li>
-						<li class="menu-item-has-children"><a href="#">community</a>
+						<li class="menu-item-has-children"><a href="f_board">community</a>
 							<ul class="sub-menu">
 								<li><a href="n_board">공지사항</a></li>
 								<li><a href="f_board">자유게시판</a></li>

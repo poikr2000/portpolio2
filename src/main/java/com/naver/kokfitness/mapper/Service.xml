@@ -25,6 +25,11 @@
 		from program
 		where code=#{radio}
 	</select>
+	<select id="serviceGetOne" parameterType="String" resultMap="serviceMap">
+		select *
+		from service
+		where seq=#{seq}
+	</select>
 	<select id="serviceCheck" parameterType="String" resultType="Integer">
 		select count(*)
 		from service

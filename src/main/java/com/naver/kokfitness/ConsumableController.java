@@ -3,6 +3,7 @@ package com.naver.kokfitness;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.naver.kokfitness.entities.Balance;
 import com.naver.kokfitness.entities.Category;
 import com.naver.kokfitness.entities.Consumable;
 import com.naver.kokfitness.entities.Partner;
@@ -36,6 +38,36 @@ public class ConsumableController {
 		ModelAndView mav = new ModelAndView("consumable/consumable_insert");
 		mav.addObject("categorys",categorys);
 		mav.addObject("partners",partners);
+		return mav;
+	}
+	@RequestMapping(value = "balanceForm", method = RequestMethod.GET)
+	 public ModelAndView balanceForm() {
+		ModelAndView mav = new ModelAndView("consumable/consumable_balance");
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		ArrayList<Balance>balances = consumabledao.balanceListAll();
+		mav.addObject("balances",balances);
+		return mav;
+	}
+	@RequestMapping(value = "balanceDetail", method = RequestMethod.GET)
+	 public ModelAndView balanceDetail(@RequestParam String yyyy,@RequestParam String bp_code) {
+		ModelAndView mav = new ModelAndView("consumable/consumable_balance_detail");
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		HashMap detailmap = new HashMap();
+		detailmap.put("yyyy", yyyy);
+		detailmap.put("bp_code", bp_code);
+		Balance balance=consumabledao.balanceSelectGenOne(detailmap);
+		mav.addObject("balance",balance);
+		return mav;
+	}
+	@RequestMapping(value = "balanceUpdate", method = RequestMethod.POST)
+	 public ModelAndView balanceUpdate(@ModelAttribute("balance")Balance balance) {
+		ModelAndView mav = new ModelAndView("consumable/consumable_balance");
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		try {
+			consumabledao.balanceUpdate(balance);
+		} catch (Exception e) {
+			System.out.println("----------"+e.getMessage());
+		}
 		return mav;
 	}
 	@RequestMapping(value = "consumableCodeConfirm", method = RequestMethod.POST)
@@ -140,5 +172,41 @@ public class ConsumableController {
 		mav.addObject("categorys",categorys);
 		mav.addObject("partners",partners);
 		return mav;
+	}
+	@RequestMapping(value = "taskCloseForm", method = RequestMethod.GET)
+	 public ModelAndView taskCloseForm() {
+		ModelAndView mav = new ModelAndView("consumable/task_close");
+		return mav;
+	}
+	@RequestMapping(value = "taskCloseMonth", method = RequestMethod.POST)
+	 public String mmTaskClose(@RequestParam String yyyy,@RequestParam String mm) {
+		ModelAndView mav = new ModelAndView("product/product_list");
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		int intmm = Integer.parseInt(mm)+1;
+		if(intmm==13) {
+			intmm=1;
+		}
+		String strmm = String.format("%02d",intmm);	
+		String columnname = "prebalance"+strmm;
+		HashMap closemap = new HashMap();
+		closemap.put("yyyy", yyyy);
+		closemap.put("columnname", columnname);
+		consumabledao.balanceMonthClose(closemap);
+		consumabledao.mmTaskClose();
+		return "redirect:consumableList";
+	}
+	@RequestMapping(value = "taskCloseYear", method = RequestMethod.POST)
+	 public String yearTaskClose(@RequestParam String yyyy,@RequestParam String mm) {
+		ModelAndView mav = new ModelAndView("product/product_list");
+		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
+		int intyyyy=Integer.parseInt(yyyy)+1;
+		HashMap yyyyclose = new HashMap();
+		yyyyclose.put("yyyy", yyyy);
+		yyyyclose.put("newyyyy", intyyyy+"");
+		
+		ArrayList<Balance> yybalances = consumabledao.balanceYyyyList(yyyyclose);
+		consumabledao.balanceYearClose(yybalances);
+		consumabledao.yearTaskClose();
+		return "redirect:consumableList";
 	}
 }

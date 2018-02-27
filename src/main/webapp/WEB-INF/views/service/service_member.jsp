@@ -45,7 +45,7 @@ $(document).ready(function() {
 <form class="serviceadmin_form" name="serviceadmin_form" id="serviceadmin_form" action="serviceCansel" method="POST" enctype="multipart/form-data">
 	<div class="col-sm-12" style="background:black;height:90px;">
 	</div>
-	<div class="container col-sm-12" style="height:800px;">
+	<div class="container col-sm-12" style="height:1000px;">
 		<div class="col-sm-offset-3" style="margin-top:50px;">
 			<h3>서비스신청 조회</h3>
 		</div>
@@ -64,7 +64,6 @@ $(document).ready(function() {
 			<table class="table table-striped table-bordered" id="adminservicetable">
 				<thead>
 					<tr style="text-align:center;">
-						<th style="text-align:center;vertical-align:middle;">순번</th>
 						<th style="text-align:center;vertical-align:middle;">신청인</th>
 						<th style="text-align:center;vertical-align:middle;">프로그램</th>
 						<th style="text-align:center;vertical-align:middle;">신청날짜</th>
@@ -78,7 +77,6 @@ $(document).ready(function() {
 						<c:choose>
 			        			<c:when test="${services.service_check==9}">
 			        				<tr>
-					        			<td class="text-center">${services.seq}</td>
 					        			<td class="text-center">${services.member_name}</td>
 					        			<td class="text-center">${services.program_name}</td>
 					        			<td class="text-center">${services.apply_date}</td>
@@ -89,19 +87,16 @@ $(document).ready(function() {
 			        			</c:when>
 			        			<c:when test="${services.service_check==5}">
 			        				<tr>
-					        			<td class="text-center">${services.seq}</td>
 					        			<td class="text-center">${services.member_name}</td>
 					        			<td class="text-center">${services.program_name}</td>
 					        			<td class="text-center">${services.apply_date}</td>
 					        			<td class="text-center">${services.register_date}</td>
 					        			<td class="text-center">진행중</td>
-					        			<td class="text-center">
-					        			</td>
+					        			<td class="text-center"></td>
 									</tr>
 			        			</c:when>
 			        			<c:otherwise>
 					        		<tr>
-					        			<td class="text-center">${services.seq}</td>
 					        			<td class="text-center">${services.member_name}</td>
 					        			<td class="text-center">${services.program_name}</td>
 					        			<td class="text-center">${services.apply_date}</td>

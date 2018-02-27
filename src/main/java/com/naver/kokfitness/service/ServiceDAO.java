@@ -14,5 +14,5 @@ public interface ServiceDAO {
 	void serviceDelete(String seq);
 	void serviceExpired(String seq);
 	void serviceRegister(Service service);
-	
+	Service serviceGetOne(String seq);
 }

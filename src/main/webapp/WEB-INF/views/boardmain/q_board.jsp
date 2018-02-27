@@ -21,6 +21,7 @@
 		            }
 		        ]
 		    } );
+		    $('.dt-button').addClass('btn btn-primary').removeClass('dt-button');
 		} );
 		</script>
 	</c:when>
@@ -38,6 +39,7 @@
 			            }
 			        ]
 			    } );
+			    $('.dt-button').addClass('btn btn-primary').removeClass('dt-button');
 			} );
 		</script>
 	</c:otherwise>
@@ -48,7 +50,7 @@
 <body>
 	<div class="container col-sm-12" style="background:url('resources/images/staff.jpg');">
 		<form class="q_insert_form" action="q_insert_form">
-			<h3 style="text-align: center; margin-top: 120px"><font color="#FFFFFF"; size="50" face="Viner Hand ITC">Q&A BOARD</font></h3>
+			<h3 style="text-align: center; margin-top: 120px"><font color="#FFFFFF"; size="50" face="Impact">Q&A BOARD</font></h3>
 			<div class="container" style="height: 700px">
 				<table id="q_board" class="table fade in" style="margin-top: 60px; background-color: #424242; border-radius: 1em; border: 1px solid white;" >
 					<thead>
@@ -63,11 +65,11 @@
 					<tbody>
 						<c:forEach var="n_boards" items="${n_boards}">
 							<tr style="text-algin: center; vertical-algin: middle;">
-								<td style="text-align: center; font-family: serif;"></h5><font color="#FE2E2E">${n_boards.n_seq}</font><h5></td>
-								<td style="text-align: center;"><h5><font color="#FE2E2E">${n_boards.n_name}</font></h5></td>
-								<td><h5><a href="n_board_detail?n_seq=${n_boards.n_seq}" style="color: #FE2E2E;">${n_boards.n_title}</a></h5></td>
-								<td style="text-align: center;"><h5><font color="#FE2E2E">${n_boards.n_date}</font></h5></td>
-								<td style="text-align: center;"><h5><font color="#FE2E2E">${n_boards.n_hit}</font></h5></td>
+								<td style="text-align: center; font-family: serif;"><h5><font color="#f39c12">${n_boards.n_seq}</font></h5></td>
+								<td style="text-align: center;"><h5><font color="#f39c12">${n_boards.n_name}</font></h5></td>
+								<td><h5><a href="n_board_detail?n_seq=${n_boards.n_seq}" style="color: #f39c12;">${n_boards.n_title}</a></h5></td>
+								<td style="text-align: center;"><h5><font color="#f39c12">${n_boards.n_date}</font></h5></td>
+								<td style="text-align: center;"><h5><font color="#f39c12">${n_boards.n_hit}</font></h5></td>
 							</tr>
 						</c:forEach>
 					</tbody>

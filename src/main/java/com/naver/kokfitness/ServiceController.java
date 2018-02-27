@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.naver.kokfitness.entities.Member;
 import com.naver.kokfitness.entities.Program;
 import com.naver.kokfitness.entities.Service;
+import com.naver.kokfitness.service.MemberDAO;
 import com.naver.kokfitness.service.ServiceDAO;
 
 @Controller
@@ -87,17 +88,52 @@ public class ServiceController {
 	@RequestMapping(value = "serviceExpired", method = RequestMethod.POST)
 	public String serviceExpired(@RequestParam String seq) {
 		ServiceDAO servicedao=sqlSession.getMapper(ServiceDAO.class);
+		MemberDAO memberdao=sqlSession.getMapper(MemberDAO.class);
+		Service service=servicedao.serviceGetOne(seq);
+		member.setEmail(service.getMember_mail());
+		memberdao.memberServiceExpired(member);
 		servicedao.serviceExpired(seq);
 		return "redirect:serviceMember";
 	}
 	@RequestMapping(value = "serviceRegister", method = RequestMethod.POST)
 	public String serviceRegister(@RequestParam String seq) {
 		ServiceDAO servicedao=sqlSession.getMapper(ServiceDAO.class);
+		MemberDAO memberdao=sqlSession.getMapper(MemberDAO.class);
 		SimpleDateFormat sm = new SimpleDateFormat("yyyy.MM.dd");
 		String date = sm.format(new Date());
 		service.setRegister_date(date);
 		service.setSeq(Integer.parseInt(seq));
 		servicedao.serviceRegister(service);
+		Service service=servicedao.serviceGetOne(seq);
+		
+		if(service.getProgram_code().equals("1111")) {
+			member.setMileage(2000);
+		}else if(service.getProgram_code().equals("1112")) {
+			member.setMileage(5000);
+		}else if(service.getProgram_code().equals("1113")) {
+			member.setMileage(9000);
+		}else if(service.getProgram_code().equals("2111")) {
+			member.setMileage(40000);
+		}else if(service.getProgram_code().equals("2112")) {
+			member.setMileage(70000);
+		}else if(service.getProgram_code().equals("2113")) {
+			member.setMileage(90000);
+		}else if(service.getProgram_code().equals("3111")) {
+			member.setMileage(5000);
+		}else if(service.getProgram_code().equals("3112")) {
+			member.setMileage(13000);
+		}else if(service.getProgram_code().equals("3113")) {
+			member.setMileage(25000);
+		}else if(service.getProgram_code().equals("4111")) {
+			member.setMileage(6000);
+		}else if(service.getProgram_code().equals("4112")) {
+			member.setMileage(16000);
+		}else if(service.getProgram_code().equals("4113")) {
+			member.setMileage(28000);
+		}
+		member.setEmail(service.getMember_mail());
+		member.setProgram_code(service.getProgram_code());
+		memberdao.memberServiceRegister(member);
 		return "redirect:serviceMember";
 	}
 	@RequestMapping(value = "serviceAdminForm", method = RequestMethod.GET)

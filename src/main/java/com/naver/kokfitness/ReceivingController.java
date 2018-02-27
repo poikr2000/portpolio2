@@ -134,6 +134,7 @@ public class ReceivingController {
 		receiving.setEquipment_code(equipment.getCode());
 		receiving.setBp_code(equipment.getBp_code());
 		receiving.setBp_name(equipment.getBp_name());
+		receiving.setPrice(equipment.getPrice());
 		receiving.setStock(equipment.getStock());
 		
 		return receiving;
@@ -147,6 +148,9 @@ public class ReceivingController {
 		try {
 			receivingdao.receivingInsert(receiving);
 			receiving.setColumnname("rcv"+receiving.getMm());
+			receiving.setDealname("deal"+receiving.getMm());
+			receiving.setBalancename("balance"+receiving.getMm());
+			receivingdao.receivingBalanceAdd(receiving);
 			consumabledao.receivingAdd(receiving);
 		}catch(Exception e){
 			System.out.println(e.getMessage());
@@ -303,6 +307,9 @@ public class ReceivingController {
 		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
 		Receiving receiving = receivingdao.receivingSelectOne(seq);
 		receiving.setColumnname("rcv"+receiving.getMm());
+		receiving.setDealname("deal"+receiving.getMm());
+		receiving.setBalancename("balance"+receiving.getMm());
+		receivingdao.receivingDeleteBalance(receiving);
 		consumabledao.receivingDeleteSub(receiving);
 		receivingdao.deleteRow(seq);
 		return "redirect:receivingInsertForm";
@@ -340,6 +347,10 @@ public class ReceivingController {
 		ConsumableDAO consumabledao=sqlSession.getMapper(ConsumableDAO.class);
 		PartnerDAO partnerdao=sqlSession.getMapper(PartnerDAO.class);
 		receiving.setColumnname("rcv"+receiving.getMm());
+		receiving.setDealname("deal"+receiving.getMm());
+		receiving.setBalancename("balance"+receiving.getMm());
+		receivingdao.receivingUpdateBalance(receiving);
+		receivingdao.receivingBalanceAdd(receiving);
 		receivingdao.updateRow(receiving);
 		consumabledao.receivingUpdateSub(receiving);
 		consumabledao.receivingAdd(receiving);

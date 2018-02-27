@@ -6,6 +6,62 @@
 		<id property="code" column="code"/>
 		<id property="name" column="name"/>
 	</resultMap>
+	<resultMap type="com.naver.kokfitness.entities.Balance" id="balanceMap">
+		<id property="newyyyy" column="newyyyy"/>
+		<id property="yyyy" column="yyyy"/>
+		<id property="bp_code" column="bp_code"/>
+		<id property="bp_name" column="bp_name"/>
+		<id property="preyybalance" column="preyybalance"/>
+		<id property="prebalance01" column="prebalance01"/>
+		<id property="prebalance02" column="prebalance02"/>
+		<id property="prebalance03" column="prebalance03"/>
+		<id property="prebalance04" column="prebalance04"/>
+		<id property="prebalance05" column="prebalance05"/>
+		<id property="prebalance06" column="prebalance06"/>
+		<id property="prebalance07" column="prebalance07"/>
+		<id property="prebalance08" column="prebalance08"/>
+		<id property="prebalance09" column="prebalance09"/>
+		<id property="prebalance10" column="prebalance10"/>
+		<id property="prebalance11" column="prebalance11"/>
+		<id property="prebalance12" column="prebalance12"/>
+		<id property="deal01" column="deal01"/>
+		<id property="deal02" column="deal02"/>
+		<id property="deal03" column="deal03"/>
+		<id property="deal04" column="deal04"/>
+		<id property="deal05" column="deal05"/>
+		<id property="deal06" column="deal06"/>
+		<id property="deal07" column="deal07"/>
+		<id property="deal08" column="deal08"/>
+		<id property="deal09" column="deal09"/>
+		<id property="deal10" column="deal10"/>
+		<id property="deal11" column="deal11"/>
+		<id property="deal12" column="deal12"/>
+		<id property="pay01" column="pay01"/>
+		<id property="pay02" column="pay02"/>
+		<id property="pay03" column="pay03"/>
+		<id property="pay04" column="pay04"/>
+		<id property="pay05" column="pay05"/>
+		<id property="pay06" column="pay06"/>
+		<id property="pay07" column="pay07"/>
+		<id property="pay08" column="pay08"/>
+		<id property="pay09" column="pay09"/>
+		<id property="pay10" column="pay10"/>
+		<id property="pay11" column="pay11"/>
+		<id property="pay12" column="pay12"/>
+		<id property="balance01" column="balance01"/>
+		<id property="balance02" column="balance02"/>
+		<id property="balance03" column="balance03"/>
+		<id property="balance04" column="balance04"/>
+		<id property="balance05" column="balance05"/>
+		<id property="balance06" column="balance06"/>
+		<id property="balance07" column="balance07"/>
+		<id property="balance08" column="balance08"/>
+		<id property="balance09" column="balance09"/>
+		<id property="balance10" column="balance10"/>
+		<id property="balance11" column="balance11"/>
+		<id property="balance12" column="balance12"/>
+		<id property="balance" column="balance"/>
+	</resultMap>
 	<resultMap type="com.naver.kokfitness.entities.Consumable" id="consumableMap">
 		<id property="code" column="code"/>
 		<id property="name" column="name"/>
@@ -82,6 +138,22 @@
 		from consumable A,business_partner B
 		where A.bp_code=B.code and A.code=#{code}
 	</select>
+	<select id="balanceYyyyList" parameterType="hashMap" resultMap="balanceMap">
+		select *,(select ${newyyyy} from dual) newyyyy  
+		from balance
+		where yyyy=#{yyyy}
+	</select>
+	<select id="balanceListAll" resultMap="balanceMap">
+		select 
+		A.* , B.name bp_name 
+		from balance A, business_partner B 
+		where A.bp_code=B.code
+	</select>
+	<select id="balanceSelectGenOne" parameterType="hashMap" resultMap="balanceMap">
+		select A.* , B.name bp_name 
+		from balance A, business_partner B 
+		where A.bp_code=B.code and yyyy=#{yyyy} and bp_code=#{bp_code}
+	</select>
 	<insert id="consumableInsert" parameterType="hashMap">
 		insert into consumable(
 		code,name,capacity,photo,price,mileageprice,bp_code,category_code,explanation
@@ -90,6 +162,18 @@
 		#{mileageprice,jdbcType=INTEGER},#{bp_code,jdbcType=VARCHAR},#{category_code,jdbcType=VARCHAR},#{explanation,jdbcType=VARCHAR}
 		)
 	</insert>
+	<insert id="balanceYearClose" parameterType="java.util.Map">
+		insert into balance(yyyy,bp_code,preyybalance,prebalance01,balance)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(#{item.newyyyy},#{item.bp_code},#{item.balance},#{item.balance},#{item.balance})
+		</foreach>
+	</insert>
+	<update id="balanceMonthClose" parameterType="hashMap">
+		update balance set 
+		${columnname}=balance
+		where yyyy=#{yyyy}
+	</update>
 	<update id="consumableUpdate" parameterType="hashMap">
 		update consumable
 		set name=#{name},capacity=#{capacity},photo=#{photo},stock=#{stock},price=#{price},bp_code=#{bp_code},category_code=#{category_code},
@@ -125,10 +209,38 @@
 		set ${columnname} = ${columnname}+#{qty}
 		where code=#{consume_code}
 	</update>
+	<update id="mmTaskClose">
+		update consumable set 
+		premmstock=stock,preddstock=stock
+	</update>
+	<update id="yearTaskClose">
+		update consumable set 
+		preyystock=stock,premmstock=stock,preddstock=stock,
+		rcv01=0,rcv02=0,rcv03=0,rcv04=0,rcv05=0,rcv06=0,rcv07=0,rcv08=0,rcv09=0,rcv10=0,rcv11=0,rcv12=0,
+		ship01=0,ship02=0,ship03=0,ship04=0,ship05=0,ship06=0,ship07=0,ship08=0,ship09=0,ship10=0,ship11=0,ship12=0
+	</update>
 	<update id="receivingUpdateSub" parameterType="hashMap">
 		update consumable 
 		set stock=stock-#{beforeqty}, ${columnname} = ${columnname}-#{beforeqty}
 		where code=#{beforeconsume_code}
+	</update>
+	<update id="balanceUpdate" parameterType="hashMap">
+		update balance set 
+		preyybalance=#{preyybalance},
+		prebalance01=#{prebalance01},prebalance02=#{prebalance02},prebalance03=#{prebalance03},prebalance04=#{prebalance04},
+		prebalance05=#{prebalance05},prebalance06=#{prebalance06},prebalance07=#{prebalance07},prebalance08=#{prebalance08},
+		prebalance09=#{prebalance09},prebalance10=#{prebalance10},prebalance11=#{prebalance11},prebalance12=#{prebalance12},
+		deal01=#{deal01},deal02=#{deal02},deal03=#{deal03},deal04=#{deal04},
+		deal05=#{deal05},deal06=#{deal06},deal07=#{deal07},deal08=#{deal08},
+		deal09=#{deal09},deal10=#{deal10},deal11=#{deal11},deal12=#{deal12},
+		pay01=#{pay01},pay02=#{pay02},pay03=#{pay03},pay04=#{pay04},
+		pay05=#{pay05},pay06=#{pay06},pay07=#{pay07},pay08=#{pay08},
+		pay09=#{pay09},pay10=#{pay10},pay11=#{pay11},pay12=#{pay12},
+		balance01=#{balance01},balance02=#{balance02},balance03=#{balance03},balance04=#{balance04},
+		balance05=#{balance05},balance06=#{balance06},balance07=#{balance07},balance08=#{balance08},
+		balance09=#{balance09},balance10=#{balance10},balance11=#{balance11},balance12=#{balance12},
+		balance=#{balance}
+		where yyyy=#{yyyy} and bp_code=#{bp_code}
 	</update>
 	<delete id="consumableDelete" parameterType="String">
 		delete from consumable where code=#{code}

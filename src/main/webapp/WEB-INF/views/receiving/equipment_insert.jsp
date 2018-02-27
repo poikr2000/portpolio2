@@ -68,10 +68,12 @@ $(document).ready(function(){
 			datatype:'json',
 			url : 'equipmentSelected',
 			success : function(data){
+				alert(data.price);
 				$('#equipment_code').attr("value",data.equipment_code);
 				$('#bp_name').attr("value",data.bp_name);
 				$('#bp_code').attr("value",data.bp_code);
 				$('#stock').attr("value",data.stock);
+				$('#price').attr("value",data.price);
 			},
 			error : function(xhr,status,error){
 				alert("code:"+xhr.status+"\n"+"message:"+xhr.responseText+"\n"+"error:"+error);
@@ -142,18 +144,28 @@ $(document).ready(function(){
 	</div>
 	<div id="floatMenu">
 		<ul>
+			<li><a href="#">인적관리</a>
+				<ul>
+					<li><a href="memberList">회원 관리</a></li>
+					<li><a href="staffList">직원 관리</a></li>
+				</ul>
+			</li>
+			<li><a href="#">물적관리</a>
+				<ul>
+					<li><a href="partnerList">거래처 관리</a></li>
+					<li><a href="receivingInsertForm">매입관리</a></li>
+					<li><a href="receivingStatement">매입장</a></li>
+					<li><a href="shippingStatement">출고장</a></li>
+					<li><a href="consumableInsertForm">상품 등록</a></li>
+					<li><a href="consumableList">상품수불장</a></li>
+					<li><a href="equipmentInsertForm">기자재등록</a></li>
+					<li><a href="equipmentStatement">기자재매입장</a></li>
+					<li><a href="taskCloseForm">월말마감</a></li>
+					<li><a href="balanceForm">거래현황</a></li>
+				</ul>
+			</li>
 			<li><a href="serviceAdminForm">서비스신청 조회</a></li>
 			<li><a href="orderListForm">상품주문 조회</a></li>
-			<li><a href="memberList">회원 관리</a></li>
-			<li><a href="staffList">직원 관리</a></li>
-			<li><a href="partnerList">거래처 관리</a></li>
-			<li><a href="receivingInsertForm">매입관리</a></li>
-			<li><a href="receivingStatement">매입장</a></li>
-			<li><a href="shippingStatement">출고장</a></li>
-			<li><a href="consumableInsertForm">상품 등록</a></li>
-			<li><a href="consumableList">상품수불장</a></li>
-			<li><a href="equipmentInsertForm">기자재등록</a></li>
-			<li><a href="equipmentStatement">기자재매입장</a></li>
 		</ul>
 	</div>
 	<div class="col-sm-offset-2 col-sm-8">
@@ -206,7 +218,7 @@ $(document).ready(function(){
 				<div class="row" style="margin-top:10px">
 			  	  	<div class="input-group">
 					    <span class="input-group-addon">단&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp가</span>
-					    <input id="price" name="price" type="text" class="form-control">
+					    <input id="price" name="price" type="text" readonly="readonly"class="form-control">
 				 	</div>
 				</div>
 				<div class="row" style="margin-top:10px">

@@ -59,11 +59,9 @@
 						</tr>
 	
 						<tr>
-							<td colspan="2"><input type="submit" value="수정"
-								class="pull-right"> <input type="button" value="reset"
-								class="pull-left"> <input type="button"
-								value="글 목록으로... " class="pull-right"
-								onclick="javascript:location.href='n_board'" /></td>
+							<td colspan="2"><input type="submit" value="수정"class="pull-right btn btn-primary"> 
+							<input type="button" value="reset"class="pull-left btn btn-primary"> 
+							<input type="button"value="글 목록으로... " class="pull-right btn btn-primary"onclick="javascript:location.href='n_board'" /></td>
 						</tr>
 					</tbody>
 				</table>

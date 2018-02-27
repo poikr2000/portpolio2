@@ -244,7 +244,6 @@ public class MileageController {
 			String dd = String.format("%02d", resultdd);
 			shipping.setDd(dd);
 		}
-		System.out.println("----------------"+shipping.getDd());
 		ArrayList<Shipping>shippings=shippingdao.SelectShippingStatementDd(shipping);
 		mav.addObject("shippings",shippings);
 		mav.addObject("yyyy",shipping.getYyyy());

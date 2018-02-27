@@ -28,7 +28,11 @@ $(document).ready(function() {
 </script>
 </content>
 <body>
-<form style="background:url('resources/images/bgimage.jpg')">
+<form style="background:url('resources/images/maingym.jpg')no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;">
 	<div style="height:700px">
 		<div class="row">
 			<div class="col-md-8 col-lg-8 offset-0 offset-sm-0 offset-md-2 offset-lg-2 ">
@@ -46,7 +50,7 @@ $(document).ready(function() {
 			<li><a href="memberDetail?email=${sessionemail}">회원정보 수정</a></li>
 			<li><a href="serviceMember">서비스신청 조회</a></li>
 			<li><a href="memberOrderList?email=${sessionemail}">주문상품 조회</a></li>
-			<li><a href="">회원탈퇴</a></li>
+			<li><a href="memberWithdraw">회원탈퇴</a></li>
 		</ul>
 	</div>
 </form>

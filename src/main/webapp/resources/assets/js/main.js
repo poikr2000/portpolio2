@@ -292,8 +292,10 @@ $('.consult-nav').dropdownMenu({
 $(window).scroll(function() {
 	if ($(document).scrollTop() > 100) {
 		$('.header').addClass('shrink');
+		$('.logoimg').attr('src',"resources/images/logo3.png");
 	} else {
 		$('.header').removeClass('shrink');
+		$('.logoimg').attr('src',"resources/images/logo5.png");
 	}
 });
 

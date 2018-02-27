@@ -61,21 +61,31 @@ $(document).ready(function() {
 <form class="orderlist_form" name="orderlist_form" id="orderlist_form" action="shippingCheckOut" method="POST" enctype="multipart/form-data">
 	<div class="col-sm-12" style="background:black;height:90px;">
 	</div>
-	<div class="container col-sm-12" style="height:800px;">
+	<div class="container col-sm-12" style="height:1300px;">
 		<div id="floatMenu">
 			<ul>
+				<li><a href="#">인적관리</a>
+					<ul>
+						<li><a href="memberList">회원 관리</a></li>
+						<li><a href="staffList">직원 관리</a></li>
+					</ul>
+				</li>
+				<li><a href="#">물적관리</a>
+					<ul>
+						<li><a href="partnerList">거래처 관리</a></li>
+						<li><a href="receivingInsertForm">매입관리</a></li>
+						<li><a href="receivingStatement">매입장</a></li>
+						<li><a href="shippingStatement">출고장</a></li>
+						<li><a href="consumableInsertForm">상품 등록</a></li>
+						<li><a href="consumableList">상품수불장</a></li>
+						<li><a href="equipmentInsertForm">기자재등록</a></li>
+						<li><a href="equipmentStatement">기자재매입장</a></li>
+						<li><a href="taskCloseForm">월말마감</a></li>
+						<li><a href="balanceForm">거래현황</a></li>
+					</ul>
+				</li>
 				<li><a href="serviceAdminForm">서비스신청 조회</a></li>
 				<li><a href="orderListForm">상품주문 조회</a></li>
-				<li><a href="memberList">회원 관리</a></li>
-				<li><a href="staffList">직원 관리</a></li>
-				<li><a href="partnerList">거래처 관리</a></li>
-				<li><a href="receivingInsertForm">매입관리</a></li>
-				<li><a href="receivingStatement">매입장</a></li>
-				<li><a href="shippingStatement">출고장</a></li>
-				<li><a href="consumableInsertForm">상품 등록</a></li>
-				<li><a href="consumableList">상품수불장</a></li>
-				<li><a href="equipmentInsertForm">기자재등록</a></li>
-				<li><a href="equipmentStatement">기자재매입장</a></li>
 			</ul>
 		</div>
 		<div class="col-sm-offset-3" style="margin-top:50px;">
@@ -113,7 +123,7 @@ $(document).ready(function() {
 			        			</c:when>
 			        			<c:otherwise>
 					        			<tr>
-											<td style="width: 50pt;text-align:center;vertical-align:middle;"><img src="${shippings.photo}" style="width:100%;"/></td>
+											<td style="width: 50pt;text-align:center;vertical-align:middle;"><img src="${shippings.photo}" style="width:70%;"/></td>
 											<td style="text-align:center;vertical-align:middle;">${shippings.consume_name}</td>
 											<td style="text-align:center;vertical-align:middle;">${shippings.member_name}</td>
 											<td style="text-align:center;vertical-align:middle;">${shippings.mileageprice}</td>

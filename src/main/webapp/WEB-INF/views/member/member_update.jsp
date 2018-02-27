@@ -52,7 +52,6 @@ $(document).ready(function(){
 		}
 		$('#udateconfirmbtn').show();
 		$('#admin_updateconfirmbtn').hide();
-		$('#deleteconfirmbtn').hide();
 		var msg=""
 		if($('#userpassword').val()!=$('#passwordchk').val()){
 			msg="- 비밀번호를 다시 확인 해주시기 바랍니다 -";
@@ -67,57 +66,8 @@ $(document).ready(function(){
 		$('#confirmModal').modal('show');
 	})
 	$('#udateconfirmbtn').click(function(){
+		alert("회원정보가 변경되었습니다.");
 		$('#update_form').attr('action','memberUpdate');
-		$('#update_form').submit();
-	})
-	$('#admin_memberupdatebtn').click(function(){
-		var id=$('#id').val();
-		var name=$('#name').val();
-		var password=$('#userpassword').val();
-		var passwordchk=$('#passwordchk').val();
-		var zipcode=$('#zipcode').val();
-		var newaddr=$('#newaddr').val();
-		var detailaddr=$('#detailaddr').val();
-		var phone2=$('#phone2').val();
-		var phone3=$('#phone3').val();
-		var memlevel=$('#memlevel').val();
-		var mileage=$('#mileage').val();
-		if(name==""||id==""||password==""||passwordchk==""||zipcode==""||newaddr==""||detailaddr==""||phone2==""||phone3==""||memlevel==""||mileage==""){
-			$('#requirechk').click();
-			return;
-		}else{
-			$('#udateconfirmbtn').hide();
-			$('#admin_updateconfirmbtn').show();
-			$('#deleteconfirmbtn').hide();
-			var msg=""
-			if($('#userpassword').val()!=$('#passwordchk').val()){
-				msg="- 비밀번호를 다시 확인 해주시기 바랍니다 -";
-				$('#updateModalMsg').text(msg);
-				$('#usebtn').text("확인");
-				$('#updateModal').modal('show');
-				$('#passwordchk').val('');
-				return;
-			}
-			msg="- 변경 사항을 저장하시겠습니까? -";
-			$('#confirmModalMsg').text(msg);
-			$('#confirmModal').modal('show');
-		}
-	})
-	$('#admin_updateconfirmbtn').click(function(){
-		$('#update_form').attr('action','adminMemberUpdate');
-		$('#update_form').submit();
-	})
-	$('#memberdeletebtn').click(function(){
-		$('#udateconfirmbtn').hide();
-		$('#admin_updateconfirmbtn').hide();
-		$('#deleteconfirmbtn').show();
-		var msg=""
-		msg="- 회원정보를 삭제하시겠습니까 -";
-		$('#confirmModalMsg').text(msg);
-		$('#confirmModal').modal('show');
-	})
-	$('#deleteconfirmbtn').click(function(){
-		$('#update_form').attr('action','memberDelete');
 		$('#update_form').submit();
 	})
 	$(document).ready(function() {
@@ -255,31 +205,8 @@ $(document).ready(function(){
 	</div>
  	<div class="col-sm-offset-4 col-sm-4" style="text-align:center;margin-top:20px;margin-bottom: 80px">
 		&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-		<c:choose>
-			<c:when test="${sessionemail=='admin@admin.com'}">
-				<button class="btn" type="button" id="admin_memberupdatebtn" name="admin_memberupdatebtn">수&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp정</button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-				<button class="btn" type="button" id="memberdeletebtn" name="memberdeletebtn">삭&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp제</button>
-			</c:when>
-			<c:otherwise>
-				<button class="btn" type="button" id="memberupdatebtn" name="memberupdatebtn">수&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp정</button>
-			</c:otherwise>
-		</c:choose>&nbsp;&nbsp;&nbsp;
+		<button class="btn" type="button" id="memberupdatebtn" name="memberupdatebtn">수&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp정</button>
 		<button class="btn" type="button" onclick="history.back();">돌아가기</button>
-	</div>
-	
-	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-	  <div class="modal-dialog modal-sm">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	      </div>
-	      <div class="modal-body">
-	        <span id="updateModalMsg">...</span>
-	      </div>
-	      <div class="modal-footer">
-	        <button type="button" id="updatebtn" class="btn btn-default" data-dismiss="modal">Close</button>
-	      </div>
-	    </div>
-	  </div>
 	</div>
 	<div class="modal fade" id="confirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
 	  <div class="modal-dialog">
@@ -292,9 +219,21 @@ $(document).ready(function(){
 		  </div>
 	      <div class="modal-footer">
 	      	<button type="button" id="udateconfirmbtn" style="display: none" class="btn btn-default">수정</button>
-	      	<button type="button" id="admin_updateconfirmbtn" style="display: none" class="btn btn-default">수정</button>
-	      	<button type="button" id="deleteconfirmbtn" style="display: none" class="btn btn-default">삭제</button>
 	      	<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="modal fade" id="updateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-sm">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	      </div>
+	      <div class="modal-body">
+	        <span id="updateModalMsg">...</span>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" id="updatebtn" class="btn btn-default" data-dismiss="modal">Close</button>
 	      </div>
 	    </div>
 	  </div>

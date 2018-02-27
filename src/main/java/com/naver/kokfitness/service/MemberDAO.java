@@ -24,4 +24,7 @@ public interface MemberDAO {
 	void mileageAdd(Shipping shipping);
 	void membermileage_board(String email);
 	void membermileage_comment(String email);
+	void memberServiceRegister(Member member);
+	void memberServiceExpired(Member member);
+	void withdrawDelete(Member data);
 }

@@ -22,4 +22,7 @@ public interface ReceivingDAO {
 	ArrayList<Receiving> SelectReceivingStatementMm(HashMap yyyymm);
 	ArrayList<Receiving> SelectEquipmentStatement(HashMap yyyymm);
 	ArrayList<Receiving> SelectReceivingStatementDd(Receiving receiving);
+	void receivingBalanceAdd(Receiving receiving);
+	int receivingDeleteBalance(Receiving receiving);
+	int receivingUpdateBalance(Receiving receiving);
 }

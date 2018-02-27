@@ -61,9 +61,9 @@
 
 					<tr>
 						<td colspan="2">
-						<input type="submit" value="등록" class="pull-right">
-						<input type="button" value="reset"	class="pull-left">
-						<input type="button" value="글 목록으로... " class="pull-right" onclick="javascript:location.href='f_board'" />
+						<input type="submit" value="등록" class="pull-right btn btn-primary">
+						<input type="button" value="reset"	class="pull-left btn btn-primary">
+						<input type="button" value="글 목록으로... " class="pull-right btn btn-primary" onclick="javascript:location.href='f_board'" />
 						</td>
 					</tr>
 				</tbody>

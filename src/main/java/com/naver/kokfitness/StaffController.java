@@ -27,12 +27,6 @@ public class StaffController {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	@RequestMapping(value = "staffInsertForm", method = RequestMethod.GET)
-	public String staffInsert() {
-		
-		return "staff/staff_insert";
-	}
-	
 	@RequestMapping(value = "staffListForm", method = RequestMethod.GET)
 	public ModelAndView staffListForm() {
 		StaffDAO staffdao=sqlSession.getMapper(StaffDAO.class);
@@ -56,7 +50,7 @@ public class StaffController {
 	}
 	
 	@RequestMapping(value = "staffInsert", method = RequestMethod.POST)
-	public ModelAndView staffInsert(@ModelAttribute("staff") Staff staff,
+	public String staffInsert(@ModelAttribute("staff") Staff staff,
 			@RequestParam CommonsMultipartFile imgfile) {
 		String path="D:/STSSOURCE/kokfitness/src/main/webapp/resources/uploadfiles/";
 		String realpath="resources/uploadfiles/";
@@ -78,9 +72,7 @@ public class StaffController {
 		}catch(Exception e){
 			System.out.println("error : "+e.getMessage());
 		}
-		ModelAndView mav = new ModelAndView("staff/result_page");
-		mav.addObject("staff",staff);
-		return mav;
+		return "redirect:staffList";
 	}
 	
 	@RequestMapping(value = "staffList", method = RequestMethod.GET)
@@ -113,7 +105,7 @@ public class StaffController {
 	}
 	
 	@RequestMapping(value = "staffUpdate", method = RequestMethod.POST)
-	public ModelAndView staffUpdate(@ModelAttribute("staff") Staff staff,
+	public String staffUpdate(@ModelAttribute("staff") Staff staff,
 			@RequestParam CommonsMultipartFile imgfile) {
 		String path="D:/STSSOURCE/kokfitness/src/main/webapp/resources/uploadfiles/";
 		String realpath="resources/uploadfiles/";
@@ -135,9 +127,7 @@ public class StaffController {
 		}catch(Exception e){
 			System.out.println("error : "+e.getMessage());
 		}
-		ModelAndView mav = new ModelAndView("staff/result_page");
-		mav.addObject("staff",staff);
-		return mav;
+		return "redirect:staffList";
 	}
 	
 	@RequestMapping(value = "profileUpdate", method = RequestMethod.POST)

@@ -1,7 +1,9 @@
 package com.naver.kokfitness.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import com.naver.kokfitness.entities.Balance;
 import com.naver.kokfitness.entities.Category;
 import com.naver.kokfitness.entities.Consumable;
 import com.naver.kokfitness.entities.Receiving;
@@ -24,4 +26,12 @@ public interface ConsumableDAO {
 	void shippingSub(Shipping shipping);
 	void shippingAdd(Shipping shipping);
 	void shippingUpdate(Shipping shipping);
+	int mmTaskClose();
+	int yearTaskClose();
+	void balanceMonthClose(HashMap closemap);
+	void balanceYearClose(ArrayList<Balance>list);
+	ArrayList<Balance> balanceYyyyList(HashMap yyyyclose);
+	ArrayList<Balance> balanceListAll();
+	Balance balanceSelectGenOne(HashMap detailmap);
+	void balanceUpdate(Balance balance);
 }

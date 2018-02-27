@@ -107,6 +107,31 @@
 		#{no,jdbcType=INTEGER},#{hang,jdbcType=INTEGER},#{consume_code,jdbcType=VARCHAR},#{equipment_code,jdbcType=VARCHAR},
 		#{price,jdbcType=INTEGER},#{qty,jdbcType=INTEGER},#{memo,jdbcType=VARCHAR})
 	</insert>
+	<insert id="receivingBalanceAdd" parameterType="hashMap">
+		insert into balance(yyyy,bp_code,${dealname},${balancename},balance
+		)values(
+		#{yyyy,jdbcType=VARCHAR},#{bp_code,jdbcType=VARCHAR},
+		#{qty}*#{price},#{qty}*#{price},
+		#{qty}*#{price}
+		)on duplicate key update 
+		${dealname}=${dealname}+ #{qty}*#{price},
+		${balancename}=${balancename}+ #{qty}*#{price},
+		balance = balance+ #{qty}*#{price}
+	</insert>
+	<update id="receivingDeleteBalance" parameterType="hashMap">
+		update balance set
+		${dealname}=${dealname}- #{qty}*#{price},
+		${balancename}=${balancename}- #{qty}*#{price},
+		balance = balance- #{qty}*#{price}
+		where yyyy=#{yyyy} and bp_code=#{bp_code}
+	</update>
+	<update id="receivingUpdateBalance" parameterType="hashMap">
+		update balance set
+		${dealname}=${dealname}- #{beforeqty}*#{price},
+		${balancename}=${balancename}- #{beforeqty}*#{price},
+		balance = balance- #{beforeqty}*#{price}
+		where yyyy=#{yyyy} and bp_code=#{bp_code}
+	</update>
 	<update id="updateRow" parameterType="hashMap">
 		update receiving 
 		set bp_code=#{bp_code},consume_code=#{consume_code},price=#{price},qty=#{qty},memo=#{memo}

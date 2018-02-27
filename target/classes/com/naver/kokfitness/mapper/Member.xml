@@ -16,6 +16,7 @@
 		<id property="phone3" column="phone3"/>
 		<id property="memlevel" column="memlevel"/>
 		<id property="mileage" column="mileage"/>
+		<id property="program_code" column="program_code"/>
 	</resultMap>
 	<resultMap type="com.naver.kokfitness.entities.Program" id="programMap">
 		<id property="code" column="code"/>
@@ -95,12 +96,31 @@
 		where email=#{member_mail}
 	</update>
 	<update id="membermileage_board" parameterType="String">
-		update member set mileage = mileage +100 where email= #{email}
+		update member 
+		set mileage = mileage +100 
+		where email= #{email}
 	</update>
 	<update id="membermileage_comment" parameterType="String">
-		update member set mileage = mileage +30 where email= #{email}
+		update member 
+		set mileage = mileage +30 
+		where email= #{email}
+	</update>
+	<update id="memberServiceRegister" parameterType="hashMap">
+		update member 
+		set mileage =mileage+#{mileage},program_code=#{program_code}
+		where email= #{email}
+	</update>
+	<update id="memberServiceExpired" parameterType="hashMap">
+		update member 
+		set program_code='0000'
+		where email= #{email}
 	</update>
 	<delete id="memberDelete" parameterType="String">
-		delete from member where email=#{email}
+		delete from member 
+		where email=#{email}
+	</delete>
+	<delete id="withdrawDelete" parameterType="hashMap">
+		delete from member 
+		where email=#{email}
 	</delete>
 </mapper>
